@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.melody.unicall.platform.dal.privilege.SecRoleResourceMapper">
+    <resultMap id="BaseResultMap" type="top.melody.unicall.platform.entity.privilege.SecRoleResource">
+        <!--
+          WARNING - @mbggenerated
+        -->
+        <id column="ID" property="id" jdbcType="VARCHAR"/>
+        <result column="ROLE_ID" property="roleId" jdbcType="VARCHAR"/>
+        <result column="RESOURCE_ID" property="resourceId" jdbcType="VARCHAR"/>
+        <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--
+          WARNING - @mbggenerated
+        -->
+        ID, ROLE_ID, RESOURCE_ID, CREATE_DATE, UPDATE_DATE
+    </sql>
+    <sql id="Entity_Prop_List">
+    #{roleId},#{resourceId},#{createDate},#{updateDate}
+    </sql>
+
+
+    <select id="selectByRoleIdIn" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM SEC_ROLE_RESOURCE SRR
+        WHERE ROLE_ID IN
+        <foreach item="item" index="index" collection="array"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+</mapper>

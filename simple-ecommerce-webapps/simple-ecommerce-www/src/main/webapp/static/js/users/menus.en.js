@@ -1,0 +1,54 @@
+// JavaScript Document
+function initLeftMenu(menuItem,path){
+	var _orderpath = path+"/users/order?language=en";
+	var _cartpath =  path+"/users/cart?language=en";
+	var _productpath = path+"/users/favoritesproduct?language=en";
+	var _storepath = path+"/users/favoritesstore?language=en";
+	var _basepath = path+"/users/baseData?language=en";
+	var _netpath = path+"/users/netData?language=en";
+	var _msgpath = path+"/users/mail?language=en";
+	var _safepath = path+"/users/safeData?language=en";
+	var _sharepath = path+"/users/share?language=en";
+	var _addresspath = path+"/users/shippingAddress?language=en";
+	var _returnspath = path+"/users/returnApply?language=en";
+	var menustr = "<dt><img src=\""+path+"/static/img/icon_center_1.png\" />My Orders</dt>";
+	menustr+="<dd><a href=\""+_orderpath+"\"";
+	if (menuItem=='myorder') menustr+=" class=\"sel\"";
+	menustr+=" >orders centre</a></dd>";
+	menustr+="<dd><a href=\""+_cartpath+"\"";
+	if (menuItem=='mycart')  menustr+=" class=\"sel\" ";
+	menustr+=">my shopping</a></dd>";
+	menustr+= "<dt><img src=\""+path+"/static/img/icon_center_2.png\" />My Enshrine</dt>";
+	menustr+="<dd><a href=\""+_productpath+"\"";
+	if (menuItem=='myproduct')  menustr+=" class=\"sel\" ";
+	menustr+=">commodity</a></dd>";
+	menustr+="<dd><a href=\""+_storepath+"\"";
+	if (menuItem=='mystore')  menustr+=" class=\"sel\"";
+	menustr+=" >shop</a></dd>";
+	menustr+="<dt><img src=\""+path+"/static/img/icon_center_3.png\" />Account Center</dt>";
+	menustr+="<dd><a href=\""+_basepath+"\"";
+	if (menuItem=='mybase')  menustr+=" class=\"sel\" ";
+	menustr+=">basic datum</a></dd>";
+	menustr+="<dd><a href=\""+_netpath+"\"";
+	if (menuItem=='mynet')  menustr+=" class=\"sel\" ";
+	menustr+=">network datum</a></dd>";
+	menustr+="<dd><a href=\""+_msgpath+"\"";
+	if (menuItem=='mymsg')  menustr+=" class=\"sel\" ";
+	menustr+=">message</a></dd>";
+	menustr+="<dd><a href=\""+_safepath+"\"";
+	if (menuItem=='mysafe')  menustr+=" class=\"sel\" ";
+	menustr+=">account security</a></dd>";
+	menustr+="<dd><a href=\""+_sharepath+"\"";
+	if (menuItem=='myshare')  menustr+=" class=\"sel\" ";
+	menustr+=">share</a></dd>";
+	menustr+="<dd><a href=\""+_addresspath+"\"";
+	if (menuItem=='myaddress')  menustr+=" class=\"sel\" ";
+	menustr+=">address</a></dd>";
+	menustr+="<dt><img src=\""+path+"/static/img/icon_center_4.png\" />CustomerService</dt>";
+	menustr+="<dd><a href=\""+_returnspath+"\"";
+	if (menuItem=='myreturns')  menustr+=" class=\"sel\" ";
+	//menustr+=">退换货</a></dd>";
+	menustr+=">return apply</a></dd>";
+	
+	$('.centerMenu').append(menustr);
+}

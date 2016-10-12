@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.melody.unicall.platform.dal.warehouse.entity.WarehouseReturnDetail">
+	<resultMap type="WarehouseReturnDetail" id="warehouseReturnDetailResultMap">
+		<result property="id" column="ID" />
+		<result property="returnCode" column="RETURN_CODE" />
+		<result property="goodsType" column="GOODS_TYPE" />
+        <result property="returnNumber" column="RETURN_NUMBER" />
+		<result property="phone" column="PHONE" />
+		<result property="packagesId" column="PACKAGES_ID" />
+		<result property="cardNo" column="CARD_NO" />
+		<result property="prettyNumber" column="PRETTY_NUMBER" />
+		<result property="prettyPrice" column="PRETTY_PRICE" />
+		<result property="bindCard" column="BIND_CARD" />
+		<result property="bindPackages" column="BIND_PACKAGES" />
+		<result property="status" column="STATUS" />
+		<result property="remark1" column="REMARK1" />
+		<result property="remark2" column="REMARK2" />
+		<result property="remark3" column="REMARK3" />
+		<result property="validStatus" column="VALID_STATUS" />
+		<result property="removeStatus" column="REMOVE_STATUS" />
+		<result property="createTime" column="CREATE_TIME" />
+		<result property="updateTime" column="UPDATE_TIME" />
+	</resultMap>
+	
+	<sql id="table_columns">
+		ID,
+		RETURN_CODE,
+		GOODS_TYPE,
+		RETURN_NUMBER,
+		PHONE,
+		PACKAGES_ID,
+		CARD_NO,
+		PRETTY_NUMBER,
+		PRETTY_PRICE,
+		BIND_CARD,
+		BIND_PACKAGES,
+		STATUS,
+		REMARK1,
+		REMARK2,
+		REMARK3,
+		VALID_STATUS,
+		REMOVE_STATUS,
+		CREATE_TIME,
+		UPDATE_TIME
+    </sql>
+	<sql id="entity_properties">
+		#{id},
+		#{returnCode},
+		#{goodsType},
+		#{returnNumber}
+		#{phone},
+		#{packagesId},
+		#{cardNo},
+		#{prettyNumber},
+		#{prettyPrice},
+		#{bindCard},
+		#{bindPackages},
+		#{status},
+		#{remark1},
+		#{remark2},
+		#{remark3},
+		#{validStatus},
+		#{removeStatus},
+		#{createTime},
+		#{updateTime}
+	</sql>
+
+    <!-- 使用like用法：columnName like concat('%',#columnName#,'%') -->
+    <sql id="page_where">
+        <trim prefix="where" prefixOverrides="and | or ">
+            <if test="returnCode != null and returnCode != ''">and RETURN_CODE = #{returnCode}</if>
+            <if test="goodsType != null and goodsType != ''">and GOODS_TYPE = #{goodsType}</if>
+            <if test="phone != null and phone != ''">and PHONE = #{phone}</if>
+            <if test="returnNumber != null and returnNumber != ''">and RETURN_NUMBER = #{returnNumber}</if>
+            <if test="packagesId != null and packagesId != ''">and PACKAGES_ID = #{packagesId}</if>
+            <if test="cardNo != null and cardNo != ''">and CARD_NO = #{cardNo}</if>
+            <if test="prettyNumber != null and prettyNumber != ''">and PRETTY_NUMBER = #{prettyNumber}</if>
+            <if test="prettyPrice != null and prettyPrice != ''">and PRETTY_PRICE = #{prettyPrice}</if>
+            <if test="bindCard != null and bindCard != ''">and BIND_CARD = #{bindCard}</if>
+            <if test="bindPackages != null and bindPackages != ''">and BIND_PACKAGES = #{bindPackages}</if>
+            <if test="status != null and status != ''">and STATUS = #{status}</if>
+            <if test="remark1 != null and remark1 != ''">and REMARK1 = #{remark1}</if>
+            <if test="remark2 != null and remark2 != ''">and REMARK2 = #{remark2}</if>
+            <if test="remark3 != null and remark3 != ''">and REMARK3 = #{remark3}</if>
+            <if test="validStatus != null and validStatus != ''">and VALID_STATUS = #{validStatus}</if>
+            <if test="removeStatus != null and removeStatus != ''">and REMOVE_STATUS = #{removeStatus}</if>
+            <if test="createTime != null and createTime != ''">and CREATE_TIME = #{createTime}</if>
+            <if test="updateTime != null and updateTime != ''">and UPDATE_TIME = #{updateTime}</if>
+        </trim>
+    </sql>
+
+
+	<!-- 适用于主键自增类型 -->
+	<insert id="insert" parameterType="WarehouseReturnDetail" useGeneratedKeys="true" keyProperty="id">
+		insert into WAREHOUSE_RETURN_DETAIL( <include refid="table_columns" /> ) 
+		values ( <include refid="entity_properties" /> )
+	</insert>
+
+    <insert id="insertSelective" parameterType="WarehouseReturnDetail">
+        insert into WAREHOUSE_RETURN_DETAIL
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="returnCode != null and returnCode != ''">RETURN_CODE,</if>
+            <if test="goodsType != null and goodsType != ''">GOODS_TYPE,</if>
+            <if test="returnNumber != null and returnNumber != ''">returnNumber,</if>
+            <if test="phone != null and phone != ''">PHONE,</if>
+            <if test="packagesId != null and packagesId != ''">PACKAGES_ID,</if>
+            <if test="cardNo != null and cardNo != ''">CARD_NO,</if>
+            <if test="prettyNumber != null and prettyNumber != ''">PRETTY_NUMBER,</if>
+            <if test="prettyPrice != null and prettyPrice != ''">PRETTY_PRICE,</if>
+            <if test="bindCard != null and bindCard != ''">BIND_CARD,</if>
+            <if test="bindPackages != null and bindPackages != ''">BIND_PACKAGES,</if>
+            <if test="status != null and status != ''">STATUS,</if>
+            <if test="remark1 != null and remark1 != ''">REMARK1,</if>
+            <if test="remark2 != null and remark2 != ''">REMARK2,</if>
+            <if test="remark3 != null and remark3 != ''">REMARK3,</if>
+            <if test="validStatus != null and validStatus != ''">VALID_STATUS,</if>
+            <if test="removeStatus != null and removeStatus != ''">REMOVE_STATUS,</if>
+            <if test="createTime != null and createTime != ''">CREATE_TIME,</if>
+            <if test="updateTime != null and updateTime != ''">UPDATE_TIME,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="returnCode != null and returnCode != ''">#{returnCode},</if>
+            <if test="goodsType != null and goodsType != ''">#{goodsType},</if>
+            <if test="returnNumber != null and returnNumber != ''">returnNumber,</if>
+            <if test="phone != null and phone != ''">#{phone},</if>
+            <if test="packagesId != null and packagesId != ''">#{packagesId},</if>
+            <if test="cardNo != null and cardNo != ''">#{cardNo},</if>
+            <if test="prettyNumber != null and prettyNumber != ''">#{prettyNumber},</if>
+            <if test="prettyPrice != null and prettyPrice != ''">#{prettyPrice},</if>
+            <if test="bindCard != null and bindCard != ''">#{bindCard},</if>
+            <if test="bindPackages != null and bindPackages != ''">#{bindPackages},</if>
+            <if test="status != null and status != ''">#{status},</if>
+            <if test="remark1 != null and remark1 != ''">#{remark1},</if>
+            <if test="remark2 != null and remark2 != ''">#{remark2},</if>
+            <if test="remark3 != null and remark3 != ''">#{remark3},</if>
+            <if test="validStatus != null and validStatus != ''">#{validStatus},</if>
+            <if test="removeStatus != null and removeStatus != ''">#{removeStatus},</if>
+            <if test="createTime != null and createTime != ''">#{createTime},</if>
+            <if test="updateTime != null and updateTime != ''">#{updateTime},</if>
+        </trim>
+	</insert>
+
+
+	<delete id="delete" parameterType="WarehouseReturnDetail">
+		delete from WAREHOUSE_RETURN_DETAIL
+        <include refid="page_where" />
+	</delete>
+
+	<delete id="deleteByPrimaryKey" parameterType="String">
+		delete from WAREHOUSE_RETURN_DETAIL
+		where ID = #{id}
+	</delete>
+
+
+	<update id="updateByPrimaryKey" parameterType="WarehouseReturnDetail">
+		update WAREHOUSE_RETURN_DETAIL 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="returnCode != null and returnCode != ''">RETURN_CODE = #{returnCode},</if>
+			<if test="goodsType != null and goodsType != ''">GOODS_TYPE = #{goodsType},</if>
+            <if test="returnNumber != null and returnNumber != ''">RETURN_NUMBER = #{returnNumber},</if>
+			<if test="phone != null and phone != ''">PHONE = #{phone},</if>
+			<if test="packagesId != null and packagesId != ''">PACKAGES_ID = #{packagesId},</if>
+			<if test="cardNo != null and cardNo != ''">CARD_NO = #{cardNo},</if>
+			<if test="prettyNumber != null and prettyNumber != ''">PRETTY_NUMBER = #{prettyNumber},</if>
+			<if test="prettyPrice != null and prettyPrice != ''">PRETTY_PRICE = #{prettyPrice},</if>
+			<if test="bindCard != null and bindCard != ''">BIND_CARD = #{bindCard},</if>
+			<if test="bindPackages != null and bindPackages != ''">BIND_PACKAGES = #{bindPackages},</if>
+			<if test="status != null and status != ''">STATUS = #{status},</if>
+			<if test="remark1 != null and remark1 != ''">REMARK1 = #{remark1},</if>
+			<if test="remark2 != null and remark2 != ''">REMARK2 = #{remark2},</if>
+			<if test="remark3 != null and remark3 != ''">REMARK3 = #{remark3},</if>
+			<if test="validStatus != null and validStatus != ''">VALID_STATUS = #{validStatus},</if>
+			<if test="removeStatus != null and removeStatus != ''">REMOVE_STATUS = #{removeStatus},</if>
+			<if test="createTime != null and createTime != ''">CREATE_TIME = #{createTime},</if>
+			<if test="updateTime != null and updateTime != ''">UPDATE_TIME = #{updateTime},</if>
+		</trim>
+		<where>ID = #{id}</where>
+	</update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="WarehouseReturnDetail">
+        update WAREHOUSE_RETURN_DETAIL
+        <trim prefix="set" suffixOverrides=",">
+            <if test="returnCode != null and returnCode != ''">RETURN_CODE = #{returnCode},</if>
+            <if test="goodsType != null and goodsType != ''">GOODS_TYPE = #{goodsType},</if>
+            <if test="returnNumber != null and returnNumber != ''">RETURN_NUMBER = #{returnNumber},</if>
+            <if test="phone != null and phone != ''">PHONE = #{phone},</if>
+            <if test="packagesId != null and packagesId != ''">PACKAGES_ID = #{packagesId},</if>
+            <if test="cardNo != null and cardNo != ''">CARD_NO = #{cardNo},</if>
+            <if test="prettyNumber != null and prettyNumber != ''">PRETTY_NUMBER = #{prettyNumber},</if>
+            <if test="prettyPrice != null and prettyPrice != ''">PRETTY_PRICE = #{prettyPrice},</if>
+            <if test="bindCard != null and bindCard != ''">BIND_CARD = #{bindCard},</if>
+            <if test="bindPackages != null and bindPackages != ''">BIND_PACKAGES = #{bindPackages},</if>
+            <if test="status != null and status != ''">STATUS = #{status},</if>
+            <if test="remark1 != null and remark1 != ''">REMARK1 = #{remark1},</if>
+            <if test="remark2 != null and remark2 != ''">REMARK2 = #{remark2},</if>
+            <if test="remark3 != null and remark3 != ''">REMARK3 = #{remark3},</if>
+            <if test="validStatus != null and validStatus != ''">VALID_STATUS = #{validStatus},</if>
+            <if test="removeStatus != null and removeStatus != ''">REMOVE_STATUS = #{removeStatus},</if>
+            <if test="createTime != null and createTime != ''">CREATE_TIME = #{createTime},</if>
+            <if test="updateTime != null and updateTime != ''">UPDATE_TIME = #{updateTime},</if>
+        </trim>
+        <include refid="page_where" />
+    </update>
+
+
+    <select id="selectAll" resultMap="warehouseReturnDetailResultMap">
+        select <include refid="table_columns" />
+        from WAREHOUSE_RETURN_DETAIL
+    </select>
+
+    <select id="select" resultMap="warehouseReturnDetailResultMap">
+        select <include refid="table_columns" />
+        from WAREHOUSE_RETURN_DETAIL
+        <include refid="page_where" />
+	</select>
+
+    <select id="selectCount" resultType="int" >
+        select count(ID) from WAREHOUSE_RETURN_DETAIL
+        <include refid="page_where" />
+    </select>
+
+
+    <select id="selectByPrimaryKey" resultMap="warehouseReturnDetailResultMap" parameterType="String" >
+		select <include refid="table_columns" />
+		from WAREHOUSE_RETURN_DETAIL
+		where ID = #{id}
+	</select>
+	
+	<!-- 其他自定义SQL -->
+
+
+</mapper>

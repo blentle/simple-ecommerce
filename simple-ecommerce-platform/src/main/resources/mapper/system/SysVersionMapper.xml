@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.melody.unicall.platform.dal.system.entity.SysVersion">
+	<resultMap type="SysVersion" id="sysVersionResultMap">
+		<result property="id" column="ID" />
+		<result property="versionName" column="VERSION_NAME" />
+		<result property="apiVersion" column="API_VERSION" />
+		<result property="appType" column="APP_TYPE" />
+		<result property="updateSize" column="UPDATE_SIZE" />
+		<result property="versionSize" column="VERSION_SIZE" />
+		<result property="updateUrl" column="UPDATE_URL" />
+		<result property="versionUrl" column="VERSION_URL" />
+		<result property="remark1" column="REMARK1" />
+		<result property="remark2" column="REMARK2" />
+		<result property="remark3" column="REMARK3" />
+		<result property="validStatus" column="VALID_STATUS" />
+		<result property="removeStatus" column="REMOVE_STATUS" />
+		<result property="updateTime" column="UPDATE_TIME" />
+		<result property="createTime" column="CREATE_TIME" />
+	</resultMap>
+	
+	<sql id="table_columns">
+		ID,
+		VERSION_NAME,
+		API_VERSION,
+		APP_TYPE,
+		UPDATE_SIZE,
+		VERSION_SIZE,
+		UPDATE_URL,
+		VERSION_URL,
+		REMARK1,
+		REMARK2,
+		REMARK3,
+		VALID_STATUS,
+		REMOVE_STATUS,
+		UPDATE_TIME,
+		CREATE_TIME
+    </sql>
+	<sql id="entity_properties">
+		#{id},
+		#{versionName},
+		#{apiVersion},
+		#{appType},
+		#{updateSize},
+		#{versionSize},
+		#{updateUrl},
+		#{versionUrl},
+		#{remark1},
+		#{remark2},
+		#{remark3},
+		#{validStatus},
+		#{removeStatus},
+		#{updateTime},
+		#{createTime}
+	</sql>
+
+    <!-- 使用like用法：columnName like concat('%',#columnName#,'%') -->
+    <sql id="page_where">
+        <trim prefix="where" prefixOverrides="and | or ">
+            <if test="versionName != null and versionName != ''">and VERSION_NAME = #{versionName}</if>
+            <if test="apiVersion != null and apiVersion != ''">and API_VERSION = #{apiVersion}</if>
+            <if test="appType != null and appType != ''">and APP_TYPE = #{appType}</if>
+            <if test="updateSize != null and updateSize != ''">and UPDATE_SIZE = #{updateSize}</if>
+            <if test="versionSize != null and versionSize != ''">and VERSION_SIZE = #{versionSize}</if>
+            <if test="updateUrl != null and updateUrl != ''">and UPDATE_URL = #{updateUrl}</if>
+            <if test="versionUrl != null and versionUrl != ''">and VERSION_URL = #{versionUrl}</if>
+            <if test="remark1 != null and remark1 != ''">and REMARK1 = #{remark1}</if>
+            <if test="remark2 != null and remark2 != ''">and REMARK2 = #{remark2}</if>
+            <if test="remark3 != null and remark3 != ''">and REMARK3 = #{remark3}</if>
+            <if test="validStatus != null and validStatus != ''">and VALID_STATUS = #{validStatus}</if>
+            <if test="removeStatus != null and removeStatus != ''">and REMOVE_STATUS = #{removeStatus}</if>
+            <if test="updateTime != null and updateTime != ''">and UPDATE_TIME = #{updateTime}</if>
+            <if test="createTime != null and createTime != ''">and CREATE_TIME = #{createTime}</if>
+        </trim>
+    </sql>
+
+
+	<!-- 适用于主键自增类型 -->
+	<insert id="insert" parameterType="SysVersion" useGeneratedKeys="true" keyProperty="id">
+		insert into SYS_VERSION( <include refid="table_columns" /> ) 
+		values ( <include refid="entity_properties" /> )
+	</insert>
+
+    <insert id="insertSelective" parameterType="SysVersion">
+        insert into SYS_VERSION
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="versionName != null and versionName != ''">VERSION_NAME,</if>
+            <if test="apiVersion != null and apiVersion != ''">API_VERSION,</if>
+            <if test="appType != null and appType != ''">APP_TYPE,</if>
+            <if test="updateSize != null and updateSize != ''">UPDATE_SIZE,</if>
+            <if test="versionSize != null and versionSize != ''">VERSION_SIZE,</if>
+            <if test="updateUrl != null and updateUrl != ''">UPDATE_URL,</if>
+            <if test="versionUrl != null and versionUrl != ''">VERSION_URL,</if>
+            <if test="remark1 != null and remark1 != ''">REMARK1,</if>
+            <if test="remark2 != null and remark2 != ''">REMARK2,</if>
+            <if test="remark3 != null and remark3 != ''">REMARK3,</if>
+            <if test="validStatus != null and validStatus != ''">VALID_STATUS,</if>
+            <if test="removeStatus != null and removeStatus != ''">REMOVE_STATUS,</if>
+            <if test="updateTime != null and updateTime != ''">UPDATE_TIME,</if>
+            <if test="createTime != null and createTime != ''">CREATE_TIME,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="versionName != null and versionName != ''">#{versionName},</if>
+            <if test="apiVersion != null and apiVersion != ''">#{apiVersion},</if>
+            <if test="appType != null and appType != ''">#{appType},</if>
+            <if test="updateSize != null and updateSize != ''">#{updateSize},</if>
+            <if test="versionSize != null and versionSize != ''">#{versionSize},</if>
+            <if test="updateUrl != null and updateUrl != ''">#{updateUrl},</if>
+            <if test="versionUrl != null and versionUrl != ''">#{versionUrl},</if>
+            <if test="remark1 != null and remark1 != ''">#{remark1},</if>
+            <if test="remark2 != null and remark2 != ''">#{remark2},</if>
+            <if test="remark3 != null and remark3 != ''">#{remark3},</if>
+            <if test="validStatus != null and validStatus != ''">#{validStatus},</if>
+            <if test="removeStatus != null and removeStatus != ''">#{removeStatus},</if>
+            <if test="updateTime != null and updateTime != ''">#{updateTime},</if>
+            <if test="createTime != null and createTime != ''">#{createTime},</if>
+        </trim>
+	</insert>
+
+
+	<delete id="delete" parameterType="SysVersion">
+		delete from SYS_VERSION
+        <include refid="page_where" />
+	</delete>
+
+	<delete id="deleteByPrimaryKey" parameterType="String">
+		delete from SYS_VERSION
+		where ID = #{id}
+	</delete>
+
+
+	<update id="updateByPrimaryKey" parameterType="SysVersion">
+		update SYS_VERSION 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="versionName != null and versionName != ''">VERSION_NAME = #{versionName},</if>
+			<if test="apiVersion != null and apiVersion != ''">API_VERSION = #{apiVersion},</if>
+			<if test="appType != null and appType != ''">APP_TYPE = #{appType},</if>
+			<if test="updateSize != null and updateSize != ''">UPDATE_SIZE = #{updateSize},</if>
+			<if test="versionSize != null and versionSize != ''">VERSION_SIZE = #{versionSize},</if>
+			<if test="updateUrl != null and updateUrl != ''">UPDATE_URL = #{updateUrl},</if>
+			<if test="versionUrl != null and versionUrl != ''">VERSION_URL = #{versionUrl},</if>
+			<if test="remark1 != null and remark1 != ''">REMARK1 = #{remark1},</if>
+			<if test="remark2 != null and remark2 != ''">REMARK2 = #{remark2},</if>
+			<if test="remark3 != null and remark3 != ''">REMARK3 = #{remark3},</if>
+			<if test="validStatus != null and validStatus != ''">VALID_STATUS = #{validStatus},</if>
+			<if test="removeStatus != null and removeStatus != ''">REMOVE_STATUS = #{removeStatus},</if>
+			<if test="updateTime != null and updateTime != ''">UPDATE_TIME = #{updateTime},</if>
+			<if test="createTime != null and createTime != ''">CREATE_TIME = #{createTime},</if>
+		</trim>
+		<where>ID = #{id}</where>
+	</update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="SysVersion">
+        update SYS_VERSION
+        <trim prefix="set" suffixOverrides=",">
+            <if test="versionName != null and versionName != ''">VERSION_NAME = #{versionName},</if>
+            <if test="apiVersion != null and apiVersion != ''">API_VERSION = #{apiVersion},</if>
+            <if test="appType != null and appType != ''">APP_TYPE = #{appType},</if>
+            <if test="updateSize != null and updateSize != ''">UPDATE_SIZE = #{updateSize},</if>
+            <if test="versionSize != null and versionSize != ''">VERSION_SIZE = #{versionSize},</if>
+            <if test="updateUrl != null and updateUrl != ''">UPDATE_URL = #{updateUrl},</if>
+            <if test="versionUrl != null and versionUrl != ''">VERSION_URL = #{versionUrl},</if>
+            <if test="remark1 != null and remark1 != ''">REMARK1 = #{remark1},</if>
+            <if test="remark2 != null and remark2 != ''">REMARK2 = #{remark2},</if>
+            <if test="remark3 != null and remark3 != ''">REMARK3 = #{remark3},</if>
+            <if test="validStatus != null and validStatus != ''">VALID_STATUS = #{validStatus},</if>
+            <if test="removeStatus != null and removeStatus != ''">REMOVE_STATUS = #{removeStatus},</if>
+            <if test="updateTime != null and updateTime != ''">UPDATE_TIME = #{updateTime},</if>
+            <if test="createTime != null and createTime != ''">CREATE_TIME = #{createTime},</if>
+        </trim>
+        <include refid="page_where" />
+    </update>
+
+
+    <select id="selectAll" resultMap="sysVersionResultMap">
+        select <include refid="table_columns" />
+        from SYS_VERSION
+    </select>
+
+    <select id="select" resultMap="sysVersionResultMap">
+        select <include refid="table_columns" />
+        from SYS_VERSION
+        <include refid="page_where" />
+	</select>
+
+    <select id="selectCount" resultType="int" >
+        select count(ID) from SYS_VERSION
+        <include refid="page_where" />
+    </select>
+
+
+    <select id="selectByPrimaryKey" resultMap="sysVersionResultMap" parameterType="String" >
+		select <include refid="table_columns" />
+		from SYS_VERSION
+		where ID = #{id}
+	</select>
+	
+	<!-- 其他自定义SQL -->
+
+
+</mapper>

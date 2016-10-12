@@ -1,0 +1,53 @@
+// JavaScript Document
+function initLeftMenu(menuItem,path){
+	var _orderpath = path+"/users/order";
+	var _cartpath =  path+"/users/cart";
+	var _productpath = path+"/users/favoritesproduct";
+	var _storepath = path+"/users/favoritesstore";
+	var _basepath = path+"/users/baseData";
+	var _netpath = path+"/users/netData";
+	var _msgpath = path+"/users/mail";
+	var _safepath = path+"/users/safeData";
+	var _sharepath = path+"/users/share";
+	var _addresspath = path+"/users/shippingAddress";
+	var _returnspath = path+"/users/returnApply";
+	var menustr = "<dt><img src=\""+path+"/static/img/icon_center_1.png\" />我的订单</dt>";
+	menustr+="<dd><a href=\""+_orderpath+"\"";
+	if (menuItem=='myorder') menustr+=" class=\"sel\"";
+	menustr+=" >订单中心</a></dd>";
+	menustr+="<dd><a href=\""+_cartpath+"\"";
+	if (menuItem=='mycart')  menustr+=" class=\"sel\" ";
+	menustr+=">我的购物车</a></dd>";
+	menustr+= "<dt><img src=\""+path+"/static/img/icon_center_2.png\" />我的收藏</dt>";
+	menustr+="<dd><a href=\""+_productpath+"\"";
+	if (menuItem=='myproduct')  menustr+=" class=\"sel\" ";
+	menustr+=">收藏的商品</a></dd>";
+	menustr+="<dd><a href=\""+_storepath+"\"";
+	if (menuItem=='mystore')  menustr+=" class=\"sel\"";
+	menustr+=" >收藏的店铺</a></dd>";
+	menustr+="<dt><img src=\""+path+"/static/img/icon_center_3.png\" />账户中心</dt>";
+	menustr+="<dd><a href=\""+_basepath+"\"";
+	if (menuItem=='mybase')  menustr+=" class=\"sel\" ";
+	menustr+=">基本资料</a></dd>";
+	menustr+="<dd><a href=\""+_netpath+"\"";
+	if (menuItem=='mynet')  menustr+=" class=\"sel\" ";
+	menustr+=">入网资料</a></dd>";
+	menustr+="<dd><a href=\""+_msgpath+"\"";
+	if (menuItem=='mymsg')  menustr+=" class=\"sel\" ";
+	menustr+=">消息</a></dd>";
+	menustr+="<dd><a href=\""+_safepath+"\"";
+	if (menuItem=='mysafe')  menustr+=" class=\"sel\" ";
+	menustr+=">账户安全</a></dd>";
+	menustr+="<dd><a href=\""+_sharepath+"\"";
+	if (menuItem=='myshare')  menustr+=" class=\"sel\" ";
+	menustr+=">分享设置</a></dd>";
+	menustr+="<dd><a href=\""+_addresspath+"\"";
+	if (menuItem=='myaddress')  menustr+=" class=\"sel\" ";
+	menustr+=">收货地址</a></dd>";
+	menustr+="<dt><img src=\""+path+"/static/img/icon_center_4.png\" />客户服务</dt>";
+	menustr+="<dd><a href=\""+_returnspath+"\"";
+	if (menuItem=='myreturns')  menustr+=" class=\"sel\" ";
+	menustr+=">退换货</a></dd>";
+	
+	$('.centerMenu').append(menustr);
+}

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.melody.unicall.platform.dal.goods.GoodsIndexMapper">
+	<resultMap type="GoodsIndex" id="goodsIndexResultMap">
+		<result property="id" column="ID" />
+		<result property="goodsId" column="GOODS_ID" />
+		<result property="bindCard" column="BIND_CARD" />
+		<result property="includeNumber" column="INCLUDE_NUMBER" />
+		<result property="excludeNumber" column="EXCLUDE_NUMBER" />
+		<result property="tailNumber" column="TAIL_NUMBER" />
+		<result property="phoneStandard" column="PHONE_STANDARD" />
+		<result property="validStatus" column="VALID_STATUS" typeHandler="top.melody.platform.common.repository.ValidStatusTypeHandler"/>
+		<result property="removeStatus" column="REMOVE_STATUS" typeHandler="top.melody.platform.common.repository.ActStatusTypeHandler"/>
+	</resultMap>
+	
+	<sql id="table_columns">
+		ID,
+		GOODS_ID,
+		BIND_CARD,
+		INCLUDE_NUMBER,
+		EXCLUDE_NUMBER,
+		TAIL_NUMBER,
+		PHONE_STANDARD,
+		VALID_STATUS,
+		REMOVE_STATUS
+    </sql>
+	<sql id="entity_properties">
+		#{id},
+		#{goodsId},
+		#{bindCard},
+		#{includeNumber},
+		#{excludeNumber},
+		#{tailNumber},
+		#{phoneStandard},
+		#{validStatus,typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler},
+		#{removeStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler}
+	</sql>
+
+    <!-- 使用like用法：columnName like concat('%',#columnName#,'%') -->
+    <sql id="page_where">
+        <trim prefix="where" prefixOverrides="and | or ">
+            <if test="goodsId != null and goodsId != ''">and GOODS_ID = #{goodsId}</if>
+            <if test="bindCard != null and bindCard != ''">and BIND_CARD = #{bindCard}</if>
+            <if test="includeNumber != null and includeNumber != ''">and INCLUDE_NUMBER = #{includeNumber}</if>
+            <if test="excludeNumber != null and excludeNumber != ''">and EXCLUDE_NUMBER = #{excludeNumber}</if>
+			<if test="tailNumber != null and tailNumber != ''">and TAIL_NUMBER = #{tailNumber}</if>
+            <if test="phoneStandard != null and phoneStandard != ''">and PHONE_STANDARD = #{phoneStandard}</if>
+            <if test="validStatus != null and validStatus != ''">and VALID_STATUS = #{validStatus,typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler}</if>
+            <if test="removeStatus != null and removeStatus != ''">and REMOVE_STATUS = #{removeStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler}</if>
+        </trim>
+    </sql>
+
+
+	<!-- 适用于主键自增类型 -->
+	<insert id="insert" parameterType="GoodsIndex" useGeneratedKeys="true" keyProperty="id">
+		insert into GOODS_INDEX( <include refid="table_columns" /> ) 
+		values ( <include refid="entity_properties" /> )
+	</insert>
+
+    <insert id="insertSelective" parameterType="GoodsIndex">
+        insert into GOODS_INDEX
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="goodsId != null and goodsId != ''">GOODS_ID,</if>
+            <if test="bindCard != null and bindCard != ''">BIND_CARD,</if>
+            <if test="includeNumber != null and includeNumber != ''">INCLUDE_NUMBER,</if>
+            <if test="excludeNumber != null and excludeNumber != ''">EXCLUDE_NUMBER,</if>
+			<if test="tailNumber != null and tailNumber != ''">TAIL_NUMBER,</if>
+            <if test="phoneStandard != null and phoneStandard != ''">PHONE_STANDARD,</if>
+            <if test="validStatus != null and validStatus != ''">VALID_STATUS,</if>
+            <if test="removeStatus != null and removeStatus != ''">REMOVE_STATUS,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="goodsId != null and goodsId != ''">#{goodsId},</if>
+            <if test="bindCard != null and bindCard != ''">#{bindCard},</if>
+            <if test="includeNumber != null and includeNumber != ''">#{includeNumber},</if>
+            <if test="excludeNumber != null and excludeNumber != ''">#{excludeNumber},</if>
+			<if test="tailNumber != null and tailNumber != ''">#{tailNumber},</if>
+            <if test="phoneStandard != null and phoneStandard != ''">#{phoneStandard},</if>
+            <if test="validStatus != null and validStatus != ''">#{validStatus,typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler},</if>
+            <if test="removeStatus != null and removeStatus != ''">#{removeStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+        </trim>
+	</insert>
+
+
+	<delete id="delete" parameterType="GoodsIndex">
+		delete from GOODS_INDEX
+        <include refid="page_where" />
+	</delete>
+
+	<delete id="deleteByPrimaryKey" parameterType="int">
+		delete from GOODS_INDEX
+		where ID = #{id}
+	</delete>
+
+
+	<update id="updateByPrimaryKey" parameterType="GoodsIndex">
+		update GOODS_INDEX 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="goodsId != null and goodsId != ''">GOODS_ID = #{goodsId},</if>
+			<if test="bindCard != null and bindCard != ''">BIND_CARD = #{bindCard},</if>
+			<if test="includeNumber != null and includeNumber != ''">INCLUDE_NUMBER = #{includeNumber},</if>
+			<if test="excludeNumber != null and excludeNumber != ''">EXCLUDE_NUMBER = #{excludeNumber},</if>
+			<if test="tailNumber != null and tailNumber != ''">TAIL_NUMBER = #{tailNumber},</if>
+			<if test="phoneStandard != null and phoneStandard != ''">PHONE_STANDARD = #{phoneStandard},</if>
+			<if test="validStatus != null and validStatus != ''">VALID_STATUS = #{validStatus,typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler},</if>
+			<if test="removeStatus != null and removeStatus != ''">REMOVE_STATUS = #{removeStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+		</trim>
+		<where>ID = #{id}</where>
+	</update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="GoodsIndex">
+        update GOODS_INDEX
+        <trim prefix="set" suffixOverrides=",">
+            <if test="goodsId != null and goodsId != ''">GOODS_ID = #{goodsId},</if>
+            <if test="bindCard != null and bindCard != ''">BIND_CARD = #{bindCard},</if>
+            <if test="includeNumber != null and includeNumber != ''">INCLUDE_NUMBER = #{includeNumber},</if>
+            <if test="excludeNumber != null and excludeNumber != ''">EXCLUDE_NUMBER = #{excludeNumber},</if>
+			<if test="tailNumber != null and tailNumber != ''">TAIL_NUMBER = #{tailNumber},</if>
+            <if test="phoneStandard != null and phoneStandard != ''">PHONE_STANDARD = #{phoneStandard},</if>
+            <if test="validStatus != null and validStatus != ''">VALID_STATUS = #{validStatus,typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler},</if>
+            <if test="removeStatus != null and removeStatus != ''">REMOVE_STATUS = #{removeStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+        </trim>
+        <include refid="page_where" />
+    </update>
+
+
+    <select id="selectAll" resultMap="goodsIndexResultMap">
+        select <include refid="table_columns" />
+        from GOODS_INDEX
+    </select>
+
+    <select id="select" resultMap="goodsIndexResultMap">
+        select <include refid="table_columns" />
+        from GOODS_INDEX
+        <include refid="page_where" />
+	</select>
+
+    <select id="selectCount" resultType="int" >
+        select count(ID) from GOODS_INDEX
+        <include refid="page_where" />
+    </select>
+
+
+    <select id="selectByPrimaryKey" resultMap="goodsIndexResultMap" parameterType="int" >
+		select <include refid="table_columns" />
+		from GOODS_INDEX
+		where ID = #{id}
+	</select>
+	
+	<!-- 其他自定义SQL -->
+
+
+</mapper>

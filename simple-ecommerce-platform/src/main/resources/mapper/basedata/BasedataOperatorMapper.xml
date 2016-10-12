@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.melody.unicall.platform.dal.basedata.BasedataOperatorMapper">
+	<resultMap type="BasedataOperator" id="basedataOperatorResultMap">
+		<result property="id" column="ID" />
+		<result property="operatorName" column="OPERATOR_NAME" />
+		<result property="countryCode" column="COUNTRY_CODE" />
+		<result property="contactName" column="CONTACT_NAME" />
+		<result property="contactPhone" column="CONTACT_PHONE" />
+		<result property="operatorDesc" column="OPERATOR_DESC" />
+		<result property="operatorLogo" column="OPERATOR_LOGO" typeHandler="top.melody.platform.common.repository.ImagesHandler"/>
+		<result property="operatorLevel" column="OPERATOR_LEVEL" />
+		<result property="remark1" column="REMARK1" />
+		<result property="remark2" column="REMARK2" />
+		<result property="remark3" column="REMARK3" />
+		<result property="seqKey" column="SEQ_KEY" />
+		<result property="validStatus" column="VALID_STATUS" typeHandler="top.melody.platform.common.repository.ValidStatusTypeHandler" />
+		<result property="createTime" column="CREATE_TIME" />
+		<result property="updateTime" column="UPDATE_TIME" />
+	</resultMap>
+	
+	<sql id="table_columns">
+		ID,
+		OPERATOR_NAME,
+		COUNTRY_CODE,
+		CONTACT_NAME,
+		CONTACT_PHONE,
+		OPERATOR_DESC,
+		OPERATOR_LOGO,
+		OPERATOR_LEVEL,
+		REMARK1,
+		REMARK2,
+		REMARK3,
+		SEQ_KEY,
+		VALID_STATUS,
+		CREATE_TIME,
+		UPDATE_TIME
+    </sql>
+	<sql id="entity_properties">
+		#{id},
+		#{operatorName},
+		#{countryCode},
+		#{contactName},
+		#{contactPhone},
+		#{operatorDesc},
+		#{operatorLogo,typeHandler=top.icoding.platform.common.repository.ImagesHandler},
+		#{operatorLevel},
+		#{remark1},
+		#{remark2},
+		#{remark3},
+		#{seqKey},
+		#{validStatus, typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler},
+		#{createTime},
+		#{updateTime}
+	</sql>
+
+    <!-- 使用like用法：columnName like concat('%',#columnName#,'%') -->
+    <sql id="page_where">
+        <trim prefix="where" prefixOverrides="and | or ">
+            <if test="operatorName != null and operatorName != ''">and OPERATOR_NAME = #{operatorName}</if>
+            <if test="countryCode != null and countryCode != ''">and COUNTRY_CODE = #{countryCode}</if>
+            <if test="contactName != null and contactName != ''">and CONTACT_NAME = #{contactName}</if>
+            <if test="contactPhone != null and contactPhone != ''">and CONTACT_PHONE = #{contactPhone}</if>
+            <if test="operatorDesc != null and operatorDesc != ''">and OPERATOR_DESC = #{operatorDesc}</if>
+            <if test="operatorLogo != null and operatorLogo != ''">and OPERATOR_LOGO = #{operatorLogo,typeHandler=top.icoding.platform.common.repository.ImagesHandler}</if>
+            <if test="operatorLevel != null and operatorLevel != ''">and OPERATOR_LEVEL = #{operatorLevel}</if>
+            <if test="remark1 != null and remark1 != ''">and REMARK1 = #{remark1}</if>
+            <if test="remark2 != null and remark2 != ''">and REMARK2 = #{remark2}</if>
+            <if test="remark3 != null and remark3 != ''">and REMARK3 = #{remark3}</if>
+            <if test="seqKey != null and seqKey != ''">and SEQ_KEY = #{seqKey}</if>
+            <if test="validStatus != null and validStatus != ''">and VALID_STATUS = #{validStatus, typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler}</if>
+            <if test="createTime != null and createTime != ''">and CREATE_TIME = #{createTime}</if>
+            <if test="updateTime != null and updateTime != ''">and UPDATE_TIME = #{updateTime}</if>
+        </trim>
+    </sql>
+
+
+	<!-- 适用于主键自增类型 -->
+	<insert id="insert" parameterType="BasedataOperator" useGeneratedKeys="true" keyProperty="id">
+		insert into BASEDATA_OPERATOR( <include refid="table_columns" /> ) 
+		values ( <include refid="entity_properties" /> )
+	</insert>
+
+    <insert id="insertSelective" parameterType="BasedataOperator">
+        insert into BASEDATA_OPERATOR
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="operatorName != null and operatorName != ''">OPERATOR_NAME,</if>
+            <if test="countryCode != null and countryCode != ''">COUNTRY_CODE,</if>
+            <if test="contactName != null and contactName != ''">CONTACT_NAME,</if>
+            <if test="contactPhone != null and contactPhone != ''">CONTACT_PHONE,</if>
+            <if test="operatorDesc != null and operatorDesc != ''">OPERATOR_DESC,</if>
+            <if test="operatorLogo != null and operatorLogo != ''">OPERATOR_LOGO,</if>
+            <if test="operatorLevel != null and operatorLevel != ''">OPERATOR_LEVEL,</if>
+            <if test="remark1 != null and remark1 != ''">REMARK1,</if>
+            <if test="remark2 != null and remark2 != ''">REMARK2,</if>
+            <if test="remark3 != null and remark3 != ''">REMARK3,</if>
+            <if test="seqKey != null and seqKey != ''">SEQ_KEY,</if>
+            <if test="validStatus != null and validStatus != ''">VALID_STATUS,</if>
+            <if test="createTime != null and createTime != ''">CREATE_TIME,</if>
+            <if test="updateTime != null and updateTime != ''">UPDATE_TIME,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="operatorName != null and operatorName != ''">#{operatorName},</if>
+            <if test="countryCode != null and countryCode != ''">#{countryCode},</if>
+            <if test="contactName != null and contactName != ''">#{contactName},</if>
+            <if test="contactPhone != null and contactPhone != ''">#{contactPhone},</if>
+            <if test="operatorDesc != null and operatorDesc != ''">#{operatorDesc},</if>
+            <if test="operatorLogo != null and operatorLogo != ''">#{operatorLogo,typeHandler=top.icoding.platform.common.repository.ImagesHandler},</if>
+            <if test="operatorLevel != null and operatorLevel != ''">#{operatorLevel},</if>
+            <if test="remark1 != null and remark1 != ''">#{remark1},</if>
+            <if test="remark2 != null and remark2 != ''">#{remark2},</if>
+            <if test="remark3 != null and remark3 != ''">#{remark3},</if>
+            <if test="seqKey != null and seqKey != ''">#{seqKey},</if>
+            <if test="validStatus != null and validStatus != ''">#{validStatus, typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler},</if>
+            <if test="createTime != null and createTime != ''">#{createTime},</if>
+            <if test="updateTime != null and updateTime != ''">#{updateTime},</if>
+        </trim>
+	</insert>
+
+
+	<delete id="delete" parameterType="BasedataOperator">
+		delete from BASEDATA_OPERATOR
+        <include refid="page_where" />
+	</delete>
+
+	<delete id="deleteByPrimaryKey" parameterType="int">
+		delete from BASEDATA_OPERATOR
+		where ID = #{id}
+	</delete>
+
+
+	<update id="updateByPrimaryKey" parameterType="BasedataOperator">
+		update BASEDATA_OPERATOR 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="operatorName != null and operatorName != ''">OPERATOR_NAME = #{operatorName},</if>
+			<if test="countryCode != null and countryCode != ''">COUNTRY_CODE = #{countryCode},</if>
+			<if test="contactName != null and contactName != ''">CONTACT_NAME = #{contactName},</if>
+			<if test="contactPhone != null and contactPhone != ''">CONTACT_PHONE = #{contactPhone},</if>
+			<if test="operatorDesc != null and operatorDesc != ''">OPERATOR_DESC = #{operatorDesc},</if>
+			<if test="operatorLogo != null and operatorLogo != ''">OPERATOR_LOGO = #{operatorLogo,typeHandler=top.icoding.platform.common.repository.ImagesHandler},</if>
+			<if test="operatorLevel != null and operatorLevel != ''">OPERATOR_LEVEL = #{operatorLevel},</if>
+			<if test="remark1 != null and remark1 != ''">REMARK1 = #{remark1},</if>
+			<if test="remark2 != null and remark2 != ''">REMARK2 = #{remark2},</if>
+			<if test="remark3 != null and remark3 != ''">REMARK3 = #{remark3},</if>
+			<if test="seqKey != null and seqKey != ''">SEQ_KEY = #{seqKey},</if>
+			<if test="validStatus != null and validStatus != ''">VALID_STATUS = #{validStatus, typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler},</if>
+			<if test="createTime != null and createTime != ''">CREATE_TIME = #{createTime},</if>
+			<if test="updateTime != null and updateTime != ''">UPDATE_TIME = #{updateTime},</if>
+		</trim>
+		<where>ID = #{id}</where>
+	</update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="BasedataOperator">
+        update BASEDATA_OPERATOR
+        <trim prefix="set" suffixOverrides=",">
+            <if test="operatorName != null and operatorName != ''">OPERATOR_NAME = #{operatorName},</if>
+            <if test="countryCode != null and countryCode != ''">COUNTRY_CODE = #{countryCode},</if>
+            <if test="contactName != null and contactName != ''">CONTACT_NAME = #{contactName},</if>
+            <if test="contactPhone != null and contactPhone != ''">CONTACT_PHONE = #{contactPhone},</if>
+            <if test="operatorDesc != null and operatorDesc != ''">OPERATOR_DESC = #{operatorDesc},</if>
+            <if test="operatorLogo != null and operatorLogo != ''">OPERATOR_LOGO = #{operatorLogo,typeHandler=top.icoding.platform.common.repository.ImagesHandler},</if>
+            <if test="operatorLevel != null and operatorLevel != ''">OPERATOR_LEVEL = #{operatorLevel},</if>
+            <if test="remark1 != null and remark1 != ''">REMARK1 = #{remark1},</if>
+            <if test="remark2 != null and remark2 != ''">REMARK2 = #{remark2},</if>
+            <if test="remark3 != null and remark3 != ''">REMARK3 = #{remark3},</if>
+            <if test="seqKey != null and seqKey != ''">SEQ_KEY = #{seqKey},</if>
+            <if test="validStatus != null and validStatus != ''">VALID_STATUS = #{validStatus, typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler},</if>
+            <if test="createTime != null and createTime != ''">CREATE_TIME = #{createTime},</if>
+            <if test="updateTime != null and updateTime != ''">UPDATE_TIME = #{updateTime},</if>
+        </trim>
+        <include refid="page_where" />
+    </update>
+
+
+    <select id="selectAll" resultMap="basedataOperatorResultMap">
+        select <include refid="table_columns" />
+        from BASEDATA_OPERATOR
+    </select>
+
+    <select id="select" resultMap="basedataOperatorResultMap">
+        select <include refid="table_columns" />
+        from BASEDATA_OPERATOR
+        <include refid="page_where" />
+	</select>
+
+    <select id="selectCount" resultType="int" >
+        select count(ID) from BASEDATA_OPERATOR
+        <include refid="page_where" />
+    </select>
+
+
+    <select id="selectByPrimaryKey" resultMap="basedataOperatorResultMap" parameterType="int" >
+		select <include refid="table_columns" />
+		from BASEDATA_OPERATOR
+		where ID = #{id}
+	</select>
+	
+	<!-- 其他自定义SQL -->
+
+
+</mapper>

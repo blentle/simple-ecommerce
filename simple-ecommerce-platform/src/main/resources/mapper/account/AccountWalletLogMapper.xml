@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.melody.unicall.platform.dal.account.AccountWalletLogMapper">
+	<resultMap type="AccountWalletLog" id="accountWalletLogResultMap">
+		<result property="id" column="ID" />
+		<result property="walletId" column="WALLET_ID" />
+		<result property="accountId" column="ACCOUNT_ID" />
+		<result property="moneyType" column="MONEY_TYPE" />
+		<result property="logType" column="LOG_TYPE" />
+		<result property="moneyAmount" column="MONEY_AMOUNT" />
+		<result property="depositType" column="DEPOSIT_TYPE" />
+		<result property="provider" column="PROVIDER" />
+		<result property="relationId" column="RELATION_ID" />
+		<result property="remark1" column="REMARK1" />
+		<result property="remark2" column="REMARK2" />
+		<result property="remark3" column="REMARK3" />
+		<result property="updateTime" column="UPDATE_TIME" />
+		<result property="createTime" column="CREATE_TIME" />
+	</resultMap>
+	
+	<sql id="table_columns">
+		ID,
+		WALLET_ID,
+		ACCOUNT_ID,
+		MONEY_TYPE,
+		LOG_TYPE,
+		MONEY_AMOUNT,
+		DEPOSIT_TYPE,
+		PROVIDER,
+		RELATION_ID,
+		REMARK1,
+		REMARK2,
+		REMARK3,
+		UPDATE_TIME,
+		CREATE_TIME
+    </sql>
+	<sql id="entity_properties">
+		#{id},
+		#{walletId},
+		#{accountId},
+		#{moneyType},
+		#{logType},
+		#{moneyAmount},
+		#{depositType},
+		#{provider},
+		#{relationId},
+		#{remark1},
+		#{remark2},
+		#{remark3},
+		#{updateTime},
+		#{createTime}
+	</sql>
+
+    <!-- 使用like用法：columnName like concat('%',#columnName#,'%') -->
+    <sql id="page_where">
+        <trim prefix="where" prefixOverrides="and | or ">
+            <if test="walletId != null and walletId != ''">and WALLET_ID = #{walletId}</if>
+            <if test="accountId != null and accountId != ''">and ACCOUNT_ID = #{accountId}</if>
+            <if test="moneyType != null and moneyType != ''">and MONEY_TYPE = #{moneyType}</if>
+            <if test="logType != null and logType != ''">and LOG_TYPE = #{logType}</if>
+            <if test="moneyAmount != null and moneyAmount != ''">and MONEY_AMOUNT = #{moneyAmount}</if>
+            <if test="depositType != null and depositType != ''">and DEPOSIT_TYPE = #{depositType}</if>
+            <if test="provider != null and provider != ''">and PROVIDER = #{provider}</if>
+            <if test="relationId != null and relationId != ''">and RELATION_ID = #{relationId}</if>
+            <if test="remark1 != null and remark1 != ''">and REMARK1 = #{remark1}</if>
+            <if test="remark2 != null and remark2 != ''">and REMARK2 = #{remark2}</if>
+            <if test="remark3 != null and remark3 != ''">and REMARK3 = #{remark3}</if>
+            <if test="updateTime != null and updateTime != ''">and UPDATE_TIME = #{updateTime}</if>
+            <if test="createTime != null and createTime != ''">and CREATE_TIME = #{createTime}</if>
+        </trim>
+    </sql>
+
+
+	<!-- 适用于主键自增类型 -->
+	<insert id="insert" parameterType="AccountWalletLog" useGeneratedKeys="true" keyProperty="id">
+		insert into ACCOUNT_WALLET_LOG( <include refid="table_columns" /> ) 
+		values ( <include refid="entity_properties" /> )
+	</insert>
+
+    <insert id="insertSelective" parameterType="AccountWalletLog">
+        insert into ACCOUNT_WALLET_LOG
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="walletId != null and walletId != ''">WALLET_ID,</if>
+            <if test="accountId != null and accountId != ''">ACCOUNT_ID,</if>
+            <if test="moneyType != null and moneyType != ''">MONEY_TYPE,</if>
+            <if test="logType != null and logType != ''">LOG_TYPE,</if>
+            <if test="moneyAmount != null and moneyAmount != ''">MONEY_AMOUNT,</if>
+            <if test="depositType != null and depositType != ''">DEPOSIT_TYPE,</if>
+            <if test="provider != null and provider != ''">PROVIDER,</if>
+            <if test="relationId != null and relationId != ''">RELATION_ID,</if>
+            <if test="remark1 != null and remark1 != ''">REMARK1,</if>
+            <if test="remark2 != null and remark2 != ''">REMARK2,</if>
+            <if test="remark3 != null and remark3 != ''">REMARK3,</if>
+            <if test="updateTime != null and updateTime != ''">UPDATE_TIME,</if>
+            <if test="createTime != null and createTime != ''">CREATE_TIME,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="walletId != null and walletId != ''">#{walletId},</if>
+            <if test="accountId != null and accountId != ''">#{accountId},</if>
+            <if test="moneyType != null and moneyType != ''">#{moneyType},</if>
+            <if test="logType != null and logType != ''">#{logType},</if>
+            <if test="moneyAmount != null and moneyAmount != ''">#{moneyAmount},</if>
+            <if test="depositType != null and depositType != ''">#{depositType},</if>
+            <if test="provider != null and provider != ''">#{provider},</if>
+            <if test="relationId != null and relationId != ''">#{relationId},</if>
+            <if test="remark1 != null and remark1 != ''">#{remark1},</if>
+            <if test="remark2 != null and remark2 != ''">#{remark2},</if>
+            <if test="remark3 != null and remark3 != ''">#{remark3},</if>
+            <if test="updateTime != null and updateTime != ''">#{updateTime},</if>
+            <if test="createTime != null and createTime != ''">#{createTime},</if>
+        </trim>
+	</insert>
+
+
+	<delete id="delete" parameterType="AccountWalletLog">
+		delete from ACCOUNT_WALLET_LOG
+        <include refid="page_where" />
+	</delete>
+
+	<delete id="deleteByPrimaryKey" parameterType="String">
+		delete from ACCOUNT_WALLET_LOG
+		where ID = #{id}
+	</delete>
+
+
+	<update id="updateByPrimaryKey" parameterType="AccountWalletLog">
+		update ACCOUNT_WALLET_LOG 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="walletId != null and walletId != ''">WALLET_ID = #{walletId},</if>
+			<if test="accountId != null and accountId != ''">ACCOUNT_ID = #{accountId},</if>
+			<if test="moneyType != null and moneyType != ''">MONEY_TYPE = #{moneyType},</if>
+			<if test="logType != null and logType != ''">LOG_TYPE = #{logType},</if>
+			<if test="moneyAmount != null and moneyAmount != ''">MONEY_AMOUNT = #{moneyAmount},</if>
+			<if test="depositType != null and depositType != ''">DEPOSIT_TYPE = #{depositType},</if>
+			<if test="provider != null and provider != ''">PROVIDER = #{provider},</if>
+			<if test="relationId != null and relationId != ''">RELATION_ID = #{relationId},</if>
+			<if test="remark1 != null and remark1 != ''">REMARK1 = #{remark1},</if>
+			<if test="remark2 != null and remark2 != ''">REMARK2 = #{remark2},</if>
+			<if test="remark3 != null and remark3 != ''">REMARK3 = #{remark3},</if>
+			<if test="updateTime != null and updateTime != ''">UPDATE_TIME = #{updateTime},</if>
+			<if test="createTime != null and createTime != ''">CREATE_TIME = #{createTime},</if>
+		</trim>
+		<where>ID = #{id}</where>
+	</update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="AccountWalletLog">
+        update ACCOUNT_WALLET_LOG
+        <trim prefix="set" suffixOverrides=",">
+            <if test="walletId != null and walletId != ''">WALLET_ID = #{walletId},</if>
+            <if test="accountId != null and accountId != ''">ACCOUNT_ID = #{accountId},</if>
+            <if test="moneyType != null and moneyType != ''">MONEY_TYPE = #{moneyType},</if>
+            <if test="logType != null and logType != ''">LOG_TYPE = #{logType},</if>
+            <if test="moneyAmount != null and moneyAmount != ''">MONEY_AMOUNT = #{moneyAmount},</if>
+            <if test="depositType != null and depositType != ''">DEPOSIT_TYPE = #{depositType},</if>
+            <if test="provider != null and provider != ''">PROVIDER = #{provider},</if>
+            <if test="relationId != null and relationId != ''">RELATION_ID = #{relationId},</if>
+            <if test="remark1 != null and remark1 != ''">REMARK1 = #{remark1},</if>
+            <if test="remark2 != null and remark2 != ''">REMARK2 = #{remark2},</if>
+            <if test="remark3 != null and remark3 != ''">REMARK3 = #{remark3},</if>
+            <if test="updateTime != null and updateTime != ''">UPDATE_TIME = #{updateTime},</if>
+            <if test="createTime != null and createTime != ''">CREATE_TIME = #{createTime},</if>
+        </trim>
+        <include refid="page_where" />
+    </update>
+
+
+    <select id="selectAll" resultMap="accountWalletLogResultMap">
+        select <include refid="table_columns" />
+        from ACCOUNT_WALLET_LOG
+    </select>
+
+    <select id="select" resultMap="accountWalletLogResultMap">
+        select <include refid="table_columns" />
+        from ACCOUNT_WALLET_LOG
+        <include refid="page_where" />
+	</select>
+
+    <select id="selectCount" resultType="int" >
+        select count(ID) from ACCOUNT_WALLET_LOG
+        <include refid="page_where" />
+    </select>
+
+
+    <select id="selectByPrimaryKey" resultMap="accountWalletLogResultMap" parameterType="String" >
+		select <include refid="table_columns" />
+		from ACCOUNT_WALLET_LOG
+		where ID = #{id}
+	</select>
+	
+	<!-- 其他自定义SQL -->
+
+
+</mapper>

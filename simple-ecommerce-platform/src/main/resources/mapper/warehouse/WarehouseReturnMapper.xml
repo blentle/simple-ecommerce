@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.melody.unicall.platform.dal.warehouse.entity.WarehouseReturn">
+	<resultMap type="WarehouseReturn" id="warehouseReturnResultMap">
+		<result property="id" column="ID" />
+		<result property="returnCode" column="RETURN_CODE" />
+		<result property="purchaseCode" column="PURCHASE_CODE" />
+		<result property="returnUser" column="RETURN_USER" />
+		<result property="returnTime" column="RETURN_TIME" />
+		<result property="returnNumber" column="RETURN_NUMBER" />
+		<result property="countryCode" column="COUNTRY_CODE" />
+		<result property="operatorId" column="OPERATOR_ID" />
+		<result property="supplierId" column="SUPPLIER_ID" />
+		<result property="status" column="STATUS" />
+		<result property="memo" column="MEMO" />
+		<result property="remark1" column="REMARK1" />
+		<result property="remark2" column="REMARK2" />
+		<result property="remark3" column="REMARK3" />
+		<result property="validStatus" column="VALID_STATUS" />
+		<result property="removeStatus" column="REMOVE_STATUS" />
+		<result property="createTime" column="CREATE_TIME" />
+		<result property="updateTime" column="UPDATE_TIME" />
+	</resultMap>
+	
+	<sql id="table_columns">
+		ID,
+		RETURN_CODE,
+		PURCHASE_CODE,
+		RETURN_USER,
+		RETURN_TIME,
+		RETURN_NUMBER,
+		COUNTRY_CODE,
+		OPERATOR_ID,
+		SUPPLIER_ID,
+		STATUS,
+		MEMO,
+		REMARK1,
+		REMARK2,
+		REMARK3,
+		VALID_STATUS,
+		REMOVE_STATUS,
+		CREATE_TIME,
+		UPDATE_TIME
+    </sql>
+	<sql id="entity_properties">
+		#{id},
+		#{returnCode},
+		#{purchaseCode},
+		#{returnUser},
+		#{returnTime},
+		#{returnNumber},
+		#{countryCode},
+		#{operatorId},
+		#{supplierId},
+		#{status},
+		#{memo},
+		#{remark1},
+		#{remark2},
+		#{remark3},
+		#{validStatus},
+		#{removeStatus},
+		#{createTime},
+		#{updateTime}
+	</sql>
+
+    <!-- 使用like用法：columnName like concat('%',#columnName#,'%') -->
+    <sql id="page_where">
+        <trim prefix="where" prefixOverrides="and | or ">
+            <if test="returnCode != null and returnCode != ''">and RETURN_CODE = #{returnCode}</if>
+            <if test="purchaseCode != null and purchaseCode != ''">and PURCHASE_CODE = #{purchaseCode}</if>
+            <if test="returnUser != null and returnUser != ''">and RETURN_USER = #{returnUser}</if>
+            <if test="returnTime != null and returnTime != ''">and RETURN_TIME = #{returnTime}</if>
+            <if test="returnNumber != null and returnNumber != ''">and RETURN_NUMBER = #{returnNumber}</if>
+            <if test="countryCode != null and countryCode != ''">and COUNTRY_CODE = #{countryCode}</if>
+            <if test="operatorId != null and operatorId != ''">and OPERATOR_ID = #{operatorId}</if>
+            <if test="supplierId != null and supplierId != ''">and SUPPLIER_ID = #{supplierId}</if>
+            <if test="status != null and status != ''">and STATUS = #{status}</if>
+            <if test="memo != null and memo != ''">and MEMO = #{memo}</if>
+            <if test="remark1 != null and remark1 != ''">and REMARK1 = #{remark1}</if>
+            <if test="remark2 != null and remark2 != ''">and REMARK2 = #{remark2}</if>
+            <if test="remark3 != null and remark3 != ''">and REMARK3 = #{remark3}</if>
+            <if test="validStatus != null and validStatus != ''">and VALID_STATUS = #{validStatus}</if>
+            <if test="removeStatus != null and removeStatus != ''">and REMOVE_STATUS = #{removeStatus}</if>
+            <if test="createTime != null and createTime != ''">and CREATE_TIME = #{createTime}</if>
+            <if test="updateTime != null and updateTime != ''">and UPDATE_TIME = #{updateTime}</if>
+        </trim>
+    </sql>
+
+
+	<!-- 适用于主键自增类型 -->
+	<insert id="insert" parameterType="WarehouseReturn" useGeneratedKeys="true" keyProperty="id">
+		insert into WAREHOUSE_RETURN( <include refid="table_columns" /> ) 
+		values ( <include refid="entity_properties" /> )
+	</insert>
+
+    <insert id="insertSelective" parameterType="WarehouseReturn">
+        insert into WAREHOUSE_RETURN
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="returnCode != null and returnCode != ''">RETURN_CODE,</if>
+            <if test="purchaseCode != null and purchaseCode != ''">PURCHASE_CODE,</if>
+            <if test="returnUser != null and returnUser != ''">RETURN_USER,</if>
+            <if test="returnTime != null and returnTime != ''">RETURN_TIME,</if>
+            <if test="returnNumber != null and returnNumber != ''">RETURN_NUMBER,</if>
+            <if test="countryCode != null and countryCode != ''">COUNTRY_CODE,</if>
+            <if test="operatorId != null and operatorId != ''">OPERATOR_ID,</if>
+            <if test="supplierId != null and supplierId != ''">SUPPLIER_ID,</if>
+            <if test="status != null and status != ''">STATUS,</if>
+            <if test="memo != null and memo != ''">MEMO,</if>
+            <if test="remark1 != null and remark1 != ''">REMARK1,</if>
+            <if test="remark2 != null and remark2 != ''">REMARK2,</if>
+            <if test="remark3 != null and remark3 != ''">REMARK3,</if>
+            <if test="validStatus != null and validStatus != ''">VALID_STATUS,</if>
+            <if test="removeStatus != null and removeStatus != ''">REMOVE_STATUS,</if>
+            <if test="createTime != null and createTime != ''">CREATE_TIME,</if>
+            <if test="updateTime != null and updateTime != ''">UPDATE_TIME,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="returnCode != null and returnCode != ''">#{returnCode},</if>
+            <if test="purchaseCode != null and purchaseCode != ''">#{purchaseCode},</if>
+            <if test="returnUser != null and returnUser != ''">#{returnUser},</if>
+            <if test="returnTime != null and returnTime != ''">#{returnTime},</if>
+            <if test="returnNumber != null and returnNumber != ''">#{returnNumber},</if>
+            <if test="countryCode != null and countryCode != ''">#{countryCode},</if>
+            <if test="operatorId != null and operatorId != ''">#{operatorId},</if>
+            <if test="supplierId != null and supplierId != ''">#{supplierId},</if>
+            <if test="status != null and status != ''">#{status},</if>
+            <if test="memo != null and memo != ''">#{memo},</if>
+            <if test="remark1 != null and remark1 != ''">#{remark1},</if>
+            <if test="remark2 != null and remark2 != ''">#{remark2},</if>
+            <if test="remark3 != null and remark3 != ''">#{remark3},</if>
+            <if test="validStatus != null and validStatus != ''">#{validStatus},</if>
+            <if test="removeStatus != null and removeStatus != ''">#{removeStatus},</if>
+            <if test="createTime != null and createTime != ''">#{createTime},</if>
+            <if test="updateTime != null and updateTime != ''">#{updateTime},</if>
+        </trim>
+	</insert>
+
+
+	<delete id="delete" parameterType="WarehouseReturn">
+		delete from WAREHOUSE_RETURN
+        <include refid="page_where" />
+	</delete>
+
+	<delete id="deleteByPrimaryKey" parameterType="String">
+		delete from WAREHOUSE_RETURN
+		where ID = #{id}
+	</delete>
+
+
+	<update id="updateByPrimaryKey" parameterType="WarehouseReturn">
+		update WAREHOUSE_RETURN 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="returnCode != null and returnCode != ''">RETURN_CODE = #{returnCode},</if>
+			<if test="purchaseCode != null and purchaseCode != ''">PURCHASE_CODE = #{purchaseCode},</if>
+			<if test="returnUser != null and returnUser != ''">RETURN_USER = #{returnUser},</if>
+			<if test="returnTime != null and returnTime != ''">RETURN_TIME = #{returnTime},</if>
+			<if test="returnNumber != null and returnNumber != ''">RETURN_NUMBER = #{returnNumber},</if>
+			<if test="countryCode != null and countryCode != ''">COUNTRY_CODE = #{countryCode},</if>
+			<if test="operatorId != null and operatorId != ''">OPERATOR_ID = #{operatorId},</if>
+			<if test="supplierId != null and supplierId != ''">SUPPLIER_ID = #{supplierId},</if>
+			<if test="status != null and status != ''">STATUS = #{status},</if>
+			<if test="memo != null and memo != ''">MEMO = #{memo},</if>
+			<if test="remark1 != null and remark1 != ''">REMARK1 = #{remark1},</if>
+			<if test="remark2 != null and remark2 != ''">REMARK2 = #{remark2},</if>
+			<if test="remark3 != null and remark3 != ''">REMARK3 = #{remark3},</if>
+			<if test="validStatus != null and validStatus != ''">VALID_STATUS = #{validStatus},</if>
+			<if test="removeStatus != null and removeStatus != ''">REMOVE_STATUS = #{removeStatus},</if>
+			<if test="createTime != null and createTime != ''">CREATE_TIME = #{createTime},</if>
+			<if test="updateTime != null and updateTime != ''">UPDATE_TIME = #{updateTime},</if>
+		</trim>
+		<where>ID = #{id}</where>
+	</update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="WarehouseReturn">
+        update WAREHOUSE_RETURN
+        <trim prefix="set" suffixOverrides=",">
+            <if test="returnCode != null and returnCode != ''">RETURN_CODE = #{returnCode},</if>
+            <if test="purchaseCode != null and purchaseCode != ''">PURCHASE_CODE = #{purchaseCode},</if>
+            <if test="returnUser != null and returnUser != ''">RETURN_USER = #{returnUser},</if>
+            <if test="returnTime != null and returnTime != ''">RETURN_TIME = #{returnTime},</if>
+            <if test="returnNumber != null and returnNumber != ''">RETURN_NUMBER = #{returnNumber},</if>
+            <if test="countryCode != null and countryCode != ''">COUNTRY_CODE = #{countryCode},</if>
+            <if test="operatorId != null and operatorId != ''">OPERATOR_ID = #{operatorId},</if>
+            <if test="supplierId != null and supplierId != ''">SUPPLIER_ID = #{supplierId},</if>
+            <if test="status != null and status != ''">STATUS = #{status},</if>
+            <if test="memo != null and memo != ''">MEMO = #{memo},</if>
+            <if test="remark1 != null and remark1 != ''">REMARK1 = #{remark1},</if>
+            <if test="remark2 != null and remark2 != ''">REMARK2 = #{remark2},</if>
+            <if test="remark3 != null and remark3 != ''">REMARK3 = #{remark3},</if>
+            <if test="validStatus != null and validStatus != ''">VALID_STATUS = #{validStatus},</if>
+            <if test="removeStatus != null and removeStatus != ''">REMOVE_STATUS = #{removeStatus},</if>
+            <if test="createTime != null and createTime != ''">CREATE_TIME = #{createTime},</if>
+            <if test="updateTime != null and updateTime != ''">UPDATE_TIME = #{updateTime},</if>
+        </trim>
+        <include refid="page_where" />
+    </update>
+
+
+    <select id="selectAll" resultMap="warehouseReturnResultMap">
+        select <include refid="table_columns" />
+        from WAREHOUSE_RETURN
+    </select>
+
+    <select id="select" resultMap="warehouseReturnResultMap">
+        select <include refid="table_columns" />
+        from WAREHOUSE_RETURN
+        <include refid="page_where" />
+	</select>
+
+    <select id="selectCount" resultType="int" >
+        select count(ID) from WAREHOUSE_RETURN
+        <include refid="page_where" />
+    </select>
+
+
+    <select id="selectByPrimaryKey" resultMap="warehouseReturnResultMap" parameterType="String" >
+		select <include refid="table_columns" />
+		from WAREHOUSE_RETURN
+		where ID = #{id}
+	</select>
+	
+	<!-- 其他自定义SQL -->
+
+
+</mapper>

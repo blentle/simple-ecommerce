@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.melody.unicall.platform.dal.warehouse.WarehousePurchaseEntryMapper">
+	<resultMap type="WarehousePurchaseEntry" id="warehousePurchaseEntryResultMap">
+		<result property="id" column="ID" />
+		<result property="purchaseCode" column="PURCHASE_CODE" />
+		<result property="applyUser" column="APPLY_USER" />
+		<result property="applyTime" column="APPLY_TIME" />
+		<result property="auditUser" column="AUDIT_USER" />
+		<result property="auditTime" column="AUDIT_TIME" />
+		<result property="purchaseUser" column="PURCHASE_USER" />
+		<result property="purchaseTime" column="PURCHASE_TIME" />
+		<result property="status" column="STATUS" typeHandler="top.melody.platform.common.repository.PurchaseEntryStatusHandler"/>
+		<result property="memo" column="MEMO" />
+		<result property="remark1" column="REMARK1" />
+		<result property="remark2" column="REMARK2" />
+		<result property="remark3" column="REMARK3" />
+		<result property="purchaseInvoice" column="PURCHASE_INVOICE" />
+		<result property="validStatus" column="VALID_STATUS" typeHandler="top.melody.platform.common.repository.ValidStatusTypeHandler" />
+		<result property="removeStatus" column="REMOVE_STATUS" typeHandler="top.melody.platform.common.repository.ActStatusTypeHandler" />
+		<result property="createTime" column="CREATE_TIME" />
+		<result property="updateTime" column="UPDATE_TIME" />
+	</resultMap>
+	
+	<sql id="table_columns">
+		ID,
+		PURCHASE_CODE,
+		APPLY_USER,
+		APPLY_TIME,
+		AUDIT_USER,
+		AUDIT_TIME,
+		PURCHASE_USER,
+		PURCHASE_TIME,
+		STATUS,
+		MEMO,
+		REMARK1,
+		REMARK2,
+		REMARK3,
+		PURCHASE_INVOICE,
+		VALID_STATUS,
+		REMOVE_STATUS,
+		CREATE_TIME,
+		UPDATE_TIME
+    </sql>
+	<sql id="entity_properties">
+		#{id},
+		#{purchaseCode},
+		#{applyUser},
+		#{applyTime},
+		#{auditUser},
+		#{auditTime},
+		#{purchaseUser},
+		#{purchaseTime},
+		#{status, typeHandler=top.icoding.platform.common.repository.PurchaseEntryStatusHandler},
+		#{memo},
+		#{remark1},
+		#{remark2},
+		#{remark3},
+		#{purchaseInvoice},
+		#{validStatus, typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler},
+		#{removeStatus, typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},
+		#{createTime},
+		#{updateTime}
+	</sql>
+
+    <!-- 使用like用法：columnName like concat('%',#columnName#,'%') -->
+    <sql id="page_where">
+        <trim prefix="where" prefixOverrides="and | or ">
+            <if test="purchaseCode != null and purchaseCode != ''">and PURCHASE_CODE = #{purchaseCode}</if>
+            <if test="applyUser != null and applyUser != ''">and APPLY_USER = #{applyUser}</if>
+            <if test="applyTime != null and applyTime != ''">and APPLY_TIME = #{applyTime}</if>
+            <if test="auditUser != null and auditUser != ''">and AUDIT_USER = #{auditUser}</if>
+            <if test="auditTime != null and auditTime != ''">and AUDIT_TIME = #{auditTime}</if>
+            <if test="purchaseUser != null and purchaseUser != ''">and PURCHASE_USER = #{purchaseUser}</if>
+            <if test="purchaseTime != null and purchaseTime != ''">and PURCHASE_TIME = #{purchaseTime}</if>
+            <if test="status != null and status != ''">and STATUS = #{status, typeHandler=top.icoding.platform.common.repository.PurchaseEntryStatusHandler}</if>
+            <if test="memo != null and memo != ''">and MEMO = #{memo}</if>
+            <if test="remark1 != null and remark1 != ''">and REMARK1 = #{remark1}</if>
+            <if test="remark2 != null and remark2 != ''">and REMARK2 = #{remark2}</if>
+            <if test="remark3 != null and remark3 != ''">and REMARK3 = #{remark3}</if>
+            <if test="purchaseInvoice != null and purchaseInvoice != ''">and PURCHASE_INVOICE = #{purchaseInvoice}</if>
+            <if test="validStatus != null and validStatus != ''">and VALID_STATUS = #{validStatus, typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler}</if>
+            <if test="removeStatus != null and removeStatus != ''">and REMOVE_STATUS = #{removeStatus, typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler}</if>
+            <if test="createTime != null and createTime != ''">and CREATE_TIME = #{createTime}</if>
+            <if test="updateTime != null and updateTime != ''">and UPDATE_TIME = #{updateTime}</if>
+        </trim>
+    </sql>
+    
+    <sql id="page_where_map">
+        <trim prefix="where" prefixOverrides="and | or ">
+            <if test="purchaseCode != null and purchaseCode != ''">and PURCHASE_CODE = #{purchaseCode}</if>
+            <if test="applyUser != null and applyUser != ''">and APPLY_USER = #{applyUser}</if>
+            <if test="startApplyTime != null and startApplyTime != ''">and APPLY_TIME >= #{startApplyTime}</if>
+            <if test="endApplyTime != null and endApplyTime != ''"><![CDATA[ and APPLY_TIME <= #{endApplyTime}]]></if>
+            <if test="auditUser != null and auditUser != ''">and AUDIT_USER = #{auditUser}</if>
+            <if test="auditTime != null and auditTime != ''">and AUDIT_TIME = #{auditTime}</if>
+            <if test="purchaseUser != null and purchaseUser != ''">and PURCHASE_USER = #{purchaseUser}</if>
+            <if test="purchaseTime != null and purchaseTime != ''">and PURCHASE_TIME = #{purchaseTime}</if>
+            <if test="status != null and status != ''">and STATUS = #{status, typeHandler=top.icoding.platform.common.repository.PurchaseEntryStatusHandler}</if>
+            <if test="memo != null and memo != ''">and MEMO = #{memo}</if>
+            <if test="remark1 != null and remark1 != ''">and REMARK1 = #{remark1}</if>
+            <if test="remark2 != null and remark2 != ''">and REMARK2 = #{remark2}</if>
+            <if test="remark3 != null and remark3 != ''">and REMARK3 = #{remark3}</if>
+            <if test="purchaseInvoice != null and purchaseInvoice != ''">and PURCHASE_INVOICE = #{purchaseInvoice}</if>
+            <if test="validStatus != null and validStatus != ''">and VALID_STATUS = #{validStatus, typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler}</if>
+            <if test="removeStatus != null and removeStatus != ''">and REMOVE_STATUS = #{removeStatus, typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler}</if>
+            <if test="createTime != null and createTime != ''">and CREATE_TIME = #{createTime}</if>
+            <if test="updateTime != null and updateTime != ''">and UPDATE_TIME = #{updateTime}</if>
+        </trim>
+    </sql>
+    
+	<!-- 适用于主键自增类型 -->
+	<insert id="insert" parameterType="WarehousePurchaseEntry" useGeneratedKeys="true" keyProperty="id">
+		insert into WAREHOUSE_PURCHASE_ENTRY( <include refid="table_columns" /> ) 
+		values ( <include refid="entity_properties" /> )
+	</insert>
+
+    <insert id="insertSelective" parameterType="WarehousePurchaseEntry">
+        insert into WAREHOUSE_PURCHASE_ENTRY
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="purchaseCode != null and purchaseCode != ''">PURCHASE_CODE,</if>
+            <if test="applyUser != null and applyUser != ''">APPLY_USER,</if>
+            <if test="applyTime != null and applyTime != ''">APPLY_TIME,</if>
+            <if test="auditUser != null and auditUser != ''">AUDIT_USER,</if>
+            <if test="auditTime != null and auditTime != ''">AUDIT_TIME,</if>
+            <if test="purchaseUser != null and purchaseUser != ''">PURCHASE_USER,</if>
+            <if test="purchaseTime != null and purchaseTime != ''">PURCHASE_TIME,</if>
+            <if test="status != null and status != ''">STATUS,</if>
+            <if test="memo != null and memo != ''">MEMO,</if>
+            <if test="remark1 != null and remark1 != ''">REMARK1,</if>
+            <if test="remark2 != null and remark2 != ''">REMARK2,</if>
+            <if test="remark3 != null and remark3 != ''">REMARK3,</if>
+            <if test="purchaseInvoice != null and purchaseInvoice != ''">PURCHASE_INVOICE,</if>
+            <if test="validStatus != null and validStatus != ''">VALID_STATUS,</if>
+            <if test="removeStatus != null and removeStatus != ''">REMOVE_STATUS,</if>
+            <if test="createTime != null and createTime != ''">CREATE_TIME,</if>
+            <if test="updateTime != null and updateTime != ''">UPDATE_TIME,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="purchaseCode != null and purchaseCode != ''">#{purchaseCode},</if>
+            <if test="applyUser != null and applyUser != ''">#{applyUser},</if>
+            <if test="applyTime != null and applyTime != ''">#{applyTime},</if>
+            <if test="auditUser != null and auditUser != ''">#{auditUser},</if>
+            <if test="auditTime != null and auditTime != ''">#{auditTime},</if>
+            <if test="purchaseUser != null and purchaseUser != ''">#{purchaseUser},</if>
+            <if test="purchaseTime != null and purchaseTime != ''">#{purchaseTime},</if>
+            <if test="status != null and status != ''">#{status, typeHandler=top.icoding.platform.common.repository.PurchaseEntryStatusHandler},</if>
+            <if test="memo != null and memo != ''">#{memo},</if>
+            <if test="remark1 != null and remark1 != ''">#{remark1},</if>
+            <if test="remark2 != null and remark2 != ''">#{remark2},</if>
+            <if test="remark3 != null and remark3 != ''">#{remark3},</if>
+            <if test="purchaseInvoice != null and purchaseInvoice != ''">#{purchaseInvoice},</if>
+            <if test="validStatus != null and validStatus != ''">#{validStatus, typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler},</if>
+            <if test="removeStatus != null and removeStatus != ''">#{removeStatus, typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+            <if test="createTime != null and createTime != ''">#{createTime},</if>
+            <if test="updateTime != null and updateTime != ''">#{updateTime},</if>
+        </trim>
+	</insert>
+
+
+	<delete id="delete" parameterType="WarehousePurchaseEntry">
+		delete from WAREHOUSE_PURCHASE_ENTRY
+        <include refid="page_where" />
+	</delete>
+
+	<delete id="deleteByPrimaryKey" parameterType="int">
+		delete from WAREHOUSE_PURCHASE_ENTRY
+		where ID = #{id}
+	</delete>
+
+
+	<update id="updateByPrimaryKey" parameterType="WarehousePurchaseEntry">
+		update WAREHOUSE_PURCHASE_ENTRY 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="purchaseCode != null and purchaseCode != ''">PURCHASE_CODE = #{purchaseCode},</if>
+			<if test="applyUser != null and applyUser != ''">APPLY_USER = #{applyUser},</if>
+			<if test="applyTime != null and applyTime != ''">APPLY_TIME = #{applyTime},</if>
+			<if test="auditUser != null and auditUser != ''">AUDIT_USER = #{auditUser},</if>
+			<if test="auditTime != null and auditTime != ''">AUDIT_TIME = #{auditTime},</if>
+			<if test="purchaseUser != null and purchaseUser != ''">PURCHASE_USER = #{purchaseUser},</if>
+			<if test="purchaseTime != null and purchaseTime != ''">PURCHASE_TIME = #{purchaseTime},</if>
+			<if test="status != null and status != ''">STATUS = #{status, typeHandler=top.icoding.platform.common.repository.PurchaseEntryStatusHandler},</if>
+			<if test="memo != null and memo != ''">MEMO = #{memo},</if>
+			<if test="remark1 != null and remark1 != ''">REMARK1 = #{remark1},</if>
+			<if test="remark2 != null and remark2 != ''">REMARK2 = #{remark2},</if>
+			<if test="remark3 != null and remark3 != ''">REMARK3 = #{remark3},</if>
+			<if test="purchaseInvoice != null and purchaseInvoice != ''">PURCHASE_INVOICE = #{purchaseInvoice},</if>
+			<if test="validStatus != null and validStatus != ''">VALID_STATUS = #{validStatus, typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler},</if>
+			<if test="removeStatus != null and removeStatus != ''">REMOVE_STATUS = #{removeStatus, typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+			<if test="createTime != null and createTime != ''">CREATE_TIME = #{createTime},</if>
+			<if test="updateTime != null and updateTime != ''">UPDATE_TIME = #{updateTime},</if>
+		</trim>
+		<where>ID = #{id}</where>
+	</update>
+
+	<update id="updateByPurchaseCode" parameterType="WarehousePurchaseEntry">
+		update WAREHOUSE_PURCHASE_ENTRY 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="purchaseCode != null and purchaseCode != ''">PURCHASE_CODE = #{purchaseCode},</if>
+			<if test="applyUser != null and applyUser != ''">APPLY_USER = #{applyUser},</if>
+			<if test="applyTime != null and applyTime != ''">APPLY_TIME = #{applyTime},</if>
+			<if test="auditUser != null and auditUser != ''">AUDIT_USER = #{auditUser},</if>
+			<if test="auditTime != null and auditTime != ''">AUDIT_TIME = #{auditTime},</if>
+			<if test="purchaseUser != null and purchaseUser != ''">PURCHASE_USER = #{purchaseUser},</if>
+			<if test="purchaseTime != null and purchaseTime != ''">PURCHASE_TIME = #{purchaseTime},</if>
+			<if test="status != null and status != ''">STATUS = #{status, typeHandler=top.icoding.platform.common.repository.PurchaseEntryStatusHandler},</if>
+			<if test="memo != null and memo != ''">MEMO = #{memo},</if>
+			<if test="remark1 != null and remark1 != ''">REMARK1 = #{remark1},</if>
+			<if test="remark2 != null and remark2 != ''">REMARK2 = #{remark2},</if>
+			<if test="remark3 != null and remark3 != ''">REMARK3 = #{remark3},</if>
+			<if test="purchaseInvoice != null and purchaseInvoice != ''">PURCHASE_INVOICE = #{purchaseInvoice},</if>
+			<if test="validStatus != null and validStatus != ''">VALID_STATUS = #{validStatus, typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler},</if>
+			<if test="removeStatus != null and removeStatus != ''">REMOVE_STATUS = #{removeStatus, typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+			<if test="createTime != null and createTime != ''">CREATE_TIME = #{createTime},</if>
+			<if test="updateTime != null and updateTime != ''">UPDATE_TIME = #{updateTime},</if>
+		</trim>
+		<where>PURCHASE_CODE = #{purchaseCode}</where>
+	</update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="WarehousePurchaseEntry">
+        update WAREHOUSE_PURCHASE_ENTRY
+        <trim prefix="set" suffixOverrides=",">
+            <if test="purchaseCode != null and purchaseCode != ''">PURCHASE_CODE = #{purchaseCode},</if>
+            <if test="applyUser != null and applyUser != ''">APPLY_USER = #{applyUser},</if>
+            <if test="applyTime != null and applyTime != ''">APPLY_TIME = #{applyTime},</if>
+            <if test="auditUser != null and auditUser != ''">AUDIT_USER = #{auditUser},</if>
+            <if test="auditTime != null and auditTime != ''">AUDIT_TIME = #{auditTime},</if>
+            <if test="purchaseUser != null and purchaseUser != ''">PURCHASE_USER = #{purchaseUser},</if>
+            <if test="purchaseTime != null and purchaseTime != ''">PURCHASE_TIME = #{purchaseTime},</if>
+            <if test="status != null and status != ''">STATUS = #{status, typeHandler=top.icoding.platform.common.repository.PurchaseEntryStatusHandler},</if>
+            <if test="memo != null and memo != ''">MEMO = #{memo},</if>
+            <if test="remark1 != null and remark1 != ''">REMARK1 = #{remark1},</if>
+            <if test="remark2 != null and remark2 != ''">REMARK2 = #{remark2},</if>
+            <if test="remark3 != null and remark3 != ''">REMARK3 = #{remark3},</if>
+            <if test="purchaseInvoice != null and purchaseInvoice != ''">PURCHASE_INVOICE = #{purchaseInvoice},</if>
+            <if test="validStatus != null and validStatus != ''">VALID_STATUS = #{validStatus, typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler},</if>
+            <if test="removeStatus != null and removeStatus != ''">REMOVE_STATUS = #{removeStatus, typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+            <if test="createTime != null and createTime != ''">CREATE_TIME = #{createTime},</if>
+            <if test="updateTime != null and updateTime != ''">UPDATE_TIME = #{updateTime},</if>
+        </trim>
+        <include refid="page_where" />
+    </update>
+
+
+    <select id="selectAll" resultMap="warehousePurchaseEntryResultMap">
+        select <include refid="table_columns" />
+        from WAREHOUSE_PURCHASE_ENTRY
+    </select>
+
+    <select id="select" resultMap="warehousePurchaseEntryResultMap">
+        select <include refid="table_columns" />
+        from WAREHOUSE_PURCHASE_ENTRY
+        <include refid="page_where" />
+	</select>
+    <select id="queryPurchaseEntryList" parameterType="hashmap" resultMap="warehousePurchaseEntryResultMap">
+        SELECT <include refid="table_columns" />
+        FROM WAREHOUSE_PURCHASE_ENTRY
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            <if test="purchaseCode != null and purchaseCode != ''">AND PURCHASE_CODE = #{purchaseCode}</if>
+            <if test="applyUser != null and applyUser != ''">AND APPLY_USER = #{applyUser}</if>
+            <if test="applyTime != null">AND APPLY_TIME = #{applyTime}</if>
+            <if test="auditUser != null and auditUser != ''">AND AUDIT_USER = #{auditUser}</if>
+            <if test="auditTime != null and auditTime != ''">AND AUDIT_TIME = #{auditTime}</if>
+            <if test="purchaseUser != null and purchaseUser != ''">AND PURCHASE_USER = #{purchaseUser}</if>
+            <if test="startPurchaseTime != null">AND PURCHASE_TIME &gt;= #{startPurchaseTime}</if>
+            <if test="endPurchaseTime != null">AND PURCHASE_TIME &lt; #{endPurchaseTime}</if>
+            <if test="status != null">AND STATUS = #{status, typeHandler=top.icoding.platform.common.repository.PurchaseEntryStatusHandler}</if>
+            <if test="memo != null and memo != ''">AND MEMO = #{memo}</if>
+            <if test="remark1 != null and remark1 != ''">AND REMARK1 = #{remark1}</if>
+            <if test="remark2 != null and remark2 != ''">AND REMARK2 = #{remark2}</if>
+            <if test="remark3 != null and remark3 != ''">AND REMARK3 = #{remark3}</if>
+            <if test="purchaseInvoice != null and purchaseInvoice != ''">AND PURCHASE_INVOICE = #{purchaseInvoice}</if>
+            <if test="validStatus != null">AND VALID_STATUS = #{validStatus, typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler}</if>
+            <if test="removeStatus != null">AND REMOVE_STATUS = #{removeStatus, typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler}</if>
+        </trim>
+        <include refid="update_desc"/>
+    </select>
+	
+	<select id="selectByParam" parameterType="Map" resultMap="warehousePurchaseEntryResultMap">
+        select <include refid="table_columns" />
+        from WAREHOUSE_PURCHASE_ENTRY
+        <include refid="page_where_map" />
+	</select>
+
+    <select id="selectCount" resultType="int" >
+        select count(ID) from WAREHOUSE_PURCHASE_ENTRY
+        <include refid="page_where" />
+    </select>
+
+
+    <select id="selectByPrimaryKey" resultMap="warehousePurchaseEntryResultMap" parameterType="int" >
+		select <include refid="table_columns" />
+		from WAREHOUSE_PURCHASE_ENTRY
+		where ID = #{id}
+	</select>
+	
+	<!-- 其他自定义SQL -->
+    <sql id="update_desc" >
+        ORDER BY UPDATE_TIME DESC
+    </sql>
+
+</mapper>

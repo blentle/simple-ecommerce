@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.melody.unicall.platform.dal.goods.GoodsMapper">
+	<resultMap type="Goods" id="goodsResultMap">
+		<result property="id" column="ID" />
+		<result property="entryDetailId" column="ENTRY_DETAIL_ID" />
+		<result property="countryCode" column="COUNTRY_CODE" />
+		<result property="operatorId" column="OPERATOR_ID" />
+		<result property="storeId" column="STORE_ID" />
+		<result property="goodsName" column="GOODS_NAME" />
+		<result property="phone" column="PHONE" />
+		<result property="cardNo" column="CARD_NO" />
+		<result property="packagesId" column="PACKAGES_ID" />
+		<result property="goodsType" column="GOODS_TYPE" typeHandler="top.melody.platform.common.repository.GoodsTypeHandler"/>
+		<result property="bindCard" column="BIND_CARD" />
+		<result property="bindPackages" column="BIND_PACKAGES" />
+		<result property="prettyNumber" column="PRETTY_NUMBER" typeHandler="top.melody.platform.common.repository.LiangNumberTypeHandler"/>
+		<result property="prettyPrice" column="PRETTY_PRICE" />
+		<result property="goodsPrice" column="GOODS_PRICE" />
+		<result property="status" column="STATUS" typeHandler="top.melody.platform.common.repository.GoodsStatusHandler"/>
+		<result property="storage" column="STORAGE" />
+		<result property="sequenceKey" column="SEQUENCE_KEY" />
+		<result property="remark1" column="REMARK1" />
+		<result property="remark2" column="REMARK2" />
+		<result property="remark3" column="REMARK3" />
+		<result property="validStatus" column="VALID_STATUS" typeHandler="top.melody.platform.common.repository.ValidStatusTypeHandler"/>
+		<result property="removeStatus" column="REMOVE_STATUS" typeHandler="top.melody.platform.common.repository.ActStatusTypeHandler"/>
+		<result property="createTime" column="CREATE_TIME" />
+		<result property="updateTime" column="UPDATE_TIME" />
+	</resultMap>
+	
+	<sql id="table_columns">
+		ID,
+		ENTRY_DETAIL_ID,
+		COUNTRY_CODE,
+		OPERATOR_ID,
+		STORE_ID,
+		GOODS_NAME,
+		PHONE,
+		CARD_NO,
+		PACKAGES_ID,
+		GOODS_TYPE,
+		BIND_CARD,
+		BIND_PACKAGES,
+		PRETTY_NUMBER,
+		PRETTY_PRICE,
+		GOODS_PRICE,
+		STATUS,
+		STORAGE,
+		SEQUENCE_KEY,
+		REMARK1,
+		REMARK2,
+		REMARK3,
+		VALID_STATUS,
+		REMOVE_STATUS,
+		CREATE_TIME,
+		UPDATE_TIME
+    </sql>
+	<sql id="entity_properties">
+		#{id},
+		#{entryDetailId},
+		#{countryCode},
+		#{operatorId},
+		#{storeId},
+		#{goodsName},
+		#{phone},
+		#{cardNo},
+		#{packagesId},
+		#{goodsType,typeHandler=top.icoding.platform.common.repository.GoodsTypeHandler},
+		#{bindCard},
+		#{bindPackages},
+		#{prettyNumber,typeHandler=top.icoding.platform.common.repository.LiangNumberTypeHandler},
+		#{prettyPrice},
+		#{goodsPrice},
+		#{status,typeHandler=top.icoding.platform.common.repository.GoodsStatusHandler},
+		#{storage},
+		#{sequenceKey},
+		#{remark1},
+		#{remark2},
+		#{remark3},
+		#{validStatus,typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler},
+		#{removeStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},
+		#{createTime},
+		#{updateTime}
+	</sql>
+
+    <!-- 使用like用法：columnName like concat('%',#columnName#,'%') -->
+    <sql id="page_where">
+        <trim prefix="where" prefixOverrides="and | or ">
+            <if test="entryDetailId != null and entryDetailId != ''">and ENTRY_DETAIL_ID = #{entryDetailId}</if>
+            <if test="countryCode != null and countryCode != ''">and COUNTRY_CODE = #{countryCode}</if>
+            <if test="operatorId != null and operatorId != ''">and OPERATOR_ID = #{operatorId}</if>
+            <if test="storeId != null and storeId != ''">and STORE_ID = #{storeId}</if>
+            <if test="goodsName != null and goodsName != ''">and GOODS_NAME = #{goodsName}</if>
+            <if test="phone != null and phone != ''">and PHONE = #{phone}</if>
+            <if test="cardNo != null and cardNo != ''">and CARD_NO = #{cardNo}</if>
+            <if test="packagesId != null and packagesId != ''">and PACKAGES_ID = #{packagesId}</if>
+            <if test="goodsType != null and goodsType != ''">and GOODS_TYPE = #{goodsType,typeHandler=top.icoding.platform.common.repository.GoodsTypeHandler}</if>
+            <if test="bindCard != null and bindCard != ''">and BIND_CARD = #{bindCard}</if>
+            <if test="bindPackages != null and bindPackages != ''">and BIND_PACKAGES = #{bindPackages}</if>
+            <if test="prettyNumber != null and prettyNumber != ''">and PRETTY_NUMBER = #{prettyNumber,typeHandler=top.icoding.platform.common.repository.LiangNumberTypeHandler}</if>
+            <if test="prettyPrice != null and prettyPrice != ''">and PRETTY_PRICE = #{prettyPrice}</if>
+            <if test="goodsPrice != null and goodsPrice != ''">and GOODS_PRICE = #{goodsPrice}</if>
+            <if test="status != null and status != ''">and STATUS = #{status,typeHandler=top.icoding.platform.common.repository.GoodsStatusHandler}</if>
+			<if test="storage != null and storage != ''">and STORAGE = #{storage}</if>
+			<if test="sequenceKey != null and sequenceKey != ''">and SEQUENCE_KEY = #{sequenceKey}</if>
+            <if test="remark1 != null and remark1 != ''">and REMARK1 = #{remark1}</if>
+            <if test="remark2 != null and remark2 != ''">and REMARK2 = #{remark2}</if>
+            <if test="remark3 != null and remark3 != ''">and REMARK3 = #{remark3}</if>
+            <if test="validStatus != null and validStatus != ''">and VALID_STATUS = #{validStatus,typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler}</if>
+            <if test="removeStatus != null and removeStatus != ''">and REMOVE_STATUS = #{removeStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler}</if>
+            <if test="createTime != null and createTime != ''">and CREATE_TIME = #{createTime}</if>
+            <if test="updateTime != null and updateTime != ''">and UPDATE_TIME = #{updateTime}</if>
+        </trim>
+    </sql>
+	
+	<sql id="where_param">
+		    <if test="packagesId != null and packagesId != ''">and G.PACKAGES_ID=#{packagesId}</if>
+            <if test="countryCode != null and countryCode != ''">and G.COUNTRY_CODE in
+				<foreach item="item" index="index" collection="countryCode" open="(" separator="," close=")">  
+  					#{item}   
+ 				</foreach>
+			</if>
+            <if test="operatorId != null and operatorId != ''">and G.OPERATOR_ID in
+            	<foreach item="item" index="index" collection="operatorId" open="(" separator="," close=")">  
+  					#{item}   
+ 				</foreach> 
+			</if>
+            <if test="phoneStandard != null and phoneStandard != ''">and GI.PHONE_STANDARD &amp; #{phoneStandard}>0</if>
+            <if test="bindCard != null and bindCard != ''">and G.BIND_CARD = #{bindCard}</if>
+            <if test="prettyNumber != null and prettyNumber != ''">and PRETTY_PRICE > 0</if>
+            <if test="goodsPriceMin != null and goodsPriceMin != ''">and GOODS_PRICE >= #{goodsPriceMin}</if>
+            <if test="goodsPriceMax != null and goodsPriceMax != ''">and GOODS_PRICE &lt;= #{goodsPriceMax}</if>
+        	<if test="includeNumber != null and includeNumber != ''">and INCLUDE_NUMBER &amp; #{includeNumber}>0</if>
+        	<if test="excludeNumber != null and includeNumber != ''">and EXCLUDE_NUMBER &amp; #{excludeNumber}>0</if>
+        	<if test="tailNumber != null and tailNumber != ''">and TAIL_NUMBER = #{tailNumber}</if>
+    </sql>
+
+	<sql id="mobile_query_where">
+		<trim prefix="and" prefixOverrides="and | or">
+			<if test="mobile != null and mobile != ''">and PHONE like concat('%',#{mobile},'%')</if>
+			<if test="liangType != null and liangType != ''">and PRETTY_NUMBER = #{liangType}</if>
+			<if test="countryCode != null and countryCode != ''">and COUNTRY_CODE = #{countryCode}</if>
+			<if test="operatorId != null and operatorId != ''">and OPERATOR_ID = #{operatorId}</if>
+			<if test="storeId != null and storeId != ''">and STORE_ID = #{storeId}</if>
+			<if test="tail != null and tail != ''">and TAIL_NUMBER = #{tail}</if>
+			<if test="include != null and include != ''">and #{include} &amp;INCLUDE_NUMBER &gt;0 </if>
+			<if test="exclude != null and exclude != ''">and #{exclude} &amp;EXCLUDE_NUMBER &gt;0</if>
+		</trim>
+	</sql>
+
+	<!-- 适用于主键自增类型 -->
+	<insert id="insert" parameterType="Goods" useGeneratedKeys="true" keyProperty="id">
+		insert into GOODS( <include refid="table_columns" /> ) 
+		values ( <include refid="entity_properties" /> )
+	</insert>
+
+    <insert id="insertSelective" parameterType="Goods">
+        insert into GOODS
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="entryDetailId != null and entryDetailId != ''">ENTRY_DETAIL_ID,</if>
+            <if test="countryCode != null and countryCode != ''">COUNTRY_CODE,</if>
+            <if test="operatorId != null and operatorId != ''">OPERATOR_ID,</if>
+            <if test="storeId != null and storeId != ''">STORE_ID,</if>
+            <if test="goodsName != null and goodsName != ''">GOODS_NAME,</if>
+            <if test="phone != null and phone != ''">PHONE,</if>
+            <if test="cardNo != null and cardNo != ''">CARD_NO,</if>
+            <if test="packagesId != null and packagesId != ''">PACKAGES_ID,</if>
+            <if test="goodsType != null and goodsType != ''">GOODS_TYPE,</if>
+            <if test="bindCard != null and bindCard != ''">BIND_CARD,</if>
+            <if test="bindPackages != null and bindPackages != ''">BIND_PACKAGES,</if>
+            <if test="prettyNumber != null and prettyNumber != ''">PRETTY_NUMBER,</if>
+            <if test="prettyPrice != null and prettyPrice != ''">PRETTY_PRICE,</if>
+            <if test="goodsPrice != null and goodsPrice != ''">GOODS_PRICE,</if>
+            <if test="status != null and status != ''">STATUS,</if>
+			<if test="storage != null and storage != ''">STORAGE,</if>
+			<if test="sequenceKey != null and sequenceKey != ''">SEQUENCE_KEY,</if>
+            <if test="remark1 != null and remark1 != ''">REMARK1,</if>
+            <if test="remark2 != null and remark2 != ''">REMARK2,</if>
+            <if test="remark3 != null and remark3 != ''">REMARK3,</if>
+            <if test="validStatus != null and validStatus != ''">VALID_STATUS,</if>
+            <if test="removeStatus != null and removeStatus != ''">REMOVE_STATUS,</if>
+            <if test="createTime != null and createTime != ''">CREATE_TIME,</if>
+            <if test="updateTime != null and updateTime != ''">UPDATE_TIME,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="entryDetailId != null and entryDetailId != ''">#{entryDetailId},</if>
+            <if test="countryCode != null and countryCode != ''">#{countryCode},</if>
+            <if test="operatorId != null and operatorId != ''">#{operatorId},</if>
+            <if test="storeId != null and storeId != ''">#{storeId},</if>
+            <if test="goodsName != null and goodsName != ''">#{goodsName},</if>
+            <if test="phone != null and phone != ''">#{phone},</if>
+            <if test="cardNo != null and cardNo != ''">#{cardNo},</if>
+            <if test="packagesId != null and packagesId != ''">#{packagesId},</if>
+            <if test="goodsType != null and goodsType != ''">#{goodsType,typeHandler=top.icoding.platform.common.repository.GoodsTypeHandler},</if>
+            <if test="bindCard != null and bindCard != ''">#{bindCard},</if>
+            <if test="bindPackages != null and bindPackages != ''">#{bindPackages},</if>
+            <if test="prettyNumber != null and prettyNumber != ''">#{prettyNumber,typeHandler=top.icoding.platform.common.repository.LiangNumberTypeHandler},</if>
+            <if test="prettyPrice != null and prettyPrice != ''">#{prettyPrice},</if>
+            <if test="goodsPrice != null and goodsPrice != ''">#{goodsPrice},</if>
+            <if test="status != null and status != ''">#{status,typeHandler=top.icoding.platform.common.repository.GoodsStatusHandler},</if>
+			<if test="storage != null and storage != ''">#{storage},</if>
+			<if test="sequenceKey != null and sequenceKey != ''">#{sequenceKey},</if>
+            <if test="remark1 != null and remark1 != ''">#{remark1},</if>
+            <if test="remark2 != null and remark2 != ''">#{remark2},</if>
+            <if test="remark3 != null and remark3 != ''">#{remark3},</if>
+            <if test="validStatus != null and validStatus != ''">#{validStatus,typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler},</if>
+            <if test="removeStatus != null and removeStatus != ''">#{removeStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+            <if test="createTime != null and createTime != ''">#{createTime},</if>
+            <if test="updateTime != null and updateTime != ''">#{updateTime},</if>
+        </trim>
+	</insert>
+
+
+	<delete id="delete" parameterType="Goods">
+		delete from GOODS
+        <include refid="page_where" />
+	</delete>
+
+	<delete id="deleteByPrimaryKey" parameterType="int">
+		delete from GOODS
+		where ID = #{id}
+	</delete>
+
+
+	<update id="updateByPrimaryKey" parameterType="Goods">
+		update GOODS 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="entryDetailId != null and entryDetailId != ''">ENTRY_DETAIL_ID = #{entryDetailId},</if>
+			<if test="countryCode != null and countryCode != ''">COUNTRY_CODE = #{countryCode},</if>
+			<if test="operatorId != null and operatorId != ''">OPERATOR_ID = #{operatorId},</if>
+			<if test="storeId != null and storeId != ''">STORE_ID = #{storeId},</if>
+			<if test="goodsName != null and goodsName != ''">GOODS_NAME = #{goodsName},</if>
+			<if test="phone != null and phone != ''">PHONE = #{phone},</if>
+			<if test="cardNo != null and cardNo != ''">CARD_NO = #{cardNo},</if>
+			<if test="packagesId != null and packagesId != ''">PACKAGES_ID = #{packagesId},</if>
+			<if test="goodsType != null and goodsType != ''">GOODS_TYPE = #{goodsType,typeHandler=top.icoding.platform.common.repository.GoodsTypeHandler},</if>
+			<if test="bindCard != null and bindCard != ''">BIND_CARD = #{bindCard},</if>
+			<if test="bindPackages != null and bindPackages != ''">BIND_PACKAGES = #{bindPackages},</if>
+			<if test="prettyNumber != null and prettyNumber != ''">PRETTY_NUMBER = #{prettyNumber,typeHandler=top.icoding.platform.common.repository.LiangNumberTypeHandler},</if>
+			<if test="prettyPrice != null and prettyPrice != ''">PRETTY_PRICE = #{prettyPrice},</if>
+			<if test="goodsPrice != null and goodsPrice != ''">GOODS_PRICE = #{goodsPrice},</if>
+			<if test="status != null and status != ''">STATUS = #{status,typeHandler=top.icoding.platform.common.repository.GoodsStatusHandler},</if>
+			<if test="storage != null and storage != ''">STORAGE = #{storage},</if>
+			<if test="sequenceKey != null and sequenceKey != ''">SEQUENCE_KEY = #{sequenceKey},</if>
+			<if test="remark1 != null and remark1 != ''">REMARK1 = #{remark1},</if>
+			<if test="remark2 != null and remark2 != ''">REMARK2 = #{remark2},</if>
+			<if test="remark3 != null and remark3 != ''">REMARK3 = #{remark3},</if>
+			<if test="validStatus != null and validStatus != ''">VALID_STATUS = #{validStatus,typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler},</if>
+			<if test="removeStatus != null and removeStatus != ''">REMOVE_STATUS = #{removeStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+			<if test="createTime != null and createTime != ''">CREATE_TIME = #{createTime},</if>
+			<if test="updateTime != null and updateTime != ''">UPDATE_TIME = #{updateTime},</if>
+		</trim>
+		<where>ID = #{id}</where>
+	</update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="Goods">
+        update GOODS
+        <trim prefix="set" suffixOverrides=",">
+            <if test="entryDetailId != null and entryDetailId != ''">ENTRY_DETAIL_ID = #{entryDetailId},</if>
+            <if test="countryCode != null and countryCode != ''">COUNTRY_CODE = #{countryCode},</if>
+            <if test="operatorId != null and operatorId != ''">OPERATOR_ID = #{operatorId},</if>
+            <if test="storeId != null and storeId != ''">STORE_ID = #{storeId},</if>
+            <if test="goodsName != null and goodsName != ''">GOODS_NAME = #{goodsName},</if>
+            <if test="phone != null and phone != ''">PHONE = #{phone},</if>
+            <if test="cardNo != null and cardNo != ''">CARD_NO = #{cardNo},</if>
+            <if test="packagesId != null and packagesId != ''">PACKAGES_ID = #{packagesId},</if>
+            <if test="goodsType != null and goodsType != ''">GOODS_TYPE = #{goodsType,typeHandler=top.icoding.platform.common.repository.GoodsTypeHandler},</if>
+            <if test="bindCard != null and bindCard != ''">BIND_CARD = #{bindCard},</if>
+            <if test="bindPackages != null and bindPackages != ''">BIND_PACKAGES = #{bindPackages},</if>
+            <if test="prettyNumber != null and prettyNumber != ''">PRETTY_NUMBER = #{prettyNumber,typeHandler=top.icoding.platform.common.repository.LiangNumberTypeHandler},</if>
+            <if test="prettyPrice != null and prettyPrice != ''">PRETTY_PRICE = #{prettyPrice},</if>
+            <if test="goodsPrice != null and goodsPrice != ''">GOODS_PRICE = #{goodsPrice},</if>
+            <if test="status != null and status != ''">STATUS = #{status,typeHandler=top.icoding.platform.common.repository.GoodsStatusHandler},</if>
+			<if test="storage != null and storage != ''">REMARK1 = #{storage},</if>
+			<if test="sequenceKey != null and sequenceKey != ''">SEQUENCE_KEY = #{sequenceKey},</if>
+            <if test="remark1 != null and remark1 != ''">REMARK1 = #{remark1},</if>
+            <if test="remark2 != null and remark2 != ''">REMARK2 = #{remark2},</if>
+            <if test="remark3 != null and remark3 != ''">REMARK3 = #{remark3},</if>
+            <if test="validStatus != null and validStatus != ''">VALID_STATUS = #{validStatus,typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler},</if>
+            <if test="removeStatus != null and removeStatus != ''">REMOVE_STATUS = #{removeStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+            <if test="createTime != null and createTime != ''">CREATE_TIME = #{createTime},</if>
+            <if test="updateTime != null and updateTime != ''">UPDATE_TIME = #{updateTime},</if>
+        </trim>
+        <include refid="page_where" />
+    </update>
+
+	<update id="updateGoodsStatus" parameterType="int">
+		update GOODS set STATUS = #{goodsStatus,typeHandler=top.melody.platform.common.repository.GoodsStatusHandler}
+		where ID in
+		<foreach collection="goodsIdList" open="(" close=")" item="goodsId" separator=",">
+			#{goodsId}
+		</foreach>
+	</update>
+
+	<select id="queryMobileList" resultMap="goodsResultMap" parameterType="hashmap">
+		select
+		GOODS.ID as ID,
+		ENTRY_DETAIL_ID,
+		COUNTRY_CODE,
+		OPERATOR_ID,
+		STORE_ID,
+		GOODS_NAME,
+		PHONE,
+		CARD_NO,
+		PACKAGES_ID,
+		GOODS_TYPE,
+		GOODS.BIND_CARD as BIND_CARD,
+		BIND_PACKAGES,
+		PRETTY_NUMBER,
+		PRETTY_PRICE,
+		GOODS_PRICE,
+		STATUS,
+		STORAGE,
+		SEQUENCE_KEY,
+		REMARK1,
+		REMARK2,
+		REMARK3,
+		GOODS.VALID_STATUS as VALID_STATUS,
+		GOODS.REMOVE_STATUS as REMOVE_STATUS,
+		CREATE_TIME,
+		UPDATE_TIME
+		from GOODS,GOODS_INDEX
+		where GOODS_TYPE = 'number' and GOODS.ID =
+		GOODS_INDEX.GOODS_ID
+		<include refid="mobile_query_where"/>
+		order by GOODS.UPDATE_TIME desc
+	</select>
+
+
+    <select id="selectAll" resultMap="goodsResultMap">
+        select <include refid="table_columns" />
+        from GOODS
+    </select>
+
+    <select id="select" resultMap="goodsResultMap">
+        select <include refid="table_columns" />
+        from GOODS
+        <include refid="page_where" />
+	</select>
+
+    <select id="selectCount" resultType="int" >
+        select count(ID) from GOODS
+        <include refid="page_where" />
+    </select>
+
+
+    <select id="selectByPrimaryKey" resultMap="goodsResultMap" parameterType="int" >
+		select <include refid="table_columns" />
+		from GOODS
+		where ID = #{id}
+	</select>
+
+	<select id="getGoodsBySequenceKey" resultMap="goodsResultMap" parameterType="String" >
+		select <include refid="table_columns" />
+		from GOODS
+		where SEQUENCE_KEY = #{0}
+	</select>
+	
+	<!-- 其他自定义SQL -->
+	<select id="selectPhoneByParam" resultType="Map" parameterType="Map">
+		select G.ID,PHONE,GOODS_PRICE,PACKAGES_NAME,PACKAGES_DESC,PACKAGES_RANGE,PACKAGES_IMAGE,G.COUNTRY_CODE,OPERATOR_ID,G.BIND_CARD,INTRODUCTION,VALID_TIME,GI.PHONE_STANDARD,G.PRETTY_PRICE from 
+		GOODS G join GOODS_INDEX GI on G.ID=GI.GOODS_ID left join PACKAGES P on G.PACKAGES_ID=P.ID where GOODS_TYPE='number' and G.STATUS='onsale' 
+		<include refid="where_param" />
+		<if test="orderBy != null and orderBy != ''">order by ${orderBy} ${order}</if>
+	</select>
+	
+	<select id="selectPhoneByPackage" resultMap="goodsResultMap" parameterType="Map">
+		select G.ID,PHONE,GOODS_PRICE
+		from GOODS G,GOODS_INDEX GT where G.ID=GT.GOODS_ID and GOODS_TYPE='number' and G.STATUS='onsale' and PACKAGES_ID=#{packagesId} 
+		<include refid="where_param" />
+		<if test="orderBy != null and orderBy != ''">order by ${orderBy} ${order}</if>
+	</select>
+
+    <select id="getGoodsDetailByPhone" resultMap="goodsResultMap" parameterType="String" >
+        select <include refid="table_columns" />
+        from GOODS
+        where PHONE = #{phone}
+    </select>
+</mapper>

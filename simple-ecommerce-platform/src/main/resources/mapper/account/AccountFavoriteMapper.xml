@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.melody.unicall.platform.dal.account.AccountFavoriteMapper">
+	<resultMap type="AccountFavorite" id="accountFavoriteResultMap">
+		<result property="id" column="ID" />
+		<result property="accountId" column="ACCOUNT_ID" />
+		<result property="favoriteType" column="FAVORITE_TYPE" />
+		<result property="relationId" column="RELATION_ID" />
+		<result property="remark1" column="REMARK1" />
+		<result property="remark2" column="REMARK2" />
+		<result property="remark3" column="REMARK3" />
+		<result property="createTime" column="CREATE_TIME" />
+	</resultMap>
+	
+	<sql id="table_columns">
+		ID,
+		ACCOUNT_ID,
+		FAVORITE_TYPE,
+		RELATION_ID,
+		REMARK1,
+		REMARK2,
+		REMARK3,
+		CREATE_TIME
+    </sql>
+	<sql id="entity_properties">
+		#{id},
+		#{accountId},
+		#{favoriteType},
+		#{relationId},
+		#{remark1},
+		#{remark2},
+		#{remark3},
+		#{createTime}
+	</sql>
+
+    <!-- 使用like用法：columnName like concat('%',#columnName#,'%') -->
+    <sql id="page_where">
+        <trim prefix="where" prefixOverrides="and | or ">
+            <if test="accountId != null and accountId != ''">and ACCOUNT_ID = #{accountId}</if>
+            <if test="favoriteType != null and favoriteType != ''">and FAVORITE_TYPE = #{favoriteType}</if>
+            <if test="relationId != null and relationId != ''">and RELATION_ID = #{relationId}</if>
+            <if test="remark1 != null and remark1 != ''">and REMARK1 = #{remark1}</if>
+            <if test="remark2 != null and remark2 != ''">and REMARK2 = #{remark2}</if>
+            <if test="remark3 != null and remark3 != ''">and REMARK3 = #{remark3}</if>
+            <if test="createTime != null and createTime != ''">and CREATE_TIME = #{createTime}</if>
+        </trim>
+    </sql>
+
+
+	<!-- 适用于主键自增类型 -->
+	<insert id="insert" parameterType="AccountFavorite" useGeneratedKeys="true" keyProperty="id">
+		insert into ACCOUNT_FAVORITE( <include refid="table_columns" /> ) 
+		values ( <include refid="entity_properties" /> )
+	</insert>
+
+    <insert id="insertSelective" parameterType="AccountFavorite">
+        insert into ACCOUNT_FAVORITE
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="accountId != null and accountId != ''">ACCOUNT_ID,</if>
+            <if test="favoriteType != null and favoriteType != ''">FAVORITE_TYPE,</if>
+            <if test="relationId != null and relationId != ''">RELATION_ID,</if>
+            <if test="remark1 != null and remark1 != ''">REMARK1,</if>
+            <if test="remark2 != null and remark2 != ''">REMARK2,</if>
+            <if test="remark3 != null and remark3 != ''">REMARK3,</if>
+            <if test="createTime != null and createTime != ''">CREATE_TIME,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="accountId != null and accountId != ''">#{accountId},</if>
+            <if test="favoriteType != null and favoriteType != ''">#{favoriteType},</if>
+            <if test="relationId != null and relationId != ''">#{relationId},</if>
+            <if test="remark1 != null and remark1 != ''">#{remark1},</if>
+            <if test="remark2 != null and remark2 != ''">#{remark2},</if>
+            <if test="remark3 != null and remark3 != ''">#{remark3},</if>
+            <if test="createTime != null and createTime != ''">#{createTime},</if>
+        </trim>
+	</insert>
+
+
+	<delete id="delete" parameterType="AccountFavorite">
+		delete from ACCOUNT_FAVORITE
+        <include refid="page_where" />
+	</delete>
+
+	<delete id="deleteByPrimaryKey" parameterType="String">
+		delete from ACCOUNT_FAVORITE
+		where ID = #{id}
+	</delete>
+
+
+	<update id="updateByPrimaryKey" parameterType="AccountFavorite">
+		update ACCOUNT_FAVORITE 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="accountId != null and accountId != ''">ACCOUNT_ID = #{accountId},</if>
+			<if test="favoriteType != null and favoriteType != ''">FAVORITE_TYPE = #{favoriteType},</if>
+			<if test="relationId != null and relationId != ''">RELATION_ID = #{relationId},</if>
+			<if test="remark1 != null and remark1 != ''">REMARK1 = #{remark1},</if>
+			<if test="remark2 != null and remark2 != ''">REMARK2 = #{remark2},</if>
+			<if test="remark3 != null and remark3 != ''">REMARK3 = #{remark3},</if>
+			<if test="createTime != null and createTime != ''">CREATE_TIME = #{createTime},</if>
+		</trim>
+		<where>ID = #{id}</where>
+	</update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="AccountFavorite">
+        update ACCOUNT_FAVORITE
+        <trim prefix="set" suffixOverrides=",">
+            <if test="accountId != null and accountId != ''">ACCOUNT_ID = #{accountId},</if>
+            <if test="favoriteType != null and favoriteType != ''">FAVORITE_TYPE = #{favoriteType},</if>
+            <if test="relationId != null and relationId != ''">RELATION_ID = #{relationId},</if>
+            <if test="remark1 != null and remark1 != ''">REMARK1 = #{remark1},</if>
+            <if test="remark2 != null and remark2 != ''">REMARK2 = #{remark2},</if>
+            <if test="remark3 != null and remark3 != ''">REMARK3 = #{remark3},</if>
+            <if test="createTime != null and createTime != ''">CREATE_TIME = #{createTime},</if>
+        </trim>
+        <include refid="page_where" />
+    </update>
+
+
+    <select id="selectAll" resultMap="accountFavoriteResultMap">
+        select <include refid="table_columns" />
+        from ACCOUNT_FAVORITE
+    </select>
+
+    <select id="select" resultMap="accountFavoriteResultMap">
+        select <include refid="table_columns" />
+        from ACCOUNT_FAVORITE
+        <include refid="page_where" />
+	</select>
+
+    <select id="selectCount" resultType="int" >
+        select count(ID) from ACCOUNT_FAVORITE
+        <include refid="page_where" />
+    </select>
+
+
+    <select id="selectByPrimaryKey" resultMap="accountFavoriteResultMap" parameterType="String" >
+		select <include refid="table_columns" />
+		from ACCOUNT_FAVORITE
+		where ID = #{id}
+	</select>
+	
+	<!-- 其他自定义SQL -->
+
+
+</mapper>

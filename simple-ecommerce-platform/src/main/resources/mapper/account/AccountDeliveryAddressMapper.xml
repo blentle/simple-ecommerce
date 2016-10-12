@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.melody.unicall.platform.dal.account.AccountDeliveryAddressMapper">
+	<resultMap type="AccountDeliveryAddress" id="accountDeliveryAddressResultMap">
+		<result property="id" column="ID" />
+		<result property="accountId" column="ACCOUNT_ID" />
+		<result property="provinceCode" column="PROVINCE_CODE" />
+		<result property="cityCode" column="CITY_CODE" />
+		<result property="countyCode" column="COUNTY_CODE" />
+		<result property="address" column="ADDRESS" />
+		<result property="actStatus" column="ACT_STATUS" typeHandler="top.melody.platform.common.repository.ActStatusTypeHandler"/>
+		<result property="realName" column="REAL_NAME" />
+		<result property="mobile" column="MOBILE" />
+		<result property="email" column="EMAIL" />
+		<result property="remark1" column="REMARK1" />
+		<result property="remark2" column="REMARK2" />
+		<result property="remark3" column="REMARK3" />
+		<result property="validStatus" column="VALID_STATUS" typeHandler="top.melody.platform.common.repository.ValidStatusTypeHandler"/>
+		<result property="removeStatus" column="REMOVE_STATUS" typeHandler="top.melody.platform.common.repository.ActStatusTypeHandler"/>
+		<result property="updateTime" column="UPDATE_TIME" />
+		<result property="createTime" column="CREATE_TIME" />
+	</resultMap>
+	
+	<sql id="table_columns">
+		ID,
+		ACCOUNT_ID,
+		PROVINCE_CODE,
+		CITY_CODE,
+		COUNTY_CODE,
+		ADDRESS,
+		ACT_STATUS,
+		REAL_NAME,
+		MOBILE,
+		EMAIL,
+		REMARK1,
+		REMARK2,
+		REMARK3,
+		VALID_STATUS,
+		REMOVE_STATUS,
+		UPDATE_TIME,
+		CREATE_TIME
+    </sql>
+	<sql id="entity_properties">
+		#{id},
+		#{accountId},
+		#{provinceCode},
+		#{cityCode},
+		#{countyCode},
+		#{address},
+		#{actStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},
+		#{realName},
+		#{mobile},
+		#{email},
+		#{remark1},
+		#{remark2},
+		#{remark3},
+		#{validStatus,typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler},
+		#{removeStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},
+		#{updateTime},
+		#{createTime}
+	</sql>
+
+    <!-- 使用like用法：columnName like concat('%',#columnName#,'%') -->
+    <sql id="page_where">
+        <trim prefix="where" prefixOverrides="and | or ">
+            <if test="accountId != null and accountId != ''">and ACCOUNT_ID = #{accountId}</if>
+            <if test="provinceCode != null and provinceCode != ''">and PROVINCE_CODE = #{provinceCode}</if>
+            <if test="cityCode != null and cityCode != ''">and CITY_CODE = #{cityCode}</if>
+            <if test="countyCode != null and countyCode != ''">and COUNTY_CODE = #{countyCode}</if>
+            <if test="address != null and address != ''">and ADDRESS = #{address}</if>
+            <if test="actStatus != null and actStatus != ''">and ACT_STATUS = #{actStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler}</if>
+			<if test="realName != null and realName != ''">and REAL_NAME = #{realName}</if>
+			<if test="mobile != null and mobile != ''">and MOBILE = #{mobile}</if>
+			<if test="email != null and email != ''">and EMAIL = #{email}</if>
+            <if test="remark1 != null and remark1 != ''">and REMARK1 = #{remark1}</if>
+            <if test="remark2 != null and remark2 != ''">and REMARK2 = #{remark2}</if>
+            <if test="remark3 != null and remark3 != ''">and REMARK3 = #{remark3}</if>
+            <if test="validStatus != null and validStatus != ''">and VALID_STATUS = #{validStatus,typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler}</if>
+            <if test="removeStatus != null and removeStatus != ''">and REMOVE_STATUS = #{removeStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler}</if>
+            <if test="updateTime != null and updateTime != ''">and UPDATE_TIME = #{updateTime}</if>
+            <if test="createTime != null and createTime != ''">and CREATE_TIME = #{createTime}</if>
+        </trim>
+    </sql>
+
+
+	<!-- 适用于主键自增类型 -->
+	<insert id="insert" parameterType="AccountDeliveryAddress" useGeneratedKeys="true" keyProperty="id">
+		insert into ACCOUNT_DELIVERY_ADDRESS( <include refid="table_columns" /> ) 
+		values ( <include refid="entity_properties" /> )
+	</insert>
+
+    <insert id="insertSelective" parameterType="AccountDeliveryAddress">
+        insert into ACCOUNT_DELIVERY_ADDRESS
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="accountId != null and accountId != ''">ACCOUNT_ID,</if>
+            <if test="provinceCode != null and provinceCode != ''">PROVINCE_CODE,</if>
+            <if test="cityCode != null and cityCode != ''">CITY_CODE,</if>
+            <if test="countyCode != null and countyCode != ''">COUNTY_CODE,</if>
+            <if test="address != null and address != ''">ADDRESS,</if>
+            <if test="actStatus != null and actStatus != ''">ACT_STATUS,</if>
+			<if test="realName != null and realName != ''">REAL_NAME,</if>
+			<if test="mobile != null and mobile != ''">MOBILE,</if>
+			<if test="email != null and email != ''">EMAIL,</if>
+            <if test="remark1 != null and remark1 != ''">REMARK1,</if>
+            <if test="remark2 != null and remark2 != ''">REMARK2,</if>
+            <if test="remark3 != null and remark3 != ''">REMARK3,</if>
+            <if test="validStatus != null and validStatus != ''">VALID_STATUS,</if>
+            <if test="removeStatus != null and removeStatus != ''">REMOVE_STATUS,</if>
+            <if test="updateTime != null and updateTime != ''">UPDATE_TIME,</if>
+            <if test="createTime != null and createTime != ''">CREATE_TIME,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="accountId != null and accountId != ''">#{accountId},</if>
+            <if test="provinceCode != null and provinceCode != ''">#{provinceCode},</if>
+            <if test="cityCode != null and cityCode != ''">#{cityCode},</if>
+            <if test="countyCode != null and countyCode != ''">#{countyCode},</if>
+            <if test="address != null and address != ''">#{address},</if>
+            <if test="actStatus != null and actStatus != ''">#{actStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+			<if test="realName != null and realName != ''">#{realName},</if>
+			<if test="mobile != null and mobile != ''">#{mobile},</if>
+			<if test="email != null and email != ''">#{email},</if>
+            <if test="remark1 != null and remark1 != ''">#{remark1},</if>
+            <if test="remark2 != null and remark2 != ''">#{remark2},</if>
+            <if test="remark3 != null and remark3 != ''">#{remark3},</if>
+            <if test="validStatus != null and validStatus != ''">#{validStatus,typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler},</if>
+            <if test="removeStatus != null and removeStatus != ''">#{removeStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+            <if test="updateTime != null and updateTime != ''">#{updateTime},</if>
+            <if test="createTime != null and createTime != ''">#{createTime},</if>
+        </trim>
+	</insert>
+
+
+	<delete id="delete" parameterType="AccountDeliveryAddress">
+		delete from ACCOUNT_DELIVERY_ADDRESS
+        <include refid="page_where" />
+	</delete>
+
+	<delete id="deleteByPrimaryKey" parameterType="int">
+		delete from ACCOUNT_DELIVERY_ADDRESS
+		where ID = #{id}
+	</delete>
+
+
+	<update id="updateByPrimaryKey" parameterType="AccountDeliveryAddress">
+		update ACCOUNT_DELIVERY_ADDRESS 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="accountId != null and accountId != ''">ACCOUNT_ID = #{accountId},</if>
+			<if test="provinceCode != null and provinceCode != ''">PROVINCE_CODE = #{provinceCode},</if>
+			<if test="cityCode != null and cityCode != ''">CITY_CODE = #{cityCode},</if>
+			<if test="countyCode != null and countyCode != ''">COUNTY_CODE = #{countyCode},</if>
+			<if test="address != null and address != ''">ADDRESS = #{address},</if>
+			<if test="actStatus != null and actStatus != ''">ACT_STATUS = #{actStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+			<if test="realName != null and realName != ''">REAL_NAME = #{realName},</if>
+			<if test="mobile != null and mobile != ''">MOBILE = #{mobile},</if>
+			<if test="email != null and email != ''">EMAIL = #{email},</if>
+			<if test="remark1 != null and remark1 != ''">REMARK1 = #{remark1},</if>
+			<if test="remark2 != null and remark2 != ''">REMARK2 = #{remark2},</if>
+			<if test="remark3 != null and remark3 != ''">REMARK3 = #{remark3},</if>
+			<if test="validStatus != null and validStatus != ''">VALID_STATUS = #{validStatus,typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler},</if>
+			<if test="removeStatus != null and removeStatus != ''">REMOVE_STATUS = #{removeStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+			<if test="updateTime != null and updateTime != ''">UPDATE_TIME = #{updateTime},</if>
+			<if test="createTime != null and createTime != ''">CREATE_TIME = #{createTime},</if>
+		</trim>
+		<where>ID = #{id}</where>
+	</update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="AccountDeliveryAddress">
+        update ACCOUNT_DELIVERY_ADDRESS
+        <trim prefix="set" suffixOverrides=",">
+            <if test="accountId != null and accountId != ''">ACCOUNT_ID = #{accountId},</if>
+            <if test="provinceCode != null and provinceCode != ''">PROVINCE_CODE = #{provinceCode},</if>
+            <if test="cityCode != null and cityCode != ''">CITY_CODE = #{cityCode},</if>
+            <if test="countyCode != null and countyCode != ''">COUNTY_CODE = #{countyCode},</if>
+            <if test="address != null and address != ''">ADDRESS = #{address},</if>
+            <if test="actStatus != null and actStatus != ''">ACT_STATUS = #{actStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+			<if test="realName != null and realName != ''">REAL_NAME = #{realName},</if>
+			<if test="mobile != null and mobile != ''">MOBILE = #{mobile},</if>
+			<if test="email != null and email != ''">EMAIL = #{email},</if>
+            <if test="remark1 != null and remark1 != ''">REMARK1 = #{remark1},</if>
+            <if test="remark2 != null and remark2 != ''">REMARK2 = #{remark2},</if>
+            <if test="remark3 != null and remark3 != ''">REMARK3 = #{remark3},</if>
+            <if test="validStatus != null and validStatus != ''">VALID_STATUS = #{validStatus,typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler},</if>
+            <if test="removeStatus != null and removeStatus != ''">REMOVE_STATUS = #{removeStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+            <if test="updateTime != null and updateTime != ''">UPDATE_TIME = #{updateTime},</if>
+            <if test="createTime != null and createTime != ''">CREATE_TIME = #{createTime},</if>
+        </trim>
+        <include refid="page_where" />
+    </update>
+
+	<update id="updateActStatusByAccount">
+		update ACCOUNT_DELIVERY_ADDRESS set ACT_STATUS = #{0,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler}
+		where ACCOUNT_ID = #{1}
+	</update>
+
+
+    <select id="selectAll" resultMap="accountDeliveryAddressResultMap">
+        select <include refid="table_columns" />
+        from ACCOUNT_DELIVERY_ADDRESS
+    </select>
+
+    <select id="select" resultMap="accountDeliveryAddressResultMap">
+        select <include refid="table_columns" />
+        from ACCOUNT_DELIVERY_ADDRESS
+        <include refid="page_where" />
+		order by UPDATE_TIME desc
+	</select>
+
+    <select id="selectCount" resultType="int" >
+        select count(ID) from ACCOUNT_DELIVERY_ADDRESS
+        <include refid="page_where" />
+    </select>
+
+
+    <select id="selectByPrimaryKey" resultMap="accountDeliveryAddressResultMap" parameterType="int" >
+		select <include refid="table_columns" />
+		from ACCOUNT_DELIVERY_ADDRESS
+		where ID = #{id}
+	</select>
+	
+	<!-- 其他自定义SQL -->
+
+
+</mapper>

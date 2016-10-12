@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.melody.unicall.platform.dal.account.AccountMapper">
+	<resultMap type="Account" id="accountResultMap">
+		<result property="id" column="ID" />
+		<result property="accountName" column="ACCOUNT_NAME" />
+		<result property="accountPassword" column="ACCOUNT_PASSWORD" />
+		<result property="nickName" column="NICK_NAME" />
+		<result property="registerType" column="REGISTER_TYPE" typeHandler="top.melody.platform.common.repository.RegisterTypeHandler" />
+		<result property="accountStatus" column="ACCOUNT_STATUS" typeHandler="top.melody.platform.common.repository.ActStatusTypeHandler" />
+		<result property="countryCode" column="COUNTRY_CODE" />
+		<result property="serialNumber" column="SERIAL_NUMBER" />
+		<result property="accessToken" column="ACCESS_TOKEN" />
+		<result property="createDate" column="CREATE_DATE" />
+		<result property="updateDate" column="UPDATE_DATE" />
+	</resultMap>
+	
+	<sql id="table_columns">
+		ID,
+		ACCOUNT_NAME,
+		ACCOUNT_PASSWORD,
+		NICK_NAME,
+		REGISTER_TYPE,
+		ACCOUNT_STATUS,
+		COUNTRY_CODE,
+		SERIAL_NUMBER,
+		ACCESS_TOKEN,
+		CREATE_DATE,
+		UPDATE_DATE
+    </sql>
+	<sql id="entity_properties">
+		#{id},
+		#{accountName},
+		#{accountPassword},
+		#{nickName},
+		#{registerType,typeHandler=top.icoding.platform.common.repository.RegisterTypeHandler},
+		#{accountStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},
+		#{countryCode},
+		#{serialNumber},
+		#{accessToken},
+		#{createDate},
+		#{updateDate}
+	</sql>
+
+    <!-- 使用like用法：columnName like concat('%',#columnName#,'%') -->
+    <sql id="page_where">
+        <trim prefix="where" prefixOverrides="and | or ">
+            <if test="accountName != null and accountName != ''">and ACCOUNT_NAME = #{accountName}</if>
+            <if test="accountPassword != null and accountPassword != ''">and ACCOUNT_PASSWORD = #{accountPassword}</if>
+            <if test="nickName != null and nickName != ''">and NICK_NAME = #{nickName}</if>
+            <if test="registerType != null and registerType != ''">and REGISTER_TYPE = #{registerType,typeHandler=top.icoding.platform.common.repository.RegisterTypeHandler}</if>
+            <if test="accountStatus != null and accountStatus != ''">and ACCOUNT_STATUS = #{accountStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler}</if>
+            <if test="countryCode != null and countryCode != ''">and COUNTRY_CODE = #{countryCode}</if>
+            <if test="serialNumber != null and serialNumber != ''">and SERIAL_NUMBER = #{serialNumber}</if>
+            <if test="accessToken != null and accessToken != ''">and ACCESS_TOKEN = #{accessToken}</if>
+            <if test="createDate != null and createDate != ''">and CREATE_DATE = #{createDate}</if>
+            <if test="updateDate != null and updateDate != ''">and UPDATE_DATE = #{updateDate}</if>
+        </trim>
+    </sql>
+
+    <sql id="query_account_list_where">
+        <trim prefix="where" prefixOverrides="and | or ">
+            <if test="loginName != null and loginName != ''">and ACCOUNT_NAME like concat('%',#{loginName},'%')</if>
+            <if test="nickName != null and nickName != ''">and NICK_NAME like concat('%',#{nickName},'%')</if>
+            <if test="countryCode != null and countryCode != ''">and COUNTRY_CODE = #{countryCode}</if>
+            <if test="startDate != null and startDate != ''">and CREATE_DATE &gt;= #{startDate}</if>
+            <if test="endDate != null and endDate != ''">and CREATE_DATE &lt;= #{endDate}</if>
+        </trim>
+    </sql>
+
+
+	<!-- 适用于主键自增类型 -->
+	<insert id="insert" parameterType="Account" useGeneratedKeys="true" keyProperty="id">
+		insert into ACCOUNT( <include refid="table_columns" /> ) 
+		values ( <include refid="entity_properties" /> )
+	</insert>
+
+    <insert id="insertSelective" parameterType="Account">
+        insert into ACCOUNT
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="accountName != null and accountName != ''">ACCOUNT_NAME,</if>
+            <if test="accountPassword != null and accountPassword != ''">ACCOUNT_PASSWORD,</if>
+            <if test="nickName != null and nickName != ''">NICK_NAME,</if>
+            <if test="registerType != null and registerType != ''">REGISTER_TYPE,</if>
+            <if test="accountStatus != null and accountStatus != ''">ACCOUNT_STATUS,</if>
+            <if test="countryCode != null and countryCode != ''">COUNTRY_CODE,</if>
+            <if test="serialNumber != null and serialNumber != ''">SERIAL_NUMBER,</if>
+            <if test="accessToken != null and accessToken != ''">ACCESS_TOKEN,</if>
+            <if test="createDate != null and createDate != ''">CREATE_DATE,</if>
+            <if test="updateDate != null and updateDate != ''">UPDATE_DATE,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="accountName != null and accountName != ''">#{accountName},</if>
+            <if test="accountPassword != null and accountPassword != ''">#{accountPassword},</if>
+            <if test="nickName != null and nickName != ''">#{nickName},</if>
+            <if test="registerType != null and registerType != ''">#{registerType,typeHandler=top.icoding.platform.common.repository.RegisterTypeHandler},</if>
+            <if test="accountStatus != null and accountStatus != ''">#{accountStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+            <if test="countryCode != null and countryCode != ''">#{countryCode},</if>
+            <if test="serialNumber != null and serialNumber != ''">#{serialNumber},</if>
+            <if test="accessToken != null and accessToken != ''">#{accessToken},</if>
+            <if test="createDate != null and createDate != ''">#{createDate},</if>
+            <if test="updateDate != null and updateDate != ''">#{updateDate},</if>
+        </trim>
+	</insert>
+
+
+
+	<delete id="delete" parameterType="Account">
+		delete from ACCOUNT
+        <include refid="page_where" />
+	</delete>
+
+	<delete id="deleteByPrimaryKey" parameterType="int">
+		delete from ACCOUNT
+		where ID = #{id}
+	</delete>
+
+
+	<update id="updateByPrimaryKey" parameterType="Account">
+		update ACCOUNT 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="accountName != null and accountName != ''">ACCOUNT_NAME = #{accountName},</if>
+			<if test="accountPassword != null and accountPassword != ''">ACCOUNT_PASSWORD = #{accountPassword},</if>
+			<if test="nickName != null and nickName != ''">NICK_NAME = #{nickName},</if>
+			<if test="registerType != null and registerType != ''">REGISTER_TYPE = #{registerType,typeHandler=top.icoding.platform.common.repository.RegisterTypeHandler},</if>
+			<if test="accountStatus != null and accountStatus != ''">ACCOUNT_STATUS = #{accountStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+			<if test="countryCode != null and countryCode != ''">COUNTRY_CODE = #{countryCode},</if>
+			<if test="serialNumber != null and serialNumber != ''">SERIAL_NUMBER = #{serialNumber},</if>
+			<if test="accessToken != null and accessToken != ''">ACCESS_TOKEN = #{accessToken},</if>
+			<if test="createDate != null and createDate != ''">CREATE_DATE = #{createDate},</if>
+			<if test="updateDate != null and updateDate != ''">UPDATE_DATE = #{updateDate},</if>
+		</trim>
+		<where>ID = #{id}</where>
+	</update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="Account">
+        update ACCOUNT
+        <trim prefix="set" suffixOverrides=",">
+            <if test="accountName != null and accountName != ''">ACCOUNT_NAME = #{accountName},</if>
+            <if test="accountPassword != null and accountPassword != ''">ACCOUNT_PASSWORD = #{accountPassword},</if>
+            <if test="nickName != null and nickName != ''">NICK_NAME = #{nickName},</if>
+            <if test="registerType != null and registerType != ''">REGISTER_TYPE = #{registerType,typeHandler=top.icoding.platform.common.repository.RegisterTypeHandler},</if>
+            <if test="accountStatus != null and accountStatus != ''">ACCOUNT_STATUS = #{accountStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+            <if test="countryCode != null and countryCode != ''">COUNTRY_CODE = #{countryCode},</if>
+            <if test="serialNumber != null and serialNumber != ''">SERIAL_NUMBER = #{serialNumber},</if>
+            <if test="accessToken != null and accessToken != ''">ACCESS_TOKEN = #{accessToken},</if>
+            <if test="createDate != null and createDate != ''">CREATE_DATE = #{createDate},</if>
+            <if test="updateDate != null and updateDate != ''">UPDATE_DATE = #{updateDate},</if>
+        </trim>
+        <include refid="page_where" />
+    </update>
+
+
+    <select id="selectAll" resultMap="accountResultMap">
+        select <include refid="table_columns" />
+        from ACCOUNT
+    </select>
+
+    <select id="select" resultMap="accountResultMap">
+        select <include refid="table_columns" />
+        from ACCOUNT
+        <include refid="page_where" />
+	</select>
+
+    <select id="selectCount" resultType="int" >
+        select count(ID) from ACCOUNT
+        <include refid="page_where" />
+    </select>
+
+
+    <select id="selectByPrimaryKey" resultMap="accountResultMap" parameterType="int" >
+		select <include refid="table_columns" />
+		from ACCOUNT
+		where ID = #{id}
+	</select>
+
+
+    <select id="getByAccountName" resultMap="accountResultMap" parameterType="String" >
+        select <include refid="table_columns" />
+        from ACCOUNT
+        where ACCOUNT_NAME = #{accountName}
+    </select>
+
+    <select id="queryAccountList" resultMap="accountResultMap" parameterType="hashmap" >
+        select <include refid="table_columns" />
+        from ACCOUNT
+        <include refid="query_account_list_where" />
+    </select>
+	<!-- 其他自定义SQL -->
+
+
+</mapper>

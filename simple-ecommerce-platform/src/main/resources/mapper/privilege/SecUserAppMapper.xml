@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.melody.unicall.platform.dal.privilege.SecUserAppMapper" >
+  <resultMap id="BaseResultMap" type="top.melody.unicall.platform.entity.privilege.SecUserApp" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+    <result column="APPID" property="appid" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    ID, USER_ID, APPID, CREATE_DATE, UPDATE_DATE
+  </sql>
+  <sql id="Entity_Prop_List" >
+    #{userId},#{appid},#{createDate},#{updateDate}
+  </sql>
+</mapper>

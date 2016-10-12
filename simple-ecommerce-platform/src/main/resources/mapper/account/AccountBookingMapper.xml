@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.melody.unicall.platform.dal.account.AccountBookingMapper">
+	<resultMap type="AccountBooking" id="accountBookingResultMap">
+		<result property="id" column="ID" />
+		<result property="accountId" column="ACCOUNT_ID" />
+		<result property="bookingRealName" column="BOOKING_REAL_NAME" />
+		<result property="mobile" column="MOBILE" />
+		<result property="serviceSiteId" column="SERVICE_SITE_ID" />
+		<result property="relationId" column="RELATION_ID" />
+		<result property="updateTime" column="UPDATE_TIME" />
+		<result property="createTime" column="CREATE_TIME" />
+	</resultMap>
+	
+	<sql id="table_columns">
+		ID,
+		ACCOUNT_ID,
+		BOOKING_REAL_NAME,
+		MOBILE,
+		SERVICE_SITE_ID,
+		RELATION_ID,
+		UPDATE_TIME,
+		CREATE_TIME
+    </sql>
+	<sql id="entity_properties">
+		#{id},
+		#{accountId},
+		#{bookingRealName},
+		#{mobile},
+		#{serviceSiteId},
+		#{relationId},
+		#{updateTime},
+		#{createTime}
+	</sql>
+
+    <!-- 使用like用法：columnName like concat('%',#columnName#,'%') -->
+    <sql id="page_where">
+        <trim prefix="where" prefixOverrides="and | or ">
+            <if test="accountId != null and accountId != ''">and ACCOUNT_ID = #{accountId}</if>
+			<if test="bookingRealName != null and bookingRealName != ''">and BOOKING_REAL_NAME = #{bookingRealName}</if>
+			<if test="mobile != null and mobile != ''">and MOBILE = #{mobile}</if>
+			<if test="serviceSiteId != null and serviceSiteId != ''">and SERVICE_SITE_ID = #{serviceSiteId}</if>
+			<if test="relationId != null and relationId != ''">and RELATION_ID = #{relationId}</if>
+            <if test="updateTime != null and updateTime != ''">and UPDATE_TIME = #{updateTime}</if>
+            <if test="createTime != null and createTime != ''">and CREATE_TIME = #{createTime}</if>
+        </trim>
+    </sql>
+
+
+	<!-- 适用于主键自增类型 -->
+	<insert id="insert" parameterType="AccountBooking" useGeneratedKeys="true" keyProperty="id">
+		insert into ACCOUNT_BOOKING( <include refid="table_columns" /> ) 
+		values ( <include refid="entity_properties" /> )
+	</insert>
+
+    <insert id="insertSelective" parameterType="AccountBooking">
+        insert into ACCOUNT_BOOKING
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="accountId != null and accountId != ''">ACCOUNT_ID,</if>
+            <if test="bookingRealName != null and bookingRealName != ''">BOOKING_REAL_NAME,</if>
+			<if test="mobile != null and mobile != ''">MOBILE,</if>
+			<if test="serviceSiteId != null and serviceSiteId != ''">SERVICE_SITE_ID,</if>
+			<if test="relationId != null and relationId != ''">RELATION_ID,</if>
+            <if test="updateTime != null and updateTime != ''">UPDATE_TIME,</if>
+            <if test="createTime != null and createTime != ''">CREATE_TIME,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="accountId != null and accountId != ''">#{accountId},</if>
+            <if test="bookingRealName != null and bookingRealName != ''">#{bookingRealName},</if>
+			<if test="mobile != null and mobile != ''">#{mobile},</if>
+			<if test="serviceSiteId != null and serviceSiteId != ''">#{serviceSiteId},</if>
+			<if test="relationId != null and relationId != ''">#{relationId},</if>
+            <if test="updateTime != null and updateTime != ''">#{updateTime},</if>
+            <if test="createTime != null and createTime != ''">#{createTime},</if>
+        </trim>
+	</insert>
+
+
+	<delete id="delete" parameterType="AccountBooking">
+		delete from ACCOUNT_BOOKING
+        <include refid="page_where" />
+	</delete>
+
+	<delete id="deleteByPrimaryKey" parameterType="String">
+		delete from ACCOUNT_BOOKING
+		where ID = #{id}
+	</delete>
+
+
+	<update id="updateByPrimaryKey" parameterType="AccountBooking">
+		update ACCOUNT_BOOKING 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="accountId != null and accountId != ''">ACCOUNT_ID = #{accountId},</if>
+			<if test="bookingRealName != null and bookingRealName != ''">BOOKING_REAL_NAME = #{bookingRealName},</if>
+			<if test="mobile != null and mobile != ''">MOBILE = #{mobile},</if>
+			<if test="serviceSiteId != null and serviceSiteId != ''">SERVICE_SITE_ID = #{serviceSiteId},</if>
+			<if test="relationId != null and relationId != ''">RELATION_ID = #{relationId},</if>
+			<if test="updateTime != null and updateTime != ''">UPDATE_TIME = #{updateTime},</if>
+			<if test="createTime != null and createTime != ''">CREATE_TIME = #{createTime},</if>
+		</trim>
+		<where>ID = #{id}</where>
+	</update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="AccountBooking">
+        update ACCOUNT_BOOKING
+        <trim prefix="set" suffixOverrides=",">
+            <if test="accountId != null and accountId != ''">ACCOUNT_ID = #{accountId},</if>
+            <if test="bookingRealName != null and bookingRealName != ''">BOOKING_REAL_NAME = #{bookingRealName},</if>
+			<if test="mobile != null and mobile != ''">MOBILE = #{mobile},</if>
+			<if test="serviceSiteId != null and serviceSiteId != ''">SERVICE_SITE_ID = #{serviceSiteId},</if>
+			<if test="relationId != null and relationId != ''">RELATION_ID = #{relationId},</if>
+            <if test="updateTime != null and updateTime != ''">UPDATE_TIME = #{updateTime},</if>
+            <if test="createTime != null and createTime != ''">CREATE_TIME = #{createTime},</if>
+        </trim>
+        <include refid="page_where" />
+    </update>
+
+
+    <select id="selectAll" resultMap="accountBookingResultMap">
+        select <include refid="table_columns" />
+        from ACCOUNT_BOOKING
+    </select>
+
+    <select id="select" resultMap="accountBookingResultMap">
+        select <include refid="table_columns" />
+        from ACCOUNT_BOOKING
+        <include refid="page_where" />
+	</select>
+
+	<select id="getByRelationId" parameterType="String" resultMap="accountBookingResultMap">
+		select <include refid="table_columns" />
+		from ACCOUNT_BOOKING
+		where RELATION_ID = #{0}
+	</select>
+
+    <select id="selectCount" resultType="int" >
+        select count(ID) from ACCOUNT_BOOKING
+        <include refid="page_where" />
+    </select>
+
+
+    <select id="selectByPrimaryKey" resultMap="accountBookingResultMap" parameterType="String" >
+		select <include refid="table_columns" />
+		from ACCOUNT_BOOKING
+		where ID = #{id}
+	</select>
+	
+	<!-- 其他自定义SQL -->
+
+
+</mapper>

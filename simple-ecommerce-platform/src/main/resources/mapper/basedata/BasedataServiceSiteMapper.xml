@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.melody.unicall.platform.dal.basedata.BasedataServiceSiteMapper">
+	<resultMap type="BasedataServiceSite" id="basedataServiceSiteResultMap">
+		<result property="id" column="ID" />
+		<result property="serviceSiteName" column="SERVICE_SITE_NAME" />
+		<result property="contactName" column="CONTACT_NAME" />
+		<result property="contactPhone" column="CONTACT_PHONE" />
+		<result property="countryCode" column="COUNTRY_CODE" />
+		<result property="provinceCode" column="PROVINCE_CODE" />
+		<result property="cityCode" column="CITY_CODE" />
+		<result property="countyCode" column="COUNTY_CODE" />
+		<result property="serviceSiteAddress" column="SERVICE_SITE_ADDRESS" />
+		<result property="remark1" column="REMARK1" />
+		<result property="remark2" column="REMARK2" />
+		<result property="remark3" column="REMARK3" />
+		<result property="seqKey" column="SEQ_KEY" />
+		<result property="createTime" column="CREATE_TIME" />
+		<result property="updateTime" column="UPDATE_TIME" />
+		<result property="validStatus" column="VALID_STATUS" typeHandler="top.melody.platform.common.repository.ValidStatusTypeHandler"/>
+		<result property="removeStatus" column="REMOVE_STATUS" typeHandler="top.melody.platform.common.repository.ActStatusTypeHandler"/>
+	</resultMap>
+	
+	<sql id="table_columns">
+		ID,
+		SERVICE_SITE_NAME,
+		CONTACT_NAME,
+		CONTACT_PHONE,
+		COUNTRY_CODE,
+		PROVINCE_CODE,
+		CITY_CODE,
+		COUNTY_CODE,
+		SERVICE_SITE_ADDRESS,
+		REMARK1,
+		REMARK2,
+		REMARK3,
+		SEQ_KEY,
+		CREATE_TIME,
+		UPDATE_TIME,
+		VALID_STATUS,
+		REMOVE_STATUS
+    </sql>
+	<sql id="entity_properties">
+		#{id},
+		#{serviceSiteName},
+		#{contactName},
+		#{contactPhone},
+		#{countryCode},
+		#{provinceCode},
+		#{cityCode},
+		#{countyCode},
+		#{serviceSiteAddress},
+		#{remark1},
+		#{remark2},
+		#{remark3},
+		#{seqKey},
+		#{createTime},
+		#{updateTime},
+		#{validStatus,typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler},
+		#{removeStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler}
+	</sql>
+
+    <!-- 使用like用法：columnName like concat('%',#columnName#,'%') -->
+    <sql id="page_where">
+        <trim prefix="where" prefixOverrides="and | or ">
+            <if test="serviceSiteName != null and serviceSiteName != ''">and SERVICE_SITE_NAME = #{serviceSiteName}</if>
+            <if test="contactName != null and contactName != ''">and CONTACT_NAME = #{contactName}</if>
+            <if test="contactPhone != null and contactPhone != ''">and CONTACT_PHONE = #{contactPhone}</if>
+            <if test="countryCode != null and countryCode != ''">and COUNTRY_CODE = #{countryCode}</if>
+            <if test="provinceCode != null and provinceCode != ''">and PROVINCE_CODE = #{provinceCode}</if>
+            <if test="cityCode != null and cityCode != ''">and CITY_CODE = #{cityCode}</if>
+            <if test="countyCode != null and countyCode != ''">and COUNTY_CODE = #{countyCode}</if>
+            <if test="serviceSiteAddress != null and serviceSiteAddress != ''">and SERVICE_SITE_ADDRESS = #{serviceSiteAddress}</if>
+            <if test="remark1 != null and remark1 != ''">and REMARK1 = #{remark1}</if>
+            <if test="remark2 != null and remark2 != ''">and REMARK2 = #{remark2}</if>
+            <if test="remark3 != null and remark3 != ''">and REMARK3 = #{remark3}</if>
+            <if test="seqKey != null and seqKey != ''">and SEQ_KEY = #{seqKey}</if>
+            <if test="createTime != null and createTime != ''">and CREATE_TIME = #{createTime}</if>
+            <if test="updateTime != null and updateTime != ''">and UPDATE_TIME = #{updateTime}</if>
+            <if test="validStatus != null and validStatus != ''">and VALID_STATUS = #{validStatus,typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler}</if>
+            <if test="removeStatus != null and removeStatus != ''">and REMOVE_STATUS = #{removeStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler}</if>
+        </trim>
+    </sql>
+
+
+	<!-- 适用于主键自增类型 -->
+	<insert id="insert" parameterType="BasedataServiceSite" useGeneratedKeys="true" keyProperty="id">
+		insert into BASEDATA_SERVICE_SITE( <include refid="table_columns" /> ) 
+		values ( <include refid="entity_properties" /> )
+	</insert>
+
+    <insert id="insertSelective" parameterType="BasedataServiceSite">
+        insert into BASEDATA_SERVICE_SITE
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="serviceSiteName != null and serviceSiteName != ''">SERVICE_SITE_NAME,</if>
+            <if test="contactName != null and contactName != ''">CONTACT_NAME,</if>
+            <if test="contactPhone != null and contactPhone != ''">CONTACT_PHONE,</if>
+            <if test="countryCode != null and countryCode != ''">COUNTRY_CODE,</if>
+            <if test="provinceCode != null and provinceCode != ''">PROVINCE_CODE,</if>
+            <if test="cityCode != null and cityCode != ''">CITY_CODE,</if>
+            <if test="countyCode != null and countyCode != ''">COUNTY_CODE,</if>
+            <if test="serviceSiteAddress != null and serviceSiteAddress != ''">SERVICE_SITE_ADDRESS,</if>
+            <if test="remark1 != null and remark1 != ''">REMARK1,</if>
+            <if test="remark2 != null and remark2 != ''">REMARK2,</if>
+            <if test="remark3 != null and remark3 != ''">REMARK3,</if>
+            <if test="seqKey != null and seqKey != ''">SEQ_KEY,</if>
+            <if test="createTime != null and createTime != ''">CREATE_TIME,</if>
+            <if test="updateTime != null and updateTime != ''">UPDATE_TIME,</if>
+            <if test="validStatus != null and validStatus != ''">VALID_STATUS,</if>
+            <if test="removeStatus != null and removeStatus != ''">REMOVE_STATUS,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="serviceSiteName != null and serviceSiteName != ''">#{serviceSiteName},</if>
+            <if test="contactName != null and contactName != ''">#{contactName},</if>
+            <if test="contactPhone != null and contactPhone != ''">#{contactPhone},</if>
+            <if test="countryCode != null and countryCode != ''">#{countryCode},</if>
+            <if test="provinceCode != null and provinceCode != ''">#{provinceCode},</if>
+            <if test="cityCode != null and cityCode != ''">#{cityCode},</if>
+            <if test="countyCode != null and countyCode != ''">#{countyCode},</if>
+            <if test="serviceSiteAddress != null and serviceSiteAddress != ''">#{serviceSiteAddress},</if>
+            <if test="remark1 != null and remark1 != ''">#{remark1},</if>
+            <if test="remark2 != null and remark2 != ''">#{remark2},</if>
+            <if test="remark3 != null and remark3 != ''">#{remark3},</if>
+            <if test="seqKey != null and seqKey != ''">#{seqKey},</if>
+            <if test="createTime != null and createTime != ''">#{createTime},</if>
+            <if test="updateTime != null and updateTime != ''">#{updateTime},</if>
+            <if test="validStatus != null and validStatus != ''">#{validStatus,typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler},</if>
+            <if test="removeStatus != null and removeStatus != ''">#{removeStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+        </trim>
+	</insert>
+
+
+	<delete id="delete" parameterType="BasedataServiceSite">
+		delete from BASEDATA_SERVICE_SITE
+        <include refid="page_where" />
+	</delete>
+
+	<delete id="deleteByPrimaryKey" parameterType="String">
+		delete from BASEDATA_SERVICE_SITE
+		where ID = #{id}
+	</delete>
+
+
+	<update id="updateByPrimaryKey" parameterType="BasedataServiceSite">
+		update BASEDATA_SERVICE_SITE 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="serviceSiteName != null and serviceSiteName != ''">SERVICE_SITE_NAME = #{serviceSiteName},</if>
+			<if test="contactName != null and contactName != ''">CONTACT_NAME = #{contactName},</if>
+			<if test="contactPhone != null and contactPhone != ''">CONTACT_PHONE = #{contactPhone},</if>
+			<if test="countryCode != null and countryCode != ''">COUNTRY_CODE = #{countryCode},</if>
+			<if test="provinceCode != null and provinceCode != ''">PROVINCE_CODE = #{provinceCode},</if>
+			<if test="cityCode != null and cityCode != ''">CITY_CODE = #{cityCode},</if>
+			<if test="countyCode != null and countyCode != ''">COUNTY_CODE = #{countyCode},</if>
+			<if test="serviceSiteAddress != null and serviceSiteAddress != ''">SERVICE_SITE_ADDRESS = #{serviceSiteAddress},</if>
+			<if test="remark1 != null and remark1 != ''">REMARK1 = #{remark1},</if>
+			<if test="remark2 != null and remark2 != ''">REMARK2 = #{remark2},</if>
+			<if test="remark3 != null and remark3 != ''">REMARK3 = #{remark3},</if>
+			<if test="seqKey != null and seqKey != ''">SEQ_KEY = #{seqKey},</if>
+			<if test="createTime != null and createTime != ''">CREATE_TIME = #{createTime},</if>
+			<if test="updateTime != null and updateTime != ''">UPDATE_TIME = #{updateTime},</if>
+			<if test="validStatus != null and validStatus != ''">VALID_STATUS = #{validStatus,typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler},</if>
+			<if test="removeStatus != null and removeStatus != ''">REMOVE_STATUS = #{removeStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+		</trim>
+		<where>ID = #{id}</where>
+	</update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="BasedataServiceSite">
+        update BASEDATA_SERVICE_SITE
+        <trim prefix="set" suffixOverrides=",">
+            <if test="serviceSiteName != null and serviceSiteName != ''">SERVICE_SITE_NAME = #{serviceSiteName},</if>
+            <if test="contactName != null and contactName != ''">CONTACT_NAME = #{contactName},</if>
+            <if test="contactPhone != null and contactPhone != ''">CONTACT_PHONE = #{contactPhone},</if>
+            <if test="countryCode != null and countryCode != ''">COUNTRY_CODE = #{countryCode},</if>
+            <if test="provinceCode != null and provinceCode != ''">PROVINCE_CODE = #{provinceCode},</if>
+            <if test="cityCode != null and cityCode != ''">CITY_CODE = #{cityCode},</if>
+            <if test="countyCode != null and countyCode != ''">COUNTY_CODE = #{countyCode},</if>
+            <if test="serviceSiteAddress != null and serviceSiteAddress != ''">SERVICE_SITE_ADDRESS = #{serviceSiteAddress},</if>
+            <if test="remark1 != null and remark1 != ''">REMARK1 = #{remark1},</if>
+            <if test="remark2 != null and remark2 != ''">REMARK2 = #{remark2},</if>
+            <if test="remark3 != null and remark3 != ''">REMARK3 = #{remark3},</if>
+            <if test="seqKey != null and seqKey != ''">SEQ_KEY = #{seqKey},</if>
+            <if test="createTime != null and createTime != ''">CREATE_TIME = #{createTime},</if>
+            <if test="updateTime != null and updateTime != ''">UPDATE_TIME = #{updateTime},</if>
+            <if test="validStatus != null and validStatus != ''">VALID_STATUS = #{validStatus,typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler},</if>
+            <if test="removeStatus != null and removeStatus != ''">REMOVE_STATUS = #{removeStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+        </trim>
+        <include refid="page_where" />
+    </update>
+
+
+    <select id="selectAll" resultMap="basedataServiceSiteResultMap">
+        select <include refid="table_columns" />
+        from BASEDATA_SERVICE_SITE
+    </select>
+
+    <select id="select" resultMap="basedataServiceSiteResultMap">
+        select <include refid="table_columns" />
+        from BASEDATA_SERVICE_SITE
+        <include refid="page_where" />
+	</select>
+
+    <select id="selectCount" resultType="int" >
+        select count(ID) from BASEDATA_SERVICE_SITE
+        <include refid="page_where" />
+    </select>
+
+
+    <select id="selectByPrimaryKey" resultMap="basedataServiceSiteResultMap" parameterType="Integer" >
+		select <include refid="table_columns" />
+		from BASEDATA_SERVICE_SITE
+		where ID = #{id}
+	</select>
+	
+	<!-- 其他自定义SQL -->
+
+
+</mapper>

@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.melody.unicall.platform.dal.basedata.BasedataCountryMapper">
+	<resultMap type="BasedataCountry" id="basedataCountryResultMap">
+		<result property="id" column="ID" />
+		<result property="countryCode" column="COUNTRY_CODE" />
+		<result property="countryName" column="COUNTRY_NAME" />
+		<result property="englishName" column="ENGLISH_NAME" />
+		<result property="nationalFlag" column="NATIONAL_FLAG" typeHandler="top.melody.platform.common.repository.ImagesHandler"/>
+		<result property="countryImage" column="COUNTRY_IMAGE" typeHandler="top.melody.platform.common.repository.ImagesHandler"/>
+		<result property="openStatus" column="OPEN_STATUS" typeHandler="top.melody.platform.common.repository.ActStatusTypeHandler" />
+		<result property="registerStatus" column="REGISTER_STATUS" typeHandler="top.melody.platform.common.repository.ActStatusTypeHandler" />
+		<result property="rechargeStatus" column="RECHARGE_STATUS" typeHandler="top.melody.platform.common.repository.ActStatusTypeHandler" />
+		<result property="bookingNumber" column="BOOKING_NUMBER" />
+		<result property="createTime" column="CREATE_TIME" />
+		<result property="createUser" column="CREATE_USER" />
+		<result property="updateTime" column="UPDATE_TIME" />
+		<result property="updateUser" column="UPDATE_USER" />
+		<result property="remark1" column="REMARK1" />
+		<result property="remark2" column="REMARK2" />
+		<result property="remark3" column="REMARK3" />
+		<result property="seqKey" column="SEQ_KEY" />
+		<result property="validStatus" column="VALID_STATUS" typeHandler="top.melody.platform.common.repository.ValidStatusTypeHandler" />
+		<result property="removeStatus" column="REMOVE_STATUS" typeHandler="top.melody.platform.common.repository.ActStatusTypeHandler" />
+	</resultMap>
+	
+	<sql id="table_columns">
+		ID,
+		COUNTRY_CODE,
+		COUNTRY_NAME,
+		ENGLISH_NAME,
+		NATIONAL_FLAG,
+		COUNTRY_IMAGE,
+		OPEN_STATUS,
+		REGISTER_STATUS,
+		RECHARGE_STATUS,
+		BOOKING_NUMBER,
+		CREATE_TIME,
+		CREATE_USER,
+		UPDATE_TIME,
+		UPDATE_USER,
+		REMARK1,
+		REMARK2,
+		REMARK3,
+		SEQ_KEY,
+		VALID_STATUS,
+		REMOVE_STATUS
+    </sql>
+	<sql id="entity_properties">
+		#{id},
+		#{countryCode},
+		#{countryName},
+		#{englishName},
+		#{nationalFlag,typeHandler=top.icoding.platform.common.repository.ImagesHandler},
+		#{countryImage,typeHandler=top.icoding.platform.common.repository.ImagesHandler},
+		#{openStatus, typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},
+		#{registerStatus, typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},
+		#{rechargeStatus, typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},
+		#{bookingNumber},
+		#{createTime},
+		#{createUser},
+		#{updateTime},
+		#{updateUser},
+		#{remark1},
+		#{remark2},
+		#{remark3},
+		#{seqKey},
+		#{validStatus, typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler},
+		#{removeStatus, typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler}
+	</sql>
+
+    <!-- 使用like用法：columnName like concat('%',#columnName#,'%') -->
+    <sql id="page_where">
+        <trim prefix="where" prefixOverrides="and | or ">
+            <if test="countryCode != null and countryCode != ''">and COUNTRY_CODE = #{countryCode}</if>
+            <if test="countryName != null and countryName != ''">and COUNTRY_NAME = #{countryName}</if>
+            <if test="englishName != null and englishName != ''">and ENGLISH_NAME = #{englishName}</if>
+            <if test="nationalFlag != null and nationalFlag != ''">and NATIONAL_FLAG = #{nationalFlag,typeHandler=top.icoding.platform.common.repository.ImagesHandler}</if>
+            <if test="countryImage != null and countryImage != ''">and COUNTRY_IMAGE = #{countryImage,typeHandler=top.icoding.platform.common.repository.ImagesHandler}</if>
+            <if test="openStatus != null and openStatus != ''">and OPEN_STATUS = #{openStatus, typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler}</if>
+            <if test="registerStatus != null and registerStatus != ''">and REGISTER_STATUS = #{registerStatus, typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler}</if>
+            <if test="rechargeStatus != null and rechargeStatus != ''">and RECHARGE_STATUS = #{rechargeStatus, typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler}</if>
+            <if test="bookingNumber != null and bookingNumber != ''">and BOOKING_NUMBER = #{bookingNumber}</if>
+            <if test="createTime != null and createTime != ''">and CREATE_TIME = #{createTime}</if>
+            <if test="createUser != null and createUser != ''">and CREATE_USER = #{createUser}</if>
+            <if test="updateTime != null and updateTime != ''">and UPDATE_TIME = #{updateTime}</if>
+            <if test="updateUser != null and updateUser != ''">and UPDATE_USER = #{updateUser}</if>
+            <if test="remark1 != null and remark1 != ''">and REMARK1 = #{remark1}</if>
+            <if test="remark2 != null and remark2 != ''">and REMARK2 = #{remark2}</if>
+            <if test="remark3 != null and remark3 != ''">and REMARK3 = #{remark3}</if>
+            <if test="seqKey != null and seqKey != ''">and SEQ_KEY = #{seqKey}</if>
+            <if test="validStatus != null and validStatus != ''">and VALID_STATUS = #{validStatus, typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler}</if>
+            <if test="removeStatus != null and removeStatus != ''">and REMOVE_STATUS = #{removeStatus, typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler}</if>
+        </trim>
+    </sql>
+
+    <sql id="page_where_booking_desc">
+        <trim prefix="where" prefixOverrides="and | or ">
+            <if test="countryCode != null and countryCode != ''">and COUNTRY_CODE = #{countryCode}</if>
+            <if test="countryName != null and countryName != ''">and COUNTRY_NAME = #{countryName}</if>
+            <if test="englishName != null and englishName != ''">and ENGLISH_NAME = #{englishName}</if>
+            <if test="nationalFlag != null and nationalFlag != ''">and NATIONAL_FLAG = #{nationalFlag,typeHandler=top.icoding.platform.common.repository.ImagesHandler}</if>
+            <if test="countryImage != null and countryImage != ''">and COUNTRY_IMAGE = #{countryImage,typeHandler=top.icoding.platform.common.repository.ImagesHandler}</if>
+            <if test="openStatus != null and openStatus != ''">and OPEN_STATUS = #{openStatus, typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler}</if>
+            <if test="registerStatus != null and registerStatus != ''">and REGISTER_STATUS = #{registerStatus, typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler}</if>
+            <if test="rechargeStatus != null and rechargeStatus != ''">and RECHARGE_STATUS = #{rechargeStatus, typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler}</if>
+            <if test="bookingNumber != null and bookingNumber != ''">and BOOKING_NUMBER = #{bookingNumber}</if>
+            <if test="createTime != null and createTime != ''">and CREATE_TIME = #{createTime}</if>
+            <if test="createUser != null and createUser != ''">and CREATE_USER = #{createUser}</if>
+            <if test="updateTime != null and updateTime != ''">and UPDATE_TIME = #{updateTime}</if>
+            <if test="updateUser != null and updateUser != ''">and UPDATE_USER = #{updateUser}</if>
+            <if test="remark1 != null and remark1 != ''">and REMARK1 = #{remark1}</if>
+            <if test="remark2 != null and remark2 != ''">and REMARK2 = #{remark2}</if>
+            <if test="remark3 != null and remark3 != ''">and REMARK3 = #{remark3}</if>
+            <if test="seqKey != null and seqKey != ''">and SEQ_KEY = #{seqKey}</if>
+            <if test="validStatus != null and validStatus != ''">and VALID_STATUS = #{validStatus, typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler}</if>
+            <if test="removeStatus != null and removeStatus != ''">and REMOVE_STATUS = #{removeStatus, typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler}</if>
+            order by BOOKING_NUMBER desc
+        </trim>
+    </sql>
+
+	<!-- 适用于主键自增类型 -->
+	<insert id="insert" parameterType="BasedataCountry" useGeneratedKeys="true" keyProperty="id">
+		insert into BASEDATA_COUNTRY( <include refid="table_columns" /> ) 
+		values ( <include refid="entity_properties" /> )
+	</insert>
+
+    <insert id="insertSelective" parameterType="BasedataCountry">
+        insert into BASEDATA_COUNTRY
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="countryCode != null and countryCode != ''">COUNTRY_CODE,</if>
+            <if test="countryName != null and countryName != ''">COUNTRY_NAME,</if>
+            <if test="englishName != null and englishName != ''">ENGLISH_NAME,</if>
+            <if test="nationalFlag != null and nationalFlag != ''">NATIONAL_FLAG,</if>
+            <if test="countryImage != null and countryImage != ''">COUNTRY_IMAGE,</if>
+            <if test="openStatus != null and openStatus != ''">OPEN_STATUS,</if>
+            <if test="registerStatus != null and registerStatus != ''">REGISTER_STATUS,</if>
+            <if test="rechargeStatus != null and rechargeStatus != ''">RECHARGE_STATUS,</if>
+            <if test="bookingNumber != null and bookingNumber != ''">BOOKING_NUMBER,</if>
+            <if test="createTime != null and createTime != ''">CREATE_TIME,</if>
+            <if test="createUser != null and createUser != ''">CREATE_USER,</if>
+            <if test="updateTime != null and updateTime != ''">UPDATE_TIME,</if>
+            <if test="updateUser != null and updateUser != ''">UPDATE_USER,</if>
+            <if test="remark1 != null and remark1 != ''">REMARK1,</if>
+            <if test="remark2 != null and remark2 != ''">REMARK2,</if>
+            <if test="remark3 != null and remark3 != ''">REMARK3,</if>
+            <if test="seqKey != null and seqKey != ''">SEQ_KEY,</if>
+            <if test="validStatus != null and validStatus != ''">VALID_STATUS,</if>
+            <if test="removeStatus != null and removeStatus != ''">REMOVE_STATUS,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="countryCode != null and countryCode != ''">#{countryCode},</if>
+            <if test="countryName != null and countryName != ''">#{countryName},</if>
+            <if test="englishName != null and englishName != ''">#{englishName},</if>
+            <if test="nationalFlag != null and nationalFlag != ''">#{nationalFlag,typeHandler=top.icoding.platform.common.repository.ImagesHandler},</if>
+            <if test="countryImage != null and countryImage != ''">#{countryImage,typeHandler=top.icoding.platform.common.repository.ImagesHandler},</if>
+            <if test="openStatus != null and openStatus != ''">#{openStatus, typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+            <if test="registerStatus != null and registerStatus != ''">#{registerStatus, typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+            <if test="rechargeStatus != null and rechargeStatus != ''">#{rechargeStatus, typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+            <if test="bookingNumber != null and bookingNumber != ''">#{bookingNumber},</if>
+            <if test="createTime != null and createTime != ''">#{createTime},</if>
+            <if test="createUser != null and createUser != ''">#{createUser},</if>
+            <if test="updateTime != null and updateTime != ''">#{updateTime},</if>
+            <if test="updateUser != null and updateUser != ''">#{updateUser},</if>
+            <if test="remark1 != null and remark1 != ''">#{remark1},</if>
+            <if test="remark2 != null and remark2 != ''">#{remark2},</if>
+            <if test="remark3 != null and remark3 != ''">#{remark3},</if>
+            <if test="seqKey != null and seqKey != ''">#{seqKey},</if>
+            <if test="validStatus != null and validStatus != ''">#{validStatus, typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler},</if>
+            <if test="removeStatus != null and removeStatus != ''">#{removeStatus, typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+        </trim>
+	</insert>
+
+
+	<delete id="delete" parameterType="BasedataCountry">
+		delete from BASEDATA_COUNTRY
+        <include refid="page_where" />
+	</delete>
+
+	<delete id="deleteByPrimaryKey" parameterType="int">
+		delete from BASEDATA_COUNTRY
+		where ID = #{id}
+	</delete>
+
+
+	<update id="updateByPrimaryKey" parameterType="BasedataCountry">
+		update BASEDATA_COUNTRY 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="countryCode != null and countryCode != ''">COUNTRY_CODE = #{countryCode},</if>
+			<if test="countryName != null and countryName != ''">COUNTRY_NAME = #{countryName},</if>
+			<if test="englishName != null and englishName != ''">ENGLISH_NAME = #{englishName},</if>
+			<if test="nationalFlag != null and nationalFlag != ''">NATIONAL_FLAG = #{nationalFlag,typeHandler=top.icoding.platform.common.repository.ImagesHandler},</if>
+			<if test="countryImage != null and countryImage != ''">COUNTRY_IMAGE = #{countryImage,typeHandler=top.icoding.platform.common.repository.ImagesHandler},</if>
+			<if test="openStatus != null and openStatus != ''">OPEN_STATUS = #{openStatus, typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+			<if test="registerStatus != null and registerStatus != ''">REGISTER_STATUS = #{registerStatus, typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+			<if test="rechargeStatus != null and rechargeStatus != ''">RECHARGE_STATUS = #{rechargeStatus, typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+			<if test="bookingNumber != null and bookingNumber != ''">BOOKING_NUMBER = #{bookingNumber},</if>
+			<if test="createTime != null and createTime != ''">CREATE_TIME = #{createTime},</if>
+			<if test="createUser != null and createUser != ''">CREATE_USER = #{createUser},</if>
+			<if test="updateTime != null and updateTime != ''">UPDATE_TIME = #{updateTime},</if>
+			<if test="updateUser != null and updateUser != ''">UPDATE_USER = #{updateUser},</if>
+			<if test="remark1 != null and remark1 != ''">REMARK1 = #{remark1},</if>
+			<if test="remark2 != null and remark2 != ''">REMARK2 = #{remark2},</if>
+			<if test="remark3 != null and remark3 != ''">REMARK3 = #{remark3},</if>
+			<if test="seqKey != null and seqKey != ''">SEQ_KEY = #{seqKey},</if>
+			<if test="validStatus != null and validStatus != ''">VALID_STATUS = #{validStatus, typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler},</if>
+			<if test="removeStatus != null and removeStatus != ''">REMOVE_STATUS = #{removeStatus, typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+		</trim>
+		<where>ID = #{id}</where>
+	</update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="BasedataCountry">
+        update BASEDATA_COUNTRY
+        <trim prefix="set" suffixOverrides=",">
+            <if test="countryCode != null and countryCode != ''">COUNTRY_CODE = #{countryCode},</if>
+            <if test="countryName != null and countryName != ''">COUNTRY_NAME = #{countryName},</if>
+            <if test="englishName != null and englishName != ''">ENGLISH_NAME = #{englishName},</if>
+            <if test="nationalFlag != null and nationalFlag != ''">NATIONAL_FLAG = #{nationalFlag,typeHandler=top.icoding.platform.common.repository.ImagesHandler},</if>
+            <if test="countryImage != null and countryImage != ''">COUNTRY_IMAGE = #{countryImage,typeHandler=top.icoding.platform.common.repository.ImagesHandler},</if>
+            <if test="openStatus != null and openStatus != ''">OPEN_STATUS = #{openStatus, typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+            <if test="registerStatus != null and registerStatus != ''">REGISTER_STATUS = #{registerStatus, typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+            <if test="rechargeStatus != null and rechargeStatus != ''">RECHARGE_STATUS = #{rechargeStatus, typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+            <if test="bookingNumber != null and bookingNumber != ''">BOOKING_NUMBER = #{bookingNumber},</if>
+            <if test="createTime != null and createTime != ''">CREATE_TIME = #{createTime},</if>
+            <if test="createUser != null and createUser != ''">CREATE_USER = #{createUser},</if>
+            <if test="updateTime != null and updateTime != ''">UPDATE_TIME = #{updateTime},</if>
+            <if test="updateUser != null and updateUser != ''">UPDATE_USER = #{updateUser},</if>
+            <if test="remark1 != null and remark1 != ''">REMARK1 = #{remark1},</if>
+            <if test="remark2 != null and remark2 != ''">REMARK2 = #{remark2},</if>
+            <if test="remark3 != null and remark3 != ''">REMARK3 = #{remark3},</if>
+            <if test="seqKey != null and seqKey != ''">SEQ_KEY = #{seqKey},</if>
+            <if test="validStatus != null and validStatus != ''">VALID_STATUS = #{validStatus, typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler},</if>
+            <if test="removeStatus != null and removeStatus != ''">REMOVE_STATUS = #{removeStatus, typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+        </trim>
+        <include refid="page_where" />
+    </update>
+
+
+    <select id="selectAll" resultMap="basedataCountryResultMap">
+        select <include refid="table_columns" />
+        from BASEDATA_COUNTRY
+    </select>
+
+    <select id="select" resultMap="basedataCountryResultMap">
+        select <include refid="table_columns" />
+        from BASEDATA_COUNTRY
+        <include refid="page_where" />
+	</select>
+
+    <select id="selectCount" resultType="int" >
+        select count(ID) from BASEDATA_COUNTRY
+        <include refid="page_where" />
+    </select>
+
+
+    <select id="selectByPrimaryKey" resultMap="basedataCountryResultMap" parameterType="int" >
+		select <include refid="table_columns" />
+		from BASEDATA_COUNTRY
+		where ID = #{id}
+	</select>
+
+    <select id="selectOrderByBookingDesc" resultMap="basedataCountryResultMap">
+        select <include refid="table_columns" />
+        from BASEDATA_COUNTRY
+        <include refid="page_where_booking_desc" />
+    </select>
+
+	<select id="getCountryByCode" resultMap="basedataCountryResultMap" parameterType="String" >
+		select <include refid="table_columns" />
+		from BASEDATA_COUNTRY
+		where COUNTRY_CODE = #{0}
+	</select>
+	
+	<!-- 其他自定义SQL -->
+
+
+</mapper>

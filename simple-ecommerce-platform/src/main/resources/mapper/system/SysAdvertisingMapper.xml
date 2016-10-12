@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.melody.unicall.platform.dal.system.entity.SysAdvertising">
+	<resultMap type="SysAdvertising" id="sysAdvertisingResultMap">
+		<result property="id" column="ID" />
+		<result property="advTitle" column="ADV_TITLE" />
+		<result property="advImages" column="ADV_IMAGES" />
+		<result property="linkUrl" column="LINK_URL" />
+		<result property="contentType" column="CONTENT_TYPE" />
+		<result property="pushPlatform" column="PUSH_PLATFORM" />
+		<result property="pushPosition" column="PUSH_POSITION" />
+		<result property="remark1" column="REMARK1" />
+		<result property="remark2" column="REMARK2" />
+		<result property="remark3" column="REMARK3" />
+		<result property="validStatus" column="VALID_STATUS" />
+		<result property="removeStatus" column="REMOVE_STATUS" />
+		<result property="updateTime" column="UPDATE_TIME" />
+		<result property="crateTime" column="CRATE_TIME" />
+	</resultMap>
+	
+	<sql id="table_columns">
+		ID,
+		ADV_TITLE,
+		ADV_IMAGES,
+		LINK_URL,
+		CONTENT_TYPE,
+		PUSH_PLATFORM,
+		PUSH_POSITION,
+		REMARK1,
+		REMARK2,
+		REMARK3,
+		VALID_STATUS,
+		REMOVE_STATUS,
+		UPDATE_TIME,
+		CRATE_TIME
+    </sql>
+	<sql id="entity_properties">
+		#{id},
+		#{advTitle},
+		#{advImages},
+		#{linkUrl},
+		#{contentType},
+		#{pushPlatform},
+		#{pushPosition},
+		#{remark1},
+		#{remark2},
+		#{remark3},
+		#{validStatus},
+		#{removeStatus},
+		#{updateTime},
+		#{crateTime}
+	</sql>
+
+    <!-- 使用like用法：columnName like concat('%',#columnName#,'%') -->
+    <sql id="page_where">
+        <trim prefix="where" prefixOverrides="and | or ">
+            <if test="advTitle != null and advTitle != ''">and ADV_TITLE = #{advTitle}</if>
+            <if test="advImages != null and advImages != ''">and ADV_IMAGES = #{advImages}</if>
+            <if test="linkUrl != null and linkUrl != ''">and LINK_URL = #{linkUrl}</if>
+            <if test="contentType != null and contentType != ''">and CONTENT_TYPE = #{contentType}</if>
+            <if test="pushPlatform != null and pushPlatform != ''">and PUSH_PLATFORM = #{pushPlatform}</if>
+            <if test="pushPosition != null and pushPosition != ''">and PUSH_POSITION = #{pushPosition}</if>
+            <if test="remark1 != null and remark1 != ''">and REMARK1 = #{remark1}</if>
+            <if test="remark2 != null and remark2 != ''">and REMARK2 = #{remark2}</if>
+            <if test="remark3 != null and remark3 != ''">and REMARK3 = #{remark3}</if>
+            <if test="validStatus != null and validStatus != ''">and VALID_STATUS = #{validStatus}</if>
+            <if test="removeStatus != null and removeStatus != ''">and REMOVE_STATUS = #{removeStatus}</if>
+            <if test="updateTime != null and updateTime != ''">and UPDATE_TIME = #{updateTime}</if>
+            <if test="crateTime != null and crateTime != ''">and CRATE_TIME = #{crateTime}</if>
+        </trim>
+    </sql>
+
+
+	<!-- 适用于主键自增类型 -->
+	<insert id="insert" parameterType="SysAdvertising" useGeneratedKeys="true" keyProperty="id">
+		insert into SYS_ADVERTISING( <include refid="table_columns" /> ) 
+		values ( <include refid="entity_properties" /> )
+	</insert>
+
+    <insert id="insertSelective" parameterType="SysAdvertising">
+        insert into SYS_ADVERTISING
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="advTitle != null and advTitle != ''">ADV_TITLE,</if>
+            <if test="advImages != null and advImages != ''">ADV_IMAGES,</if>
+            <if test="linkUrl != null and linkUrl != ''">LINK_URL,</if>
+            <if test="contentType != null and contentType != ''">CONTENT_TYPE,</if>
+            <if test="pushPlatform != null and pushPlatform != ''">PUSH_PLATFORM,</if>
+            <if test="pushPosition != null and pushPosition != ''">PUSH_POSITION,</if>
+            <if test="remark1 != null and remark1 != ''">REMARK1,</if>
+            <if test="remark2 != null and remark2 != ''">REMARK2,</if>
+            <if test="remark3 != null and remark3 != ''">REMARK3,</if>
+            <if test="validStatus != null and validStatus != ''">VALID_STATUS,</if>
+            <if test="removeStatus != null and removeStatus != ''">REMOVE_STATUS,</if>
+            <if test="updateTime != null and updateTime != ''">UPDATE_TIME,</if>
+            <if test="crateTime != null and crateTime != ''">CRATE_TIME,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="advTitle != null and advTitle != ''">#{advTitle},</if>
+            <if test="advImages != null and advImages != ''">#{advImages},</if>
+            <if test="linkUrl != null and linkUrl != ''">#{linkUrl},</if>
+            <if test="contentType != null and contentType != ''">#{contentType},</if>
+            <if test="pushPlatform != null and pushPlatform != ''">#{pushPlatform},</if>
+            <if test="pushPosition != null and pushPosition != ''">#{pushPosition},</if>
+            <if test="remark1 != null and remark1 != ''">#{remark1},</if>
+            <if test="remark2 != null and remark2 != ''">#{remark2},</if>
+            <if test="remark3 != null and remark3 != ''">#{remark3},</if>
+            <if test="validStatus != null and validStatus != ''">#{validStatus},</if>
+            <if test="removeStatus != null and removeStatus != ''">#{removeStatus},</if>
+            <if test="updateTime != null and updateTime != ''">#{updateTime},</if>
+            <if test="crateTime != null and crateTime != ''">#{crateTime},</if>
+        </trim>
+	</insert>
+
+
+	<delete id="delete" parameterType="SysAdvertising">
+		delete from SYS_ADVERTISING
+        <include refid="page_where" />
+	</delete>
+
+	<delete id="deleteByPrimaryKey" parameterType="String">
+		delete from SYS_ADVERTISING
+		where ID = #{id}
+	</delete>
+
+
+	<update id="updateByPrimaryKey" parameterType="SysAdvertising">
+		update SYS_ADVERTISING 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="advTitle != null and advTitle != ''">ADV_TITLE = #{advTitle},</if>
+			<if test="advImages != null and advImages != ''">ADV_IMAGES = #{advImages},</if>
+			<if test="linkUrl != null and linkUrl != ''">LINK_URL = #{linkUrl},</if>
+			<if test="contentType != null and contentType != ''">CONTENT_TYPE = #{contentType},</if>
+			<if test="pushPlatform != null and pushPlatform != ''">PUSH_PLATFORM = #{pushPlatform},</if>
+			<if test="pushPosition != null and pushPosition != ''">PUSH_POSITION = #{pushPosition},</if>
+			<if test="remark1 != null and remark1 != ''">REMARK1 = #{remark1},</if>
+			<if test="remark2 != null and remark2 != ''">REMARK2 = #{remark2},</if>
+			<if test="remark3 != null and remark3 != ''">REMARK3 = #{remark3},</if>
+			<if test="validStatus != null and validStatus != ''">VALID_STATUS = #{validStatus},</if>
+			<if test="removeStatus != null and removeStatus != ''">REMOVE_STATUS = #{removeStatus},</if>
+			<if test="updateTime != null and updateTime != ''">UPDATE_TIME = #{updateTime},</if>
+			<if test="crateTime != null and crateTime != ''">CRATE_TIME = #{crateTime},</if>
+		</trim>
+		<where>ID = #{id}</where>
+	</update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="SysAdvertising">
+        update SYS_ADVERTISING
+        <trim prefix="set" suffixOverrides=",">
+            <if test="advTitle != null and advTitle != ''">ADV_TITLE = #{advTitle},</if>
+            <if test="advImages != null and advImages != ''">ADV_IMAGES = #{advImages},</if>
+            <if test="linkUrl != null and linkUrl != ''">LINK_URL = #{linkUrl},</if>
+            <if test="contentType != null and contentType != ''">CONTENT_TYPE = #{contentType},</if>
+            <if test="pushPlatform != null and pushPlatform != ''">PUSH_PLATFORM = #{pushPlatform},</if>
+            <if test="pushPosition != null and pushPosition != ''">PUSH_POSITION = #{pushPosition},</if>
+            <if test="remark1 != null and remark1 != ''">REMARK1 = #{remark1},</if>
+            <if test="remark2 != null and remark2 != ''">REMARK2 = #{remark2},</if>
+            <if test="remark3 != null and remark3 != ''">REMARK3 = #{remark3},</if>
+            <if test="validStatus != null and validStatus != ''">VALID_STATUS = #{validStatus},</if>
+            <if test="removeStatus != null and removeStatus != ''">REMOVE_STATUS = #{removeStatus},</if>
+            <if test="updateTime != null and updateTime != ''">UPDATE_TIME = #{updateTime},</if>
+            <if test="crateTime != null and crateTime != ''">CRATE_TIME = #{crateTime},</if>
+        </trim>
+        <include refid="page_where" />
+    </update>
+
+
+    <select id="selectAll" resultMap="sysAdvertisingResultMap">
+        select <include refid="table_columns" />
+        from SYS_ADVERTISING
+    </select>
+
+    <select id="select" resultMap="sysAdvertisingResultMap">
+        select <include refid="table_columns" />
+        from SYS_ADVERTISING
+        <include refid="page_where" />
+	</select>
+
+    <select id="selectCount" resultType="int" >
+        select count(ID) from SYS_ADVERTISING
+        <include refid="page_where" />
+    </select>
+
+
+    <select id="selectByPrimaryKey" resultMap="sysAdvertisingResultMap" parameterType="String" >
+		select <include refid="table_columns" />
+		from SYS_ADVERTISING
+		where ID = #{id}
+	</select>
+	
+	<!-- 其他自定义SQL -->
+
+
+</mapper>

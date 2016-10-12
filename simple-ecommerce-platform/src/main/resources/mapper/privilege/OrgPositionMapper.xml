@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.melody.unicall.platform.dal.privilege.OrgPositionMapper" >
+  <resultMap id="BaseResultMap" type="top.melody.unicall.platform.entity.privilege.OrgPosition" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="POSITION_NAME" property="positionName" jdbcType="VARCHAR" />
+    <result column="PARENT_ID" property="parentId" jdbcType="VARCHAR" />
+    <result column="ORDER_ID" property="orderId" jdbcType="INTEGER" />
+    <result column="ORGANIZATION_ID" property="organizationId" jdbcType="VARCHAR" />
+    <result column="APP_ID" property="appId" jdbcType="VARCHAR" />
+    <result column="VALID_STATUS" property="validStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    ID, POSITION_NAME, PARENT_ID, ORDER_ID, ORGANIZATION_ID, APP_ID, VALID_STATUS, CREATE_DATE, 
+    UPDATE_DATE
+  </sql>
+  <sql id="Entity_Prop_List" >
+    #{positionName},#{parentId},#{orderId},#{organizationId},#{appId},#{validStatus},#{createDate},#{updateDate}
+  </sql>
+</mapper>

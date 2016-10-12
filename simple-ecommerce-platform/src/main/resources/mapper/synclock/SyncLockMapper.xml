@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.melody.unicall.platform.dal.synclock.SyncLockMapper">
+	<resultMap type="SyncLock" id="syncLockResultMap">
+		<result property="id" column="ID" />
+		<result property="type" column="TYPE" typeHandler="top.melody.platform.common.repository.SyncLockObjectHandler"/>
+		<result property="relationId" column="RELATION_ID" />
+		<result property="lockTime" column="LOCK_TIME" />
+		<result property="unlockTime" column="UNLOCK_TIME" />
+		<result property="lockUser" column="LOCK_USER" />
+	</resultMap>
+	
+	<sql id="table_columns">
+		ID,
+		TYPE,
+		RELATION_ID,
+		LOCK_TIME,
+		UNLOCK_TIME,
+		LOCK_USER
+    </sql>
+	<sql id="entity_properties">
+		#{id},
+		#{type,typeHandler=top.icoding.platform.common.repository.SyncLockObjectHandler},
+		#{relationId},
+		#{lockTime},
+		#{unlockTime},
+		#{lockUser}
+	</sql>
+
+    <!-- 使用like用法：columnName like concat('%',#columnName#,'%') -->
+    <sql id="page_where">
+        <trim prefix="where" prefixOverrides="and | or ">
+            <if test="type != null and type != ''">and TYPE = #{type,typeHandler=top.icoding.platform.common.repository.SyncLockObjectHandler}</if>
+            <if test="relationId != null and relationId != ''">and RELATION_ID = #{relationId}</if>
+            <if test="lockTime != null and lockTime != ''">and LOCK_TIME = #{lockTime}</if>
+            <if test="unlockTime != null and unlockTime != ''">and UNLOCK_TIME = #{unlockTime}</if>
+            <if test="lockUser != null and lockUser != ''">and LOCK_USER = #{lockUser}</if>
+        </trim>
+    </sql>
+
+
+	<!-- 适用于主键自增类型 -->
+	<insert id="insert" parameterType="SyncLock" useGeneratedKeys="true" keyProperty="id">
+		insert into SYNC_LOCK( <include refid="table_columns" /> ) 
+		values ( <include refid="entity_properties" /> )
+	</insert>
+
+    <insert id="insertSelective" parameterType="SyncLock">
+        insert into SYNC_LOCK
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="type != null and type != ''">TYPE,</if>
+            <if test="relationId != null and relationId != ''">RELATION_ID,</if>
+            <if test="lockTime != null and lockTime != ''">LOCK_TIME,</if>
+            <if test="unlockTime != null and unlockTime != ''">UNLOCK_TIME,</if>
+            <if test="lockUser != null and lockUser != ''">LOCK_USER,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="type != null and type != ''">#{type,typeHandler=top.icoding.platform.common.repository.SyncLockObjectHandler},</if>
+            <if test="relationId != null and relationId != ''">#{relationId},</if>
+            <if test="lockTime != null and lockTime != ''">#{lockTime},</if>
+            <if test="unlockTime != null and unlockTime != ''">#{unlockTime},</if>
+            <if test="lockUser != null and lockUser != ''">#{lockUser},</if>
+        </trim>
+	</insert>
+
+
+	<delete id="delete" parameterType="SyncLock">
+		delete from SYNC_LOCK
+        <include refid="page_where" />
+	</delete>
+
+	<delete id="deleteByPrimaryKey" parameterType="String">
+		delete from SYNC_LOCK
+		where ID = #{id}
+	</delete>
+
+
+	<update id="updateByPrimaryKey" parameterType="SyncLock">
+		update SYNC_LOCK 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="type != null and type != ''">TYPE = #{type,typeHandler=top.icoding.platform.common.repository.SyncLockObjectHandler},</if>
+			<if test="relationId != null and relationId != ''">RELATION_ID = #{relationId},</if>
+			<if test="lockTime != null and lockTime != ''">LOCK_TIME = #{lockTime},</if>
+			<if test="unlockTime != null and unlockTime != ''">UNLOCK_TIME = #{unlockTime},</if>
+			<if test="lockUser != null and lockUser != ''">LOCK_USER = #{lockUser},</if>
+		</trim>
+		<where>ID = #{id}</where>
+	</update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="SyncLock">
+        update SYNC_LOCK
+        <trim prefix="set" suffixOverrides=",">
+            <if test="type != null and type != ''">TYPE = #{type,typeHandler=top.icoding.platform.common.repository.SyncLockObjectHandler},</if>
+            <if test="relationId != null and relationId != ''">RELATION_ID = #{relationId},</if>
+            <if test="lockTime != null and lockTime != ''">LOCK_TIME = #{lockTime},</if>
+            <if test="unlockTime != null and unlockTime != ''">UNLOCK_TIME = #{unlockTime},</if>
+            <if test="lockUser != null and lockUser != ''">LOCK_USER = #{lockUser},</if>
+        </trim>
+        <include refid="page_where" />
+    </update>
+
+
+    <select id="selectAll" resultMap="syncLockResultMap">
+        select <include refid="table_columns" />
+        from SYNC_LOCK
+    </select>
+
+    <select id="select" resultMap="syncLockResultMap">
+        select <include refid="table_columns" />
+        from SYNC_LOCK
+        <include refid="page_where" />
+	</select>
+
+    <select id="selectCount" resultType="int" >
+        select count(ID) from SYNC_LOCK
+        <include refid="page_where" />
+    </select>
+
+
+    <select id="selectByPrimaryKey" resultMap="syncLockResultMap" parameterType="String" >
+		select <include refid="table_columns" />
+		from SYNC_LOCK
+		where ID = #{id}
+	</select>
+	
+	<!-- 其他自定义SQL -->
+
+
+</mapper>

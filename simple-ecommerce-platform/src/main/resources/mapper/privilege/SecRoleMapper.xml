@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.melody.unicall.platform.dal.privilege.SecRoleMapper" >
+  <resultMap id="BaseResultMap" type="top.melody.unicall.platform.entity.privilege.SecRole" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="ROLE_NAME" property="roleName" jdbcType="VARCHAR" />
+    <result column="VALID_STATUS" property="validStatus" jdbcType="VARCHAR"  typeHandler="top.melody.platform.common.repository.ValidStatusTypeHandler"  />
+    <result column="APP_ID" property="appId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    ID, ROLE_NAME, VALID_STATUS, APP_ID, CREATE_DATE, UPDATE_DATE
+  </sql>
+  <sql id="Entity_Prop_List" >
+    #{id},#{roleName},#{validStatus,typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler},#{appId},#{createDate},#{updateDate}
+  </sql>
+
+
+    <!--&lt;!&ndash; 适用于主键自增类型 &ndash;&gt;-->
+    <!--<insert id="insert" parameterType="Goods" useGeneratedKeys="true" keyProperty="id">-->
+        <!--insert into GOODS( <include refid="table_columns" /> )-->
+        <!--values ( <include refid="entity_properties" /> )-->
+    <!--</insert>-->
+
+
+<insert id="insert2" parameterType="SecRole" >
+    <selectKey keyProperty="id" resultType="String" order="BEFORE">
+        select uuid_short()
+    </selectKey>
+    INSERT INTO SEC_ROLE( <include refid="Base_Column_List"/> )
+    VALUES ( <include refid="Entity_Prop_List"/> )
+</insert>
+</mapper>

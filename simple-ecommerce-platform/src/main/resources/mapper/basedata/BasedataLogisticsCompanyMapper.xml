@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.melody.unicall.platform.dal.basedata.BasedataLogisticsCompanyMapper">
+	<resultMap type="BasedataLogisticsCompany" id="basedataLogisticsCompanyResultMap">
+		<result property="id" column="ID" />
+		<result property="logisticsName" column="LOGISTICS_NAME" />
+		<result property="contactName" column="CONTACT_NAME" />
+		<result property="contactPhone" column="CONTACT_PHONE" />
+		<result property="logisticsDesc" column="LOGISTICS_DESC" />
+		<result property="validStatus" column="VALID_STATUS" typeHandler="top.melody.platform.common.repository.ValidStatusTypeHandler"/>
+		<result property="remark1" column="REMARK1" />
+		<result property="remark2" column="REMARK2" />
+		<result property="remark3" column="REMARK3" />
+		<result property="seqKey" column="SEQ_KEY" />
+		<result property="removeStatus" column="REMOVE_STATUS" typeHandler="top.melody.platform.common.repository.ActStatusTypeHandler"/>
+		<result property="createTime" column="CREATE_TIME" />
+		<result property="updateTime" column="UPDATE_TIME" />
+	</resultMap>
+	
+	<sql id="table_columns">
+		ID,
+		LOGISTICS_NAME,
+		CONTACT_NAME,
+		CONTACT_PHONE,
+		LOGISTICS_DESC,
+		VALID_STATUS,
+		REMARK1,
+		REMARK2,
+		REMARK3,
+		SEQ_KEY,
+		REMOVE_STATUS,
+		CREATE_TIME,
+		UPDATE_TIME
+    </sql>
+	<sql id="entity_properties">
+		#{id},
+		#{logisticsName},
+		#{contactName},
+		#{contactPhone},
+		#{logisticsDesc},
+		#{validStatus,typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler},
+		#{remark1},
+		#{remark2},
+		#{remark3},
+		#{seqKey},
+		#{removeStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},
+		#{createTime},
+		#{updateTime}
+	</sql>
+
+    <!-- 使用like用法：columnName like concat('%',#columnName#,'%') -->
+    <sql id="page_where">
+        <trim prefix="where" prefixOverrides="and | or ">
+            <if test="logisticsName != null and logisticsName != ''">and LOGISTICS_NAME = #{logisticsName}</if>
+            <if test="contactName != null and contactName != ''">and CONTACT_NAME = #{contactName}</if>
+            <if test="contactPhone != null and contactPhone != ''">and CONTACT_PHONE = #{contactPhone}</if>
+            <if test="logisticsDesc != null and logisticsDesc != ''">and LOGISTICS_DESC = #{logisticsDesc}</if>
+            <if test="validStatus != null and validStatus != ''">and VALID_STATUS = #{validStatus,typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler}</if>
+            <if test="remark1 != null and remark1 != ''">and REMARK1 = #{remark1}</if>
+            <if test="remark2 != null and remark2 != ''">and REMARK2 = #{remark2}</if>
+            <if test="remark3 != null and remark3 != ''">and REMARK3 = #{remark3}</if>
+            <if test="seqKey != null and seqKey != ''">and SEQ_KEY = #{seqKey}</if>
+            <if test="removeStatus != null and removeStatus != ''">and REMOVE_STATUS = #{removeStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler}</if>
+            <if test="createTime != null and createTime != ''">and CREATE_TIME = #{createTime}</if>
+            <if test="updateTime != null and updateTime != ''">and UPDATE_TIME = #{updateTime}</if>
+        </trim>
+    </sql>
+
+
+	<!-- 适用于主键自增类型 -->
+	<insert id="insert" parameterType="BasedataLogisticsCompany" useGeneratedKeys="true" keyProperty="id">
+		insert into BASEDATA_LOGISTICS_COMPANY( <include refid="table_columns" /> ) 
+		values ( <include refid="entity_properties" /> )
+	</insert>
+
+    <insert id="insertSelective" parameterType="BasedataLogisticsCompany">
+        insert into BASEDATA_LOGISTICS_COMPANY
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="logisticsName != null and logisticsName != ''">LOGISTICS_NAME,</if>
+            <if test="contactName != null and contactName != ''">CONTACT_NAME,</if>
+            <if test="contactPhone != null and contactPhone != ''">CONTACT_PHONE,</if>
+            <if test="logisticsDesc != null and logisticsDesc != ''">LOGISTICS_DESC,</if>
+            <if test="validStatus != null and validStatus != ''">VALID_STATUS,</if>
+            <if test="remark1 != null and remark1 != ''">REMARK1,</if>
+            <if test="remark2 != null and remark2 != ''">REMARK2,</if>
+            <if test="remark3 != null and remark3 != ''">REMARK3,</if>
+            <if test="seqKey != null and seqKey != ''">SEQ_KEY,</if>
+            <if test="removeStatus != null and removeStatus != ''">REMOVE_STATUS,</if>
+            <if test="createTime != null and createTime != ''">CREATE_TIME,</if>
+            <if test="updateTime != null and updateTime != ''">UPDATE_TIME,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="logisticsName != null and logisticsName != ''">#{logisticsName},</if>
+            <if test="contactName != null and contactName != ''">#{contactName},</if>
+            <if test="contactPhone != null and contactPhone != ''">#{contactPhone},</if>
+            <if test="logisticsDesc != null and logisticsDesc != ''">#{logisticsDesc},</if>
+            <if test="validStatus != null and validStatus != ''">#{validStatus,typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler},</if>
+            <if test="remark1 != null and remark1 != ''">#{remark1},</if>
+            <if test="remark2 != null and remark2 != ''">#{remark2},</if>
+            <if test="remark3 != null and remark3 != ''">#{remark3},</if>
+            <if test="seqKey != null and seqKey != ''">#{seqKey},</if>
+            <if test="removeStatus != null and removeStatus != ''">#{removeStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+            <if test="createTime != null and createTime != ''">#{createTime},</if>
+            <if test="updateTime != null and updateTime != ''">#{updateTime},</if>
+        </trim>
+	</insert>
+
+
+	<delete id="delete" parameterType="BasedataLogisticsCompany">
+		delete from BASEDATA_LOGISTICS_COMPANY
+        <include refid="page_where" />
+	</delete>
+
+	<delete id="deleteByPrimaryKey" parameterType="String">
+		delete from BASEDATA_LOGISTICS_COMPANY
+		where ID = #{id}
+	</delete>
+
+
+	<update id="updateByPrimaryKey" parameterType="BasedataLogisticsCompany">
+		update BASEDATA_LOGISTICS_COMPANY 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="logisticsName != null and logisticsName != ''">LOGISTICS_NAME = #{logisticsName},</if>
+			<if test="contactName != null and contactName != ''">CONTACT_NAME = #{contactName},</if>
+			<if test="contactPhone != null and contactPhone != ''">CONTACT_PHONE = #{contactPhone},</if>
+			<if test="logisticsDesc != null and logisticsDesc != ''">LOGISTICS_DESC = #{logisticsDesc},</if>
+			<if test="validStatus != null and validStatus != ''">VALID_STATUS = #{validStatus,typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler},</if>
+			<if test="remark1 != null and remark1 != ''">REMARK1 = #{remark1},</if>
+			<if test="remark2 != null and remark2 != ''">REMARK2 = #{remark2},</if>
+			<if test="remark3 != null and remark3 != ''">REMARK3 = #{remark3},</if>
+			<if test="seqKey != null and seqKey != ''">SEQ_KEY = #{seqKey},</if>
+			<if test="removeStatus != null and removeStatus != ''">REMOVE_STATUS = #{removeStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+			<if test="createTime != null and createTime != ''">CREATE_TIME = #{createTime},</if>
+			<if test="updateTime != null and updateTime != ''">UPDATE_TIME = #{updateTime},</if>
+		</trim>
+		<where>ID = #{id}</where>
+	</update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="BasedataLogisticsCompany">
+        update BASEDATA_LOGISTICS_COMPANY
+        <trim prefix="set" suffixOverrides=",">
+            <if test="logisticsName != null and logisticsName != ''">LOGISTICS_NAME = #{logisticsName},</if>
+            <if test="contactName != null and contactName != ''">CONTACT_NAME = #{contactName},</if>
+            <if test="contactPhone != null and contactPhone != ''">CONTACT_PHONE = #{contactPhone},</if>
+            <if test="logisticsDesc != null and logisticsDesc != ''">LOGISTICS_DESC = #{logisticsDesc},</if>
+            <if test="validStatus != null and validStatus != ''">VALID_STATUS = #{validStatus,typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler},</if>
+            <if test="remark1 != null and remark1 != ''">REMARK1 = #{remark1},</if>
+            <if test="remark2 != null and remark2 != ''">REMARK2 = #{remark2},</if>
+            <if test="remark3 != null and remark3 != ''">REMARK3 = #{remark3},</if>
+            <if test="seqKey != null and seqKey != ''">SEQ_KEY = #{seqKey},</if>
+            <if test="removeStatus != null and removeStatus != ''">REMOVE_STATUS = #{removeStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+            <if test="createTime != null and createTime != ''">CREATE_TIME = #{createTime},</if>
+            <if test="updateTime != null and updateTime != ''">UPDATE_TIME = #{updateTime},</if>
+        </trim>
+        <include refid="page_where" />
+    </update>
+
+
+    <select id="selectAll" resultMap="basedataLogisticsCompanyResultMap">
+        select <include refid="table_columns" />
+        from BASEDATA_LOGISTICS_COMPANY
+    </select>
+
+    <select id="select" resultMap="basedataLogisticsCompanyResultMap">
+        select <include refid="table_columns" />
+        from BASEDATA_LOGISTICS_COMPANY
+        <include refid="page_where" />
+	</select>
+
+    <select id="selectCount" resultType="int" >
+        select count(ID) from BASEDATA_LOGISTICS_COMPANY
+        <include refid="page_where" />
+    </select>
+
+
+    <select id="selectByPrimaryKey" resultMap="basedataLogisticsCompanyResultMap" parameterType="int" >
+		select <include refid="table_columns" />
+		from BASEDATA_LOGISTICS_COMPANY
+		where ID = #{id}
+	</select>
+	
+	<!-- 其他自定义SQL -->
+
+
+</mapper>

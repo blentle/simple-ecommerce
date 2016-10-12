@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.melody.unicall.platform.dal.system.SysNoticeMapper">
+	<resultMap type="SysNotice" id="sysNoticeResultMap">
+		<result property="id" column="ID" />
+		<result property="noticeTitle" column="NOTICE_TITLE" />
+		<result property="noticeContent" column="NOTICE_CONTENT" />
+		<result property="noticeCategory" column="NOTICE_CATEGORY" />
+		<result property="type" column="TYPE" />
+		<result property="spreadNumber" column="SPREAD_NUMBER" />
+		<result property="userId" column="USER_ID" />
+		<result property="remark1" column="REMARK1" />
+		<result property="remark2" column="REMARK2" />
+		<result property="remark3" column="REMARK3" />
+		<result property="validStatus" column="VALID_STATUS" />
+		<result property="removeStatus" column="REMOVE_STATUS" />
+		<result property="updateTime" column="UPDATE_TIME" />
+		<result property="createTime" column="CREATE_TIME" />
+	</resultMap>
+	
+	<sql id="table_columns">
+		ID,
+		NOTICE_TITLE,
+		NOTICE_CONTENT,
+		NOTICE_CATEGORY,
+		TYPE,
+		SPREAD_NUMBER,
+		USER_ID,
+		REMARK1,
+		REMARK2,
+		REMARK3,
+		VALID_STATUS,
+		REMOVE_STATUS,
+		UPDATE_TIME,
+		CREATE_TIME
+    </sql>
+	<sql id="entity_properties">
+		#{id},
+		#{noticeTitle},
+		#{noticeContent},
+		#{noticeCategory},
+		#{type},
+		#{spreadNumber},
+		#{userId},
+		#{remark1},
+		#{remark2},
+		#{remark3},
+		#{validStatus},
+		#{removeStatus},
+		#{updateTime},
+		#{createTime}
+	</sql>
+
+    <!-- 使用like用法：columnName like concat('%',#columnName#,'%') -->
+    <sql id="page_where">
+        <trim prefix="where" prefixOverrides="and | or ">
+            <if test="noticeTitle != null and noticeTitle != ''">and NOTICE_TITLE = #{noticeTitle}</if>
+            <if test="noticeContent != null and noticeContent != ''">and NOTICE_CONTENT = #{noticeContent}</if>
+            <if test="noticeCategory != null and noticeCategory != ''">and NOTICE_CATEGORY = #{noticeCategory}</if>
+            <if test="type != null and type != ''">and TYPE = #{type}</if>
+            <if test="spreadNumber != null and spreadNumber != ''">and SPREAD_NUMBER = #{spreadNumber}</if>
+            <if test="userId != null and userId != ''">and USER_ID = #{userId}</if>
+            <if test="remark1 != null and remark1 != ''">and REMARK1 = #{remark1}</if>
+            <if test="remark2 != null and remark2 != ''">and REMARK2 = #{remark2}</if>
+            <if test="remark3 != null and remark3 != ''">and REMARK3 = #{remark3}</if>
+            <if test="validStatus != null and validStatus != ''">and VALID_STATUS = #{validStatus}</if>
+            <if test="removeStatus != null and removeStatus != ''">and REMOVE_STATUS = #{removeStatus}</if>
+            <if test="updateTime != null and updateTime != ''">and UPDATE_TIME = #{updateTime}</if>
+            <if test="createTime != null and createTime != ''">and CREATE_TIME = #{createTime}</if>
+        </trim>
+    </sql>
+
+
+	<!-- 适用于主键自增类型 -->
+	<insert id="insert" parameterType="SysNotice" useGeneratedKeys="true" keyProperty="id">
+		insert into SYS_NOTICE( <include refid="table_columns" /> ) 
+		values ( <include refid="entity_properties" /> )
+	</insert>
+
+    <insert id="insertSelective" parameterType="SysNotice">
+        insert into SYS_NOTICE
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="noticeTitle != null and noticeTitle != ''">NOTICE_TITLE,</if>
+            <if test="noticeContent != null and noticeContent != ''">NOTICE_CONTENT,</if>
+            <if test="noticeCategory != null and noticeCategory != ''">NOTICE_CATEGORY,</if>
+            <if test="type != null and type != ''">TYPE,</if>
+            <if test="spreadNumber != null and spreadNumber != ''">SPREAD_NUMBER,</if>
+            <if test="userId != null and userId != ''">USER_ID,</if>
+            <if test="remark1 != null and remark1 != ''">REMARK1,</if>
+            <if test="remark2 != null and remark2 != ''">REMARK2,</if>
+            <if test="remark3 != null and remark3 != ''">REMARK3,</if>
+            <if test="validStatus != null and validStatus != ''">VALID_STATUS,</if>
+            <if test="removeStatus != null and removeStatus != ''">REMOVE_STATUS,</if>
+            <if test="updateTime != null and updateTime != ''">UPDATE_TIME,</if>
+            <if test="createTime != null and createTime != ''">CREATE_TIME,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="noticeTitle != null and noticeTitle != ''">#{noticeTitle},</if>
+            <if test="noticeContent != null and noticeContent != ''">#{noticeContent},</if>
+            <if test="noticeCategory != null and noticeCategory != ''">#{noticeCategory},</if>
+            <if test="type != null and type != ''">#{type},</if>
+            <if test="spreadNumber != null and spreadNumber != ''">#{spreadNumber},</if>
+            <if test="userId != null and userId != ''">#{userId},</if>
+            <if test="remark1 != null and remark1 != ''">#{remark1},</if>
+            <if test="remark2 != null and remark2 != ''">#{remark2},</if>
+            <if test="remark3 != null and remark3 != ''">#{remark3},</if>
+            <if test="validStatus != null and validStatus != ''">#{validStatus},</if>
+            <if test="removeStatus != null and removeStatus != ''">#{removeStatus},</if>
+            <if test="updateTime != null and updateTime != ''">#{updateTime},</if>
+            <if test="createTime != null and createTime != ''">#{createTime},</if>
+        </trim>
+	</insert>
+
+
+	<delete id="delete" parameterType="SysNotice">
+		delete from SYS_NOTICE
+        <include refid="page_where" />
+	</delete>
+
+	<delete id="deleteByPrimaryKey" parameterType="String">
+		delete from SYS_NOTICE
+		where ID = #{id}
+	</delete>
+
+
+	<update id="updateByPrimaryKey" parameterType="SysNotice">
+		update SYS_NOTICE 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="noticeTitle != null and noticeTitle != ''">NOTICE_TITLE = #{noticeTitle},</if>
+			<if test="noticeContent != null and noticeContent != ''">NOTICE_CONTENT = #{noticeContent},</if>
+			<if test="noticeCategory != null and noticeCategory != ''">NOTICE_CATEGORY = #{noticeCategory},</if>
+			<if test="type != null and type != ''">TYPE = #{type},</if>
+			<if test="spreadNumber != null and spreadNumber != ''">SPREAD_NUMBER = #{spreadNumber},</if>
+			<if test="userId != null and userId != ''">USER_ID = #{userId},</if>
+			<if test="remark1 != null and remark1 != ''">REMARK1 = #{remark1},</if>
+			<if test="remark2 != null and remark2 != ''">REMARK2 = #{remark2},</if>
+			<if test="remark3 != null and remark3 != ''">REMARK3 = #{remark3},</if>
+			<if test="validStatus != null and validStatus != ''">VALID_STATUS = #{validStatus},</if>
+			<if test="removeStatus != null and removeStatus != ''">REMOVE_STATUS = #{removeStatus},</if>
+			<if test="updateTime != null and updateTime != ''">UPDATE_TIME = #{updateTime},</if>
+			<if test="createTime != null and createTime != ''">CREATE_TIME = #{createTime},</if>
+		</trim>
+		<where>ID = #{id}</where>
+	</update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="SysNotice">
+        update SYS_NOTICE
+        <trim prefix="set" suffixOverrides=",">
+            <if test="noticeTitle != null and noticeTitle != ''">NOTICE_TITLE = #{noticeTitle},</if>
+            <if test="noticeContent != null and noticeContent != ''">NOTICE_CONTENT = #{noticeContent},</if>
+            <if test="noticeCategory != null and noticeCategory != ''">NOTICE_CATEGORY = #{noticeCategory},</if>
+            <if test="type != null and type != ''">TYPE = #{type},</if>
+            <if test="spreadNumber != null and spreadNumber != ''">SPREAD_NUMBER = #{spreadNumber},</if>
+            <if test="userId != null and userId != ''">USER_ID = #{userId},</if>
+            <if test="remark1 != null and remark1 != ''">REMARK1 = #{remark1},</if>
+            <if test="remark2 != null and remark2 != ''">REMARK2 = #{remark2},</if>
+            <if test="remark3 != null and remark3 != ''">REMARK3 = #{remark3},</if>
+            <if test="validStatus != null and validStatus != ''">VALID_STATUS = #{validStatus},</if>
+            <if test="removeStatus != null and removeStatus != ''">REMOVE_STATUS = #{removeStatus},</if>
+            <if test="updateTime != null and updateTime != ''">UPDATE_TIME = #{updateTime},</if>
+            <if test="createTime != null and createTime != ''">CREATE_TIME = #{createTime},</if>
+        </trim>
+        <include refid="page_where" />
+    </update>
+
+
+    <select id="selectAll" resultMap="sysNoticeResultMap">
+        select <include refid="table_columns" />
+        from SYS_NOTICE
+    </select>
+
+    <select id="select" resultMap="sysNoticeResultMap">
+        select <include refid="table_columns" />
+        from SYS_NOTICE
+        <include refid="page_where" />
+	</select>
+
+    <select id="selectCount" resultType="int" >
+        select count(ID) from SYS_NOTICE
+        <include refid="page_where" />
+    </select>
+
+
+    <select id="selectByPrimaryKey" resultMap="sysNoticeResultMap" parameterType="String" >
+		select <include refid="table_columns" />
+		from SYS_NOTICE
+		where ID = #{id}
+	</select>
+	
+	<!-- 其他自定义SQL -->
+
+
+</mapper>

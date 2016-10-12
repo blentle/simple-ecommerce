@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.melody.unicall.platform.dal.order.OrderLogMapper">
+	<resultMap type="OrderLog" id="orderLogResultMap">
+		<result property="id" column="ID" />
+		<result property="orderCode" column="ORDER_CODE" />
+		<result property="accountId" column="ACCOUNT_ID" />
+		<result property="orderStatus" column="ORDER_STATUS" typeHandler="top.melody.platform.common.repository.OrderStatusHandler"/>
+		<result property="statusMemo" column="STATUS_MEMO" />
+		<result property="remark1" column="REMARK1" />
+		<result property="remark2" column="REMARK2" />
+		<result property="remark3" column="REMARK3" />
+		<result property="validStatus" column="VALID_STATUS" typeHandler="top.melody.platform.common.repository.ValidStatusTypeHandler"/>
+		<result property="removeStatus" column="REMOVE_STATUS" typeHandler="top.melody.platform.common.repository.ActStatusTypeHandler"/>
+		<result property="updateTime" column="UPDATE_TIME" />
+		<result property="createTime" column="CREATE_TIME" />
+		<result property="actStatus" column="ACT_STATUS" />
+	</resultMap>
+	
+	<sql id="table_columns">
+		ID,
+		ORDER_CODE,
+		ACCOUNT_ID,
+		ORDER_STATUS,
+		STATUS_MEMO,
+		REMARK1,
+		REMARK2,
+		REMARK3,
+		VALID_STATUS,
+		REMOVE_STATUS,
+		UPDATE_TIME,
+		CREATE_TIME,
+		ACT_STATUS
+    </sql>
+	<sql id="entity_properties">
+		#{id},
+		#{orderCode},
+		#{accountId},
+		#{orderStatus,typeHandler=top.icoding.platform.common.repository.OrderStatusHandler},
+		#{statusMemo},
+		#{remark1},
+		#{remark2},
+		#{remark3},
+		#{validStatus,typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler},
+		#{removeStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},
+		#{updateTime},
+		#{createTime},
+		#{actStatus}
+	</sql>
+
+    <!-- 使用like用法：columnName like concat('%',#columnName#,'%') -->
+    <sql id="page_where">
+        <trim prefix="where" prefixOverrides="and | or ">
+            <if test="orderCode != null and orderCode != ''">and ORDER_CODE = #{orderCode}</if>
+            <if test="accountId != null and accountId != ''">and ACCOUNT_ID = #{accountId}</if>
+            <if test="orderStatus != null and orderStatus != ''">and ORDER_STATUS = #{orderStatus,typeHandler=top.icoding.platform.common.repository.OrderStatusHandler}</if>
+            <if test="statusMemo != null and statusMemo != ''">and STATUS_MEMO = #{statusMemo}</if>
+            <if test="remark1 != null and remark1 != ''">and REMARK1 = #{remark1}</if>
+            <if test="remark2 != null and remark2 != ''">and REMARK2 = #{remark2}</if>
+            <if test="remark3 != null and remark3 != ''">and REMARK3 = #{remark3}</if>
+            <if test="validStatus != null and validStatus != ''">and VALID_STATUS = #{validStatus,typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler}</if>
+            <if test="removeStatus != null and removeStatus != ''">and REMOVE_STATUS = #{removeStatus,,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler}</if>
+            <if test="updateTime != null and updateTime != ''">and UPDATE_TIME = #{updateTime}</if>
+            <if test="createTime != null and createTime != ''">and CREATE_TIME = #{createTime}</if>
+            <if test="actStatus != null and actStatus != ''">and ACT_STATUS = #{actStatus}</if>
+        </trim>
+    </sql>
+
+
+	<!-- 适用于主键自增类型 -->
+	<insert id="insert" parameterType="OrderLog" useGeneratedKeys="true" keyProperty="id">
+		insert into ORDER_LOG( <include refid="table_columns" /> ) 
+		values ( <include refid="entity_properties" /> )
+	</insert>
+
+    <insert id="insertSelective" parameterType="OrderLog">
+        insert into ORDER_LOG
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="orderCode != null and orderCode != ''">ORDER_CODE,</if>
+            <if test="accountId != null and accountId != ''">ACCOUNT_ID,</if>
+            <if test="orderStatus != null and orderStatus != ''">ORDER_STATUS,</if>
+            <if test="statusMemo != null and statusMemo != ''">STATUS_MEMO,</if>
+            <if test="remark1 != null and remark1 != ''">REMARK1,</if>
+            <if test="remark2 != null and remark2 != ''">REMARK2,</if>
+            <if test="remark3 != null and remark3 != ''">REMARK3,</if>
+            <if test="validStatus != null and validStatus != ''">VALID_STATUS,</if>
+            <if test="removeStatus != null and removeStatus != ''">REMOVE_STATUS,</if>
+            <if test="updateTime != null and updateTime != ''">UPDATE_TIME,</if>
+            <if test="createTime != null and createTime != ''">CREATE_TIME,</if>
+            <if test="actStatus != null and actStatus != ''">ACT_STATUS,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="orderCode != null and orderCode != ''">#{orderCode},</if>
+            <if test="accountId != null and accountId != ''">#{accountId},</if>
+            <if test="orderStatus != null and orderStatus != ''">#{orderStatus,typeHandler=top.icoding.platform.common.repository.OrderStatusHandler},</if>
+            <if test="statusMemo != null and statusMemo != ''">#{statusMemo},</if>
+            <if test="remark1 != null and remark1 != ''">#{remark1},</if>
+            <if test="remark2 != null and remark2 != ''">#{remark2},</if>
+            <if test="remark3 != null and remark3 != ''">#{remark3},</if>
+            <if test="validStatus != null and validStatus != ''">#{validStatus,typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler},</if>
+            <if test="removeStatus != null and removeStatus != ''">#{removeStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+            <if test="updateTime != null and updateTime != ''">#{updateTime},</if>
+            <if test="createTime != null and createTime != ''">#{createTime},</if>
+            <if test="actStatus != null and actStatus != ''">#{actStatus},</if>
+        </trim>
+	</insert>
+
+
+	<delete id="delete" parameterType="OrderLog">
+		delete from ORDER_LOG
+        <include refid="page_where" />
+	</delete>
+
+	<delete id="deleteByPrimaryKey" parameterType="String">
+		delete from ORDER_LOG
+		where ID = #{id}
+	</delete>
+
+
+	<update id="updateByPrimaryKey" parameterType="OrderLog">
+		update ORDER_LOG 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="orderCode != null and orderCode != ''">ORDER_CODE = #{orderCode},</if>
+			<if test="accountId != null and accountId != ''">ACCOUNT_ID = #{accountId},</if>
+			<if test="orderStatus != null and orderStatus != ''">ORDER_STATUS = #{orderStatus,typeHandler=top.icoding.platform.common.repository.OrderStatusHandler},</if>
+			<if test="statusMemo != null and statusMemo != ''">STATUS_MEMO = #{statusMemo},</if>
+			<if test="remark1 != null and remark1 != ''">REMARK1 = #{remark1},</if>
+			<if test="remark2 != null and remark2 != ''">REMARK2 = #{remark2},</if>
+			<if test="remark3 != null and remark3 != ''">REMARK3 = #{remark3},</if>
+			<if test="validStatus != null and validStatus != ''">VALID_STATUS = #{validStatus,typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler},</if>
+			<if test="removeStatus != null and removeStatus != ''">REMOVE_STATUS = #{removeStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+			<if test="updateTime != null and updateTime != ''">UPDATE_TIME = #{updateTime},</if>
+			<if test="createTime != null and createTime != ''">CREATE_TIME = #{createTime},</if>
+			<if test="actStatus != null and actStatus != ''">ACT_STATUS = #{actStatus},</if>
+		</trim>
+		<where>ID = #{id}</where>
+	</update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="OrderLog">
+        update ORDER_LOG
+        <trim prefix="set" suffixOverrides=",">
+            <if test="orderCode != null and orderCode != ''">ORDER_CODE = #{orderCode},</if>
+            <if test="accountId != null and accountId != ''">ACCOUNT_ID = #{accountId},</if>
+            <if test="orderStatus != null and orderStatus != ''">ORDER_STATUS = #{orderStatus,typeHandler=top.icoding.platform.common.repository.OrderStatusHandler},</if>
+            <if test="statusMemo != null and statusMemo != ''">STATUS_MEMO = #{statusMemo},</if>
+            <if test="remark1 != null and remark1 != ''">REMARK1 = #{remark1},</if>
+            <if test="remark2 != null and remark2 != ''">REMARK2 = #{remark2},</if>
+            <if test="remark3 != null and remark3 != ''">REMARK3 = #{remark3},</if>
+            <if test="validStatus != null and validStatus != ''">VALID_STATUS = #{validStatus,typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler},</if>
+            <if test="removeStatus != null and removeStatus != ''">REMOVE_STATUS = #{removeStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+            <if test="updateTime != null and updateTime != ''">UPDATE_TIME = #{updateTime},</if>
+            <if test="createTime != null and createTime != ''">CREATE_TIME = #{createTime},</if>
+            <if test="actStatus != null and actStatus != ''">ACT_STATUS = #{actStatus},</if>
+        </trim>
+        <include refid="page_where" />
+    </update>
+
+
+    <select id="selectAll" resultMap="orderLogResultMap">
+        select <include refid="table_columns" />
+        from ORDER_LOG
+    </select>
+
+    <select id="select" resultMap="orderLogResultMap">
+        select <include refid="table_columns" />
+        from ORDER_LOG
+        <include refid="page_where" />
+	</select>
+
+    <select id="selectCount" resultType="int" >
+        select count(ID) from ORDER_LOG
+        <include refid="page_where" />
+    </select>
+
+
+    <select id="selectByPrimaryKey" resultMap="orderLogResultMap" parameterType="String" >
+		select <include refid="table_columns" />
+		from ORDER_LOG
+		where ID = #{id}
+	</select>
+	
+	<!-- 其他自定义SQL -->
+
+
+</mapper>

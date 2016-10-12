@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.melody.unicall.platform.dal.account.AccountProfileMapper">
+	<resultMap type="AccountProfile" id="accountProfileResultMap">
+		<result property="id" column="ID" />
+		<result property="accountId" column="ACCOUNT_ID" />
+		<result property="realName" column="REAL_NAME" />
+		<result property="sex" column="SEX" />
+		<result property="portrait" column="PORTRAIT" typeHandler="top.melody.platform.common.repository.ImagesHandler"/>
+		<result property="birthDate" column="BIRTH_DATE" />
+		<result property="identityNumber" column="IDENTITY_NUMBER" />
+		<result property="identityPhoto" column="IDENTITY_PHOTO" />
+		<result property="phone" column="PHONE" />
+		<result property="address" column="ADDRESS" />
+		<result property="verifyEmail" column="VERIFY_EMAIL" />
+		<result property="updateTime" column="UPDATE_TIME" />
+		<result property="createTime" column="CREATE_TIME" />
+	</resultMap>
+	
+	<sql id="table_columns">
+		ID,
+		ACCOUNT_ID,
+		REAL_NAME,
+		SEX,
+		PORTRAIT,
+		BIRTH_DATE,
+		IDENTITY_NUMBER,
+		IDENTITY_PHOTO,
+		PHONE,
+		ADDRESS,
+		VERIFY_EMAIL,
+		UPDATE_TIME,
+		CREATE_TIME
+    </sql>
+	<sql id="entity_properties">
+		#{id},
+		#{accountId},
+		#{realName},
+		#{sex},
+		#{portrait,typeHandler=top.icoding.platform.common.repository.ImagesHandler},
+		#{birthDate},
+		#{identityNumber},
+		#{identityPhoto},
+		#{phone},
+		#{address},
+		#{verifyEmail},
+		#{updateTime},
+		#{createTime}
+	</sql>
+
+    <!-- 使用like用法：columnName like concat('%',#columnName#,'%') -->
+    <sql id="page_where">
+        <trim prefix="where" prefixOverrides="and | or ">
+            <if test="accountId != null and accountId != ''">and ACCOUNT_ID = #{accountId}</if>
+            <if test="realName != null and realName != ''">and REAL_NAME = #{realName}</if>
+            <if test="sex != null and sex != ''">and SEX = #{sex}</if>
+			<if test="portrait != null and portrait != ''">and PORTRAIT = #{portrait,typeHandler=top.icoding.platform.common.repository.ImagesHandler}</if>
+            <if test="birthDate != null and birthDate != ''">and BIRTH_DATE = #{birthDate}</if>
+            <if test="identityNumber != null and identityNumber != ''">and IDENTITY_NUMBER = #{identityNumber}</if>
+            <if test="identityPhoto != null and identityPhoto != ''">and IDENTITY_PHOTO = #{identityPhoto}</if>
+            <if test="phone != null and phone != ''">and PHONE = #{phone}</if>
+            <if test="address != null and address != ''">and ADDRESS = #{address}</if>
+            <if test="verifyEmail != null and verifyEmail != ''">and VERIFY_EMAIL = #{verifyEmail}</if>
+            <if test="updateTime != null and updateTime != ''">and UPDATE_TIME = #{updateTime}</if>
+            <if test="createTime != null and createTime != ''">and CREATE_TIME = #{createTime}</if>
+        </trim>
+    </sql>
+
+
+	<!-- 适用于主键自增类型 -->
+	<insert id="insert" parameterType="AccountProfile" useGeneratedKeys="true" keyProperty="id">
+		insert into ACCOUNT_PROFILE( <include refid="table_columns" /> ) 
+		values ( <include refid="entity_properties" /> )
+	</insert>
+
+    <insert id="insertSelective" parameterType="AccountProfile">
+        insert into ACCOUNT_PROFILE
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="accountId != null and accountId != ''">ACCOUNT_ID,</if>
+            <if test="realName != null and realName != ''">REAL_NAME,</if>
+            <if test="sex != null and sex != ''">SEX,</if>
+			<if test="portrait != null and portrait != ''">PORTRAIT,</if>
+            <if test="birthDate != null and birthDate != ''">BIRTH_DATE,</if>
+            <if test="identityNumber != null and identityNumber != ''">IDENTITY_NUMBER,</if>
+            <if test="identityPhoto != null and identityPhoto != ''">IDENTITY_PHOTO,</if>
+            <if test="phone != null and phone != ''">PHONE,</if>
+            <if test="address != null and address != ''">ADDRESS,</if>
+            <if test="verifyEmail != null and verifyEmail != ''">VERIFY_EMAIL,</if>
+            <if test="updateTime != null and updateTime != ''">UPDATE_TIME,</if>
+            <if test="createTime != null and createTime != ''">CREATE_TIME,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="accountId != null and accountId != ''">#{accountId},</if>
+            <if test="realName != null and realName != ''">#{realName},</if>
+            <if test="sex != null and sex != ''">#{sex},</if>
+			<if test="portrait != null and portrait !=''">#{portrait,typeHandler=top.icoding.platform.common.repository.ImagesHandler},</if>
+            <if test="birthDate != null and birthDate != ''">#{birthDate},</if>
+            <if test="identityNumber != null and identityNumber != ''">#{identityNumber},</if>
+            <if test="identityPhoto != null and identityPhoto != ''">#{identityPhoto},</if>
+            <if test="phone != null and phone != ''">#{phone},</if>
+            <if test="address != null and address != ''">#{address},</if>
+            <if test="verifyEmail != null and verifyEmail != ''">#{verifyEmail},</if>
+            <if test="updateTime != null and updateTime != ''">#{updateTime},</if>
+            <if test="createTime != null and createTime != ''">#{createTime},</if>
+        </trim>
+	</insert>
+
+
+	<delete id="delete" parameterType="AccountProfile">
+		delete from ACCOUNT_PROFILE
+        <include refid="page_where" />
+	</delete>
+
+	<delete id="deleteByPrimaryKey" parameterType="String">
+		delete from ACCOUNT_PROFILE
+		where ID = #{id}
+	</delete>
+
+
+	<update id="updateByPrimaryKey" parameterType="AccountProfile">
+		update ACCOUNT_PROFILE 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="accountId != null and accountId != ''">ACCOUNT_ID = #{accountId},</if>
+			<if test="realName != null and realName != ''">REAL_NAME = #{realName},</if>
+			<if test="sex != null and sex != ''">SEX = #{sex},</if>
+			<if test="portrait != null and portrait !=''">PORTRAIT = #{portrait,typeHandler=top.icoding.platform.common.repository.ImagesHandler},</if>
+			<if test="birthDate != null and birthDate != ''">BIRTH_DATE = #{birthDate},</if>
+			<if test="identityNumber != null and identityNumber != ''">IDENTITY_NUMBER = #{identityNumber},</if>
+			<if test="identityPhoto != null and identityPhoto != ''">IDENTITY_PHOTO = #{identityPhoto},</if>
+			<if test="phone != null and phone != ''">PHONE = #{phone},</if>
+			<if test="address != null and address != ''">ADDRESS = #{address},</if>
+			<if test="verifyEmail != null and verifyEmail != ''">VERIFY_EMAIL = #{verifyEmail},</if>
+			<if test="updateTime != null and updateTime != ''">UPDATE_TIME = #{updateTime},</if>
+			<if test="createTime != null and createTime != ''">CREATE_TIME = #{createTime},</if>
+		</trim>
+		<where>ID = #{id}</where>
+	</update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="AccountProfile">
+        update ACCOUNT_PROFILE
+        <trim prefix="set" suffixOverrides=",">
+            <if test="accountId != null and accountId != ''">ACCOUNT_ID = #{accountId},</if>
+            <if test="realName != null and realName != ''">REAL_NAME = #{realName},</if>
+            <if test="sex != null and sex != ''">SEX = #{sex},</if>
+			<if test="portrait != null and portrait !=''">PORTRAIT = #{portrait,typeHandler=top.icoding.platform.common.repository.ImagesHandler},</if>
+            <if test="birthDate != null and birthDate != ''">BIRTH_DATE = #{birthDate},</if>
+            <if test="identityNumber != null and identityNumber != ''">IDENTITY_NUMBER = #{identityNumber},</if>
+            <if test="identityPhoto != null and identityPhoto != ''">IDENTITY_PHOTO = #{identityPhoto},</if>
+            <if test="phone != null and phone != ''">PHONE = #{phone},</if>
+            <if test="address != null and address != ''">ADDRESS = #{address},</if>
+            <if test="verifyEmail != null and verifyEmail != ''">VERIFY_EMAIL = #{verifyEmail},</if>
+            <if test="updateTime != null and updateTime != ''">UPDATE_TIME = #{updateTime},</if>
+            <if test="createTime != null and createTime != ''">CREATE_TIME = #{createTime},</if>
+        </trim>
+        <include refid="page_where" />
+    </update>
+
+
+    <select id="selectAll" resultMap="accountProfileResultMap">
+        select <include refid="table_columns" />
+        from ACCOUNT_PROFILE
+    </select>
+
+    <select id="select" resultMap="accountProfileResultMap">
+        select <include refid="table_columns" />
+        from ACCOUNT_PROFILE
+        <include refid="page_where" />
+	</select>
+
+    <select id="selectCount" resultType="int" >
+        select count(ID) from ACCOUNT_PROFILE
+        <include refid="page_where" />
+    </select>
+
+
+    <select id="selectByPrimaryKey" resultMap="accountProfileResultMap" parameterType="int" >
+		select <include refid="table_columns" />
+		from ACCOUNT_PROFILE
+		where ID = #{id}
+	</select>
+
+	<select id="getByAccountId" resultMap="accountProfileResultMap" parameterType="int">
+		select <include refid="table_columns" />
+		from ACCOUNT_PROFILE
+		where ACCOUNT_ID = #{0}
+	</select>
+	
+	<!-- 其他自定义SQL -->
+
+
+</mapper>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.melody.unicall.platform.dal.privilege.SecGroupMapper" >
+  <resultMap id="BaseResultMap" type="top.melody.unicall.platform.entity.privilege.SecGroup" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="GROUP_NAME" property="groupName" jdbcType="VARCHAR" />
+    <result column="APP_ID" property="appId" jdbcType="VARCHAR" />
+    <result column="VALID_STATUS" property="validStatus" jdbcType="VARCHAR" />
+    <result column="GROUP_TYPE" property="groupType" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    ID, GROUP_NAME, APP_ID, VALID_STATUS, GROUP_TYPE, CREATE_DATE, UPDATE_DATE
+  </sql>
+  <sql id="Entity_Prop_List" >
+    #{groupName},#{appId},#{validStatus},#{groupType},#{createDate},#{updateDate}
+  </sql>
+</mapper>

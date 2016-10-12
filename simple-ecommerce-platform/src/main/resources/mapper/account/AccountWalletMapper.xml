@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.melody.unicall.platform.dal.account.AccountWalletMapper">
+	<resultMap type="AccountWallet" id="accountWalletResultMap">
+		<result property="id" column="ID" />
+		<result property="accountId" column="ACCOUNT_ID" />
+		<result property="moneyType" column="MONEY_TYPE" />
+		<result property="moneyAmount" column="MONEY_AMOUNT" />
+		<result property="balance" column="BALANCE" />
+		<result property="validStatus" column="VALID_STATUS" />
+		<result property="removeStatus" column="REMOVE_STATUS" />
+		<result property="remark1" column="REMARK1" />
+		<result property="remark2" column="REMARK2" />
+		<result property="remark3" column="REMARK3" />
+		<result property="updateTime" column="UPDATE_TIME" />
+		<result property="createTime" column="CREATE_TIME" />
+	</resultMap>
+
+	<sql id="table_columns">
+		ID,
+		ACCOUNT_ID,
+		MONEY_TYPE,
+		MONEY_AMOUNT,
+		BALANCE,
+		VALID_STATUS,
+		REMOVE_STATUS,
+		REMARK1,
+		REMARK2,
+		REMARK3,
+		UPDATE_TIME,
+		CREATE_TIME
+    </sql>
+	<sql id="entity_properties">
+		#{id},
+		#{accountId},
+		#{moneyType},
+		#{moneyAmount},
+		#{balance},
+		#{validStatus},
+		#{removeStatus},
+		#{remark1},
+		#{remark2},
+		#{remark3},
+		#{updateTime},
+		#{createTime}
+	</sql>
+
+    <!-- 使用like用法：columnName like concat('%',#columnName#,'%') -->
+    <sql id="page_where">
+        <trim prefix="where" prefixOverrides="and | or ">
+            <if test="accountId != null and accountId != ''">and ACCOUNT_ID = #{accountId}</if>
+            <if test="moneyType != null and moneyType != ''">and MONEY_TYPE = #{moneyType}</if>
+            <if test="moneyAmount != null and moneyAmount != ''">and MONEY_AMOUNT = #{moneyAmount}</if>
+            <if test="balance != null and balance != ''">and BALANCE = #{balance}</if>
+            <if test="validStatus != null and validStatus != ''">and VALID_STATUS = #{validStatus}</if>
+            <if test="removeStatus != null and removeStatus != ''">and REMOVE_STATUS = #{removeStatus}</if>
+            <if test="remark1 != null and remark1 != ''">and REMARK1 = #{remark1}</if>
+            <if test="remark2 != null and remark2 != ''">and REMARK2 = #{remark2}</if>
+            <if test="remark3 != null and remark3 != ''">and REMARK3 = #{remark3}</if>
+            <if test="updateTime != null and updateTime != ''">and UPDATE_TIME = #{updateTime}</if>
+            <if test="createTime != null and createTime != ''">and CREATE_TIME = #{createTime}</if>
+        </trim>
+    </sql>
+
+
+	<!-- 适用于主键自增类型 -->
+	<insert id="insert" parameterType="AccountWallet" useGeneratedKeys="true" keyProperty="id">
+		insert into ACCOUNT_WALLET( <include refid="table_columns" /> )
+		values ( <include refid="entity_properties" /> )
+	</insert>
+
+    <insert id="insertSelective" parameterType="AccountWallet">
+        insert into ACCOUNT_WALLET
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="accountId != null and accountId != ''">ACCOUNT_ID,</if>
+            <if test="moneyType != null and moneyType != ''">MONEY_TYPE,</if>
+            <if test="moneyAmount != null and moneyAmount != ''">MONEY_AMOUNT,</if>
+            <if test="balance != null and balance != ''">BALANCE,</if>
+            <if test="validStatus != null and validStatus != ''">VALID_STATUS,</if>
+            <if test="removeStatus != null and removeStatus != ''">REMOVE_STATUS,</if>
+            <if test="remark1 != null and remark1 != ''">REMARK1,</if>
+            <if test="remark2 != null and remark2 != ''">REMARK2,</if>
+            <if test="remark3 != null and remark3 != ''">REMARK3,</if>
+            <if test="updateTime != null and updateTime != ''">UPDATE_TIME,</if>
+            <if test="createTime != null and createTime != ''">CREATE_TIME,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="accountId != null and accountId != ''">#{accountId},</if>
+            <if test="moneyType != null and moneyType != ''">#{moneyType},</if>
+            <if test="moneyAmount != null and moneyAmount != ''">#{moneyAmount},</if>
+            <if test="balance != null and balance != ''">#{balance},</if>
+            <if test="validStatus != null and validStatus != ''">#{validStatus},</if>
+            <if test="removeStatus != null and removeStatus != ''">#{removeStatus},</if>
+            <if test="remark1 != null and remark1 != ''">#{remark1},</if>
+            <if test="remark2 != null and remark2 != ''">#{remark2},</if>
+            <if test="remark3 != null and remark3 != ''">#{remark3},</if>
+            <if test="updateTime != null and updateTime != ''">#{updateTime},</if>
+            <if test="createTime != null and createTime != ''">#{createTime},</if>
+        </trim>
+	</insert>
+
+
+	<delete id="delete" parameterType="AccountWallet">
+		delete from ACCOUNT_WALLET
+        <include refid="page_where" />
+	</delete>
+
+	<delete id="deleteByPrimaryKey" parameterType="String">
+		delete from ACCOUNT_WALLET
+		where ID = #{id}
+	</delete>
+
+
+	<update id="updateByPrimaryKey" parameterType="AccountWallet">
+		update ACCOUNT_WALLET
+		<trim prefix="set" suffixOverrides=",">
+			<if test="accountId != null and accountId != ''">ACCOUNT_ID = #{accountId},</if>
+			<if test="moneyType != null and moneyType != ''">MONEY_TYPE = #{moneyType},</if>
+			<if test="moneyAmount != null and moneyAmount != ''">MONEY_AMOUNT = #{moneyAmount},</if>
+			<if test="balance != null and balance != ''">BALANCE = #{balance},</if>
+			<if test="validStatus != null and validStatus != ''">VALID_STATUS = #{validStatus},</if>
+			<if test="removeStatus != null and removeStatus != ''">REMOVE_STATUS = #{removeStatus},</if>
+			<if test="remark1 != null and remark1 != ''">REMARK1 = #{remark1},</if>
+			<if test="remark2 != null and remark2 != ''">REMARK2 = #{remark2},</if>
+			<if test="remark3 != null and remark3 != ''">REMARK3 = #{remark3},</if>
+			<if test="updateTime != null and updateTime != ''">UPDATE_TIME = #{updateTime},</if>
+			<if test="createTime != null and createTime != ''">CREATE_TIME = #{createTime},</if>
+		</trim>
+		<where>ID = #{id}</where>
+	</update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="AccountWallet">
+        update ACCOUNT_WALLET
+        <trim prefix="set" suffixOverrides=",">
+            <if test="accountId != null and accountId != ''">ACCOUNT_ID = #{accountId},</if>
+            <if test="moneyType != null and moneyType != ''">MONEY_TYPE = #{moneyType},</if>
+            <if test="moneyAmount != null and moneyAmount != ''">MONEY_AMOUNT = #{moneyAmount},</if>
+            <if test="balance != null and balance != ''">BALANCE = #{balance},</if>
+            <if test="validStatus != null and validStatus != ''">VALID_STATUS = #{validStatus},</if>
+            <if test="removeStatus != null and removeStatus != ''">REMOVE_STATUS = #{removeStatus},</if>
+            <if test="remark1 != null and remark1 != ''">REMARK1 = #{remark1},</if>
+            <if test="remark2 != null and remark2 != ''">REMARK2 = #{remark2},</if>
+            <if test="remark3 != null and remark3 != ''">REMARK3 = #{remark3},</if>
+            <if test="updateTime != null and updateTime != ''">UPDATE_TIME = #{updateTime},</if>
+            <if test="createTime != null and createTime != ''">CREATE_TIME = #{createTime},</if>
+        </trim>
+        <include refid="page_where" />
+    </update>
+
+
+    <select id="selectAll" resultMap="accountWalletResultMap">
+        select <include refid="table_columns" />
+        from ACCOUNT_WALLET
+    </select>
+
+    <select id="select" resultMap="accountWalletResultMap">
+        select <include refid="table_columns" />
+        from ACCOUNT_WALLET
+        <include refid="page_where" />
+	</select>
+
+    <select id="selectCount" resultType="int" >
+        select count(ID) from ACCOUNT_WALLET
+        <include refid="page_where" />
+    </select>
+
+
+    <select id="selectByPrimaryKey" resultMap="accountWalletResultMap" parameterType="String" >
+		select <include refid="table_columns" />
+		from ACCOUNT_WALLET
+		where ID = #{id}
+	</select>
+	
+	<!-- 其他自定义SQL -->
+
+
+</mapper>

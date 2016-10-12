@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.melody.unicall.platform.dal.order.OrderContactInfoMapper">
+	<resultMap type="OrderContactInfo" id="orderContactInfoResultMap">
+		<result property="id" column="ID" />
+		<result property="orderCode" column="ORDER_CODE" />
+		<result property="accountId" column="ACCOUNT_ID" />
+		<result property="receiverName" column="RECEIVER_NAME" />
+		<result property="provinceCode" column="PROVINCE_CODE" />
+		<result property="provinceName" column="PROVINCE_NAME" />
+		<result property="cityCode" column="CITY_CODE" />
+		<result property="cityName" column="CITY_NAME" />
+		<result property="countyCode" column="COUNTY_CODE" />
+		<result property="countyName" column="COUNTY_NAME" />
+		<result property="address" column="ADDRESS" />
+		<result property="zipCode" column="ZIP_CODE" />
+		<result property="phone" column="PHONE" />
+		<result property="remark1" column="REMARK1" />
+		<result property="remark2" column="REMARK2" />
+		<result property="remark3" column="REMARK3" />
+		<result property="updateTime" column="UPDATE_TIME" />
+		<result property="createTime" column="CREATE_TIME" />
+	</resultMap>
+	
+	<sql id="table_columns">
+		ID,
+		ORDER_CODE,
+		ACCOUNT_ID,
+		RECEIVER_NAME,
+		PROVINCE_CODE,
+		PROVINCE_NAME,
+		CITY_CODE,
+		CITY_NAME,
+		COUNTY_CODE,
+		COUNTY_NAME,
+		ADDRESS,
+		ZIP_CODE,
+		PHONE,
+		REMARK1,
+		REMARK2,
+		REMARK3,
+		UPDATE_TIME,
+		CREATE_TIME
+    </sql>
+	<sql id="entity_properties">
+		#{id},
+		#{orderCode},
+		#{accountId},
+		#{receiverName},
+		#{provinceCode},
+		#{provinceName},
+		#{cityCode},
+		#{cityName},
+		#{countyCode},
+		#{countyName},
+		#{address},
+		#{zipCode},
+		#{phone},
+		#{remark1},
+		#{remark2},
+		#{remark3},
+		#{updateTime},
+		#{createTime}
+	</sql>
+
+    <!-- 使用like用法：columnName like concat('%',#columnName#,'%') -->
+    <sql id="page_where">
+        <trim prefix="where" prefixOverrides="and | or ">
+            <if test="orderCode != null and orderCode != ''">and ORDER_CODE = #{orderCode}</if>
+            <if test="accountId != null and accountId != ''">and ACCOUNT_ID = #{accountId}</if>
+            <if test="receiverName != null and receiverName != ''">and RECEIVER_NAME = #{receiverName}</if>
+            <if test="provinceCode != null and provinceCode != ''">and PROVINCE_CODE = #{provinceCode}</if>
+            <if test="provinceName != null and provinceName != ''">and PROVINCE_NAME = #{provinceName}</if>
+            <if test="cityCode != null and cityCode != ''">and CITY_CODE = #{cityCode}</if>
+            <if test="cityName != null and cityName != ''">and CITY_NAME = #{cityName}</if>
+            <if test="countyCode != null and countyCode != ''">and COUNTY_CODE = #{countyCode}</if>
+            <if test="countyName != null and countyName != ''">and COUNTY_NAME = #{countyName}</if>
+            <if test="address != null and address != ''">and ADDRESS = #{address}</if>
+            <if test="zipCode != null and zipCode != ''">and ZIP_CODE = #{zipCode}</if>
+            <if test="phone != null and phone != ''">and PHONE = #{phone}</if>
+            <if test="remark1 != null and remark1 != ''">and REMARK1 = #{remark1}</if>
+            <if test="remark2 != null and remark2 != ''">and REMARK2 = #{remark2}</if>
+            <if test="remark3 != null and remark3 != ''">and REMARK3 = #{remark3}</if>
+            <if test="updateTime != null and updateTime != ''">and UPDATE_TIME = #{updateTime}</if>
+            <if test="createTime != null and createTime != ''">and CREATE_TIME = #{createTime}</if>
+        </trim>
+    </sql>
+
+
+	<!-- 适用于主键自增类型 -->
+	<insert id="insert" parameterType="OrderContactInfo" useGeneratedKeys="true" keyProperty="id">
+		insert into ORDER_CONTACT_INFO( <include refid="table_columns" /> ) 
+		values ( <include refid="entity_properties" /> )
+	</insert>
+
+    <insert id="insertSelective" parameterType="OrderContactInfo">
+        insert into ORDER_CONTACT_INFO
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="orderCode != null and orderCode != ''">ORDER_CODE,</if>
+            <if test="accountId != null and accountId != ''">ACCOUNT_ID,</if>
+            <if test="receiverName != null and receiverName != ''">RECEIVER_NAME,</if>
+            <if test="provinceCode != null and provinceCode != ''">PROVINCE_CODE,</if>
+            <if test="provinceName != null and provinceName != ''">PROVINCE_NAME,</if>
+            <if test="cityCode != null and cityCode != ''">CITY_CODE,</if>
+            <if test="cityName != null and cityName != ''">CITY_NAME,</if>
+            <if test="countyCode != null and countyCode != ''">COUNTY_CODE,</if>
+            <if test="countyName != null and countyName != ''">COUNTY_NAME,</if>
+            <if test="address != null and address != ''">ADDRESS,</if>
+            <if test="zipCode != null and zipCode != ''">ZIP_CODE,</if>
+            <if test="phone != null and phone != ''">PHONE,</if>
+            <if test="remark1 != null and remark1 != ''">REMARK1,</if>
+            <if test="remark2 != null and remark2 != ''">REMARK2,</if>
+            <if test="remark3 != null and remark3 != ''">REMARK3,</if>
+            <if test="updateTime != null and updateTime != ''">UPDATE_TIME,</if>
+            <if test="createTime != null and createTime != ''">CREATE_TIME,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="orderCode != null and orderCode != ''">#{orderCode},</if>
+            <if test="accountId != null and accountId != ''">#{accountId},</if>
+            <if test="receiverName != null and receiverName != ''">#{receiverName},</if>
+            <if test="provinceCode != null and provinceCode != ''">#{provinceCode},</if>
+            <if test="provinceName != null and provinceName != ''">#{provinceName},</if>
+            <if test="cityCode != null and cityCode != ''">#{cityCode},</if>
+            <if test="cityName != null and cityName != ''">#{cityName},</if>
+            <if test="countyCode != null and countyCode != ''">#{countyCode},</if>
+            <if test="countyName != null and countyName != ''">#{countyName},</if>
+            <if test="address != null and address != ''">#{address},</if>
+            <if test="zipCode != null and zipCode != ''">#{zipCode},</if>
+            <if test="phone != null and phone != ''">#{phone},</if>
+            <if test="remark1 != null and remark1 != ''">#{remark1},</if>
+            <if test="remark2 != null and remark2 != ''">#{remark2},</if>
+            <if test="remark3 != null and remark3 != ''">#{remark3},</if>
+            <if test="updateTime != null and updateTime != ''">#{updateTime},</if>
+            <if test="createTime != null and createTime != ''">#{createTime},</if>
+        </trim>
+	</insert>
+
+
+	<delete id="delete" parameterType="OrderContactInfo">
+		delete from ORDER_CONTACT_INFO
+        <include refid="page_where" />
+	</delete>
+
+	<delete id="deleteByPrimaryKey" parameterType="String">
+		delete from ORDER_CONTACT_INFO
+		where ID = #{id}
+	</delete>
+
+
+	<update id="updateByPrimaryKey" parameterType="OrderContactInfo">
+		update ORDER_CONTACT_INFO 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="orderCode != null and orderCode != ''">ORDER_CODE = #{orderCode},</if>
+			<if test="accountId != null and accountId != ''">ACCOUNT_ID = #{accountId},</if>
+			<if test="receiverName != null and receiverName != ''">RECEIVER_NAME = #{receiverName},</if>
+			<if test="provinceCode != null and provinceCode != ''">PROVINCE_CODE = #{provinceCode},</if>
+			<if test="provinceName != null and provinceName != ''">PROVINCE_NAME = #{provinceName},</if>
+			<if test="cityCode != null and cityCode != ''">CITY_CODE = #{cityCode},</if>
+			<if test="cityName != null and cityName != ''">CITY_NAME = #{cityName},</if>
+			<if test="countyCode != null and countyCode != ''">COUNTY_CODE = #{countyCode},</if>
+			<if test="countyName != null and countyName != ''">COUNTY_NAME = #{countyName},</if>
+			<if test="address != null and address != ''">ADDRESS = #{address},</if>
+			<if test="zipCode != null and zipCode != ''">ZIP_CODE = #{zipCode},</if>
+			<if test="phone != null and phone != ''">PHONE = #{phone},</if>
+			<if test="remark1 != null and remark1 != ''">REMARK1 = #{remark1},</if>
+			<if test="remark2 != null and remark2 != ''">REMARK2 = #{remark2},</if>
+			<if test="remark3 != null and remark3 != ''">REMARK3 = #{remark3},</if>
+			<if test="updateTime != null and updateTime != ''">UPDATE_TIME = #{updateTime},</if>
+			<if test="createTime != null and createTime != ''">CREATE_TIME = #{createTime},</if>
+		</trim>
+		<where>ID = #{id}</where>
+	</update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="OrderContactInfo">
+        update ORDER_CONTACT_INFO
+        <trim prefix="set" suffixOverrides=",">
+            <if test="orderCode != null and orderCode != ''">ORDER_CODE = #{orderCode},</if>
+            <if test="accountId != null and accountId != ''">ACCOUNT_ID = #{accountId},</if>
+            <if test="receiverName != null and receiverName != ''">RECEIVER_NAME = #{receiverName},</if>
+            <if test="provinceCode != null and provinceCode != ''">PROVINCE_CODE = #{provinceCode},</if>
+            <if test="provinceName != null and provinceName != ''">PROVINCE_NAME = #{provinceName},</if>
+            <if test="cityCode != null and cityCode != ''">CITY_CODE = #{cityCode},</if>
+            <if test="cityName != null and cityName != ''">CITY_NAME = #{cityName},</if>
+            <if test="countyCode != null and countyCode != ''">COUNTY_CODE = #{countyCode},</if>
+            <if test="countyName != null and countyName != ''">COUNTY_NAME = #{countyName},</if>
+            <if test="address != null and address != ''">ADDRESS = #{address},</if>
+            <if test="zipCode != null and zipCode != ''">ZIP_CODE = #{zipCode},</if>
+            <if test="phone != null and phone != ''">PHONE = #{phone},</if>
+            <if test="remark1 != null and remark1 != ''">REMARK1 = #{remark1},</if>
+            <if test="remark2 != null and remark2 != ''">REMARK2 = #{remark2},</if>
+            <if test="remark3 != null and remark3 != ''">REMARK3 = #{remark3},</if>
+            <if test="updateTime != null and updateTime != ''">UPDATE_TIME = #{updateTime},</if>
+            <if test="createTime != null and createTime != ''">CREATE_TIME = #{createTime},</if>
+        </trim>
+        <include refid="page_where" />
+    </update>
+
+
+    <select id="selectAll" resultMap="orderContactInfoResultMap">
+        select <include refid="table_columns" />
+        from ORDER_CONTACT_INFO
+    </select>
+
+    <select id="select" resultMap="orderContactInfoResultMap">
+        select <include refid="table_columns" />
+        from ORDER_CONTACT_INFO
+        <include refid="page_where" />
+	</select>
+
+	<select id="getByOrderCode" resultMap="orderContactInfoResultMap" parameterType="String">
+		select <include refid="table_columns" />
+		from ORDER_CONTACT_INFO
+		where ORDER_CODE = #{0}
+	</select>
+
+    <select id="selectCount" resultType="int" >
+        select count(ID) from ORDER_CONTACT_INFO
+        <include refid="page_where" />
+    </select>
+
+
+    <select id="selectByPrimaryKey" resultMap="orderContactInfoResultMap" parameterType="String" >
+		select <include refid="table_columns" />
+		from ORDER_CONTACT_INFO
+		where ID = #{id}
+	</select>
+	
+	<!-- 其他自定义SQL -->
+
+
+</mapper>

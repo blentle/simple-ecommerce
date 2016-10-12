@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.melody.unicall.platform.dal.store.StoreMapper">
+	<resultMap type="Store" id="storeResultMap">
+		<result property="id" column="ID" />
+		<result property="countryCode" column="COUNTRY_CODE" />
+		<result property="operatorId" column="OPERATOR_ID" />
+		<result property="storeName" column="STORE_NAME" />
+		<result property="storePhone" column="STORE_PHONE" />
+		<result property="storeLogo" column="STORE_LOGO" typeHandler="top.melody.platform.common.repository.ImagesHandler"/>
+		<result property="storeStar" column="STORE_STAR" />
+		<result property="storeDesc" column="STORE_DESC" />
+		<result property="storeTemplate" column="STORE_TEMPLATE" />
+		<result property="remark1" column="REMARK1" />
+		<result property="remark2" column="REMARK2" />
+		<result property="remark3" column="REMARK3" />
+		<result property="updateTime" column="UPDATE_TIME" />
+		<result property="createTime" column="CREATE_TIME" />
+	</resultMap>
+	
+	<sql id="table_columns">
+		ID,
+		COUNTRY_CODE,
+		OPERATOR_ID,
+		STORE_NAME,
+		STORE_PHONE,
+		STORE_LOGO,
+		STORE_STAR,
+		STORE_DESC,
+		STORE_TEMPLATE,
+		REMARK1,
+		REMARK2,
+		REMARK3,
+		UPDATE_TIME,
+		CREATE_TIME
+    </sql>
+	<sql id="entity_properties">
+		#{id},
+		#{countryCode},
+		#{operatorId},
+		#{storeName},
+		#{storePhone},
+		#{storeLogo,typeHandler=top.icoding.platform.common.repository.ImagesHandler},
+		#{storeStar},
+		#{storeDesc},
+		#{storeTemplate},
+		#{remark1},
+		#{remark2},
+		#{remark3},
+		#{updateTime},
+		#{createTime}
+	</sql>
+
+    <!-- 使用like用法：columnName like concat('%',#columnName#,'%') -->
+    <sql id="page_where">
+        <trim prefix="where" prefixOverrides="and | or ">
+            <if test="countryCode != null and countryCode != ''">and COUNTRY_CODE = #{countryCode}</if>
+            <if test="operatorId != null and operatorId != ''">and OPERATOR_ID = #{operatorId}</if>
+            <if test="storeName != null and storeName != ''">and STORE_NAME = #{storeName}</if>
+            <if test="storePhone != null and storePhone != ''">and STORE_PHONE = #{storePhone}</if>
+            <if test="storeLogo != null and storeLogo != ''">and STORE_LOGO = #{storeLogo,typeHandler=top.icoding.platform.common.repository.ImagesHandler}</if>
+            <if test="storeStar != null and storeStar != ''">and STORE_STAR = #{storeStar}</if>
+            <if test="storeDesc != null and storeDesc != ''">and STORE_DESC = #{storeDesc}</if>
+            <if test="storeTemplate != null and storeTemplate != ''">and STORE_TEMPLATE = #{storeTemplate}</if>
+            <if test="remark1 != null and remark1 != ''">and REMARK1 = #{remark1}</if>
+            <if test="remark2 != null and remark2 != ''">and REMARK2 = #{remark2}</if>
+            <if test="remark3 != null and remark3 != ''">and REMARK3 = #{remark3}</if>
+            <if test="updateTime != null and updateTime != ''">and UPDATE_TIME = #{updateTime}</if>
+            <if test="createTime != null and createTime != ''">and CREATE_TIME = #{createTime}</if>
+        </trim>
+    </sql>
+
+
+	<!-- 适用于主键自增类型 -->
+	<insert id="insert" parameterType="Store" useGeneratedKeys="true" keyProperty="id">
+		insert into STORE( <include refid="table_columns" /> ) 
+		values ( <include refid="entity_properties" /> )
+	</insert>
+
+    <insert id="insertSelective" parameterType="Store">
+        insert into STORE
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="countryCode != null and countryCode != ''">COUNTRY_CODE,</if>
+            <if test="operatorId != null and operatorId != ''">OPERATOR_ID,</if>
+            <if test="storeName != null and storeName != ''">STORE_NAME,</if>
+            <if test="storePhone != null and storePhone != ''">STORE_PHONE,</if>
+            <if test="storeLogo != null and storeLogo != ''">STORE_LOGO,</if>
+            <if test="storeStar != null and storeStar != ''">STORE_STAR,</if>
+            <if test="storeDesc != null and storeDesc != ''">STORE_DESC,</if>
+            <if test="storeTemplate != null and storeTemplate != ''">STORE_TEMPLATE,</if>
+            <if test="remark1 != null and remark1 != ''">REMARK1,</if>
+            <if test="remark2 != null and remark2 != ''">REMARK2,</if>
+            <if test="remark3 != null and remark3 != ''">REMARK3,</if>
+            <if test="updateTime != null and updateTime != ''">UPDATE_TIME,</if>
+            <if test="createTime != null and createTime != ''">CREATE_TIME,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="countryCode != null and countryCode != ''">#{countryCode},</if>
+            <if test="operatorId != null and operatorId != ''">#{operatorId},</if>
+            <if test="storeName != null and storeName != ''">#{storeName},</if>
+            <if test="storePhone != null and storePhone != ''">#{storePhone},</if>
+            <if test="storeLogo != null and storeLogo != ''">#{storeLogo,typeHandler=top.icoding.platform.common.repository.ImagesHandler},</if>
+            <if test="storeStar != null and storeStar != ''">#{storeStar},</if>
+            <if test="storeDesc != null and storeDesc != ''">#{storeDesc},</if>
+            <if test="storeTemplate != null and storeTemplate != ''">#{storeTemplate},</if>
+            <if test="remark1 != null and remark1 != ''">#{remark1},</if>
+            <if test="remark2 != null and remark2 != ''">#{remark2},</if>
+            <if test="remark3 != null and remark3 != ''">#{remark3},</if>
+            <if test="updateTime != null and updateTime != ''">#{updateTime},</if>
+            <if test="createTime != null and createTime != ''">#{createTime},</if>
+        </trim>
+	</insert>
+
+
+	<delete id="delete" parameterType="Store">
+		delete from STORE
+        <include refid="page_where" />
+	</delete>
+
+	<delete id="deleteByPrimaryKey" parameterType="String">
+		delete from STORE
+		where ID = #{id}
+	</delete>
+
+
+	<update id="updateByPrimaryKey" parameterType="Store">
+		update STORE 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="countryCode != null and countryCode != ''">COUNTRY_CODE = #{countryCode},</if>
+			<if test="operatorId != null and operatorId != ''">OPERATOR_ID = #{operatorId},</if>
+			<if test="storeName != null and storeName != ''">STORE_NAME = #{storeName},</if>
+			<if test="storePhone != null and storePhone != ''">STORE_PHONE = #{storePhone},</if>
+			<if test="storeLogo != null and storeLogo != ''">STORE_LOGO = #{storeLogo,typeHandler=top.icoding.platform.common.repository.ImagesHandler},</if>
+			<if test="storeStar != null and storeStar != ''">STORE_STAR = #{storeStar},</if>
+			<if test="storeDesc != null and storeDesc != ''">STORE_DESC = #{storeDesc},</if>
+			<if test="storeTemplate != null and storeTemplate != ''">STORE_TEMPLATE = #{storeTemplate},</if>
+			<if test="remark1 != null and remark1 != ''">REMARK1 = #{remark1},</if>
+			<if test="remark2 != null and remark2 != ''">REMARK2 = #{remark2},</if>
+			<if test="remark3 != null and remark3 != ''">REMARK3 = #{remark3},</if>
+			<if test="updateTime != null and updateTime != ''">UPDATE_TIME = #{updateTime},</if>
+			<if test="createTime != null and createTime != ''">CREATE_TIME = #{createTime},</if>
+		</trim>
+		<where>ID = #{id}</where>
+	</update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="Store">
+        update STORE
+        <trim prefix="set" suffixOverrides=",">
+            <if test="countryCode != null and countryCode != ''">COUNTRY_CODE = #{countryCode},</if>
+            <if test="operatorId != null and operatorId != ''">OPERATOR_ID = #{operatorId},</if>
+            <if test="storeName != null and storeName != ''">STORE_NAME = #{storeName},</if>
+            <if test="storePhone != null and storePhone != ''">STORE_PHONE = #{storePhone},</if>
+            <if test="storeLogo != null and storeLogo != ''">STORE_LOGO = #{storeLogo,typeHandler=top.icoding.platform.common.repository.ImagesHandler},</if>
+            <if test="storeStar != null and storeStar != ''">STORE_STAR = #{storeStar},</if>
+            <if test="storeDesc != null and storeDesc != ''">STORE_DESC = #{storeDesc},</if>
+            <if test="storeTemplate != null and storeTemplate != ''">STORE_TEMPLATE = #{storeTemplate},</if>
+            <if test="remark1 != null and remark1 != ''">REMARK1 = #{remark1},</if>
+            <if test="remark2 != null and remark2 != ''">REMARK2 = #{remark2},</if>
+            <if test="remark3 != null and remark3 != ''">REMARK3 = #{remark3},</if>
+            <if test="updateTime != null and updateTime != ''">UPDATE_TIME = #{updateTime},</if>
+            <if test="createTime != null and createTime != ''">CREATE_TIME = #{createTime},</if>
+        </trim>
+        <include refid="page_where" />
+    </update>
+
+
+    <select id="selectAll" resultMap="storeResultMap">
+        select <include refid="table_columns" />
+        from STORE
+    </select>
+
+    <select id="select" resultMap="storeResultMap">
+        select <include refid="table_columns" />
+        from STORE
+        <include refid="page_where" />
+	</select>
+
+    <select id="selectCount" resultType="int" >
+        select count(ID) from STORE
+        <include refid="page_where" />
+    </select>
+
+
+    <select id="selectByPrimaryKey" resultMap="storeResultMap" parameterType="Integer" >
+		select <include refid="table_columns" />
+		from STORE
+		where ID = #{id}
+	</select>
+	
+	<!-- 其他自定义SQL -->
+
+
+</mapper>

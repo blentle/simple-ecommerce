@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.melody.unicall.platform.dal.order.OrderPaymentMapper">
+	<resultMap type="OrderPayment" id="orderPaymentResultMap">
+		<result property="id" column="ID" />
+		<result property="orderCode" column="ORDER_CODE" />
+		<result property="paymentType" column="PAYMENT_TYPE" typeHandler="top.melody.platform.common.repository.PaymentTypeHandler"/>
+		<result property="paymentFee" column="PAYMENT_FEE" />
+		<result property="payStatus" column="PAY_STATUS" typeHandler="top.melody.platform.common.repository.ActStatusTypeHandler"/>
+		<result property="remark1" column="REMARK1" />
+		<result property="remark2" column="REMARK2" />
+		<result property="remark3" column="REMARK3" />
+		<result property="updateTime" column="UPDATE_TIME" />
+		<result property="createTime" column="CREATE_TIME" />
+	</resultMap>
+	
+	<sql id="table_columns">
+		ID,
+		ORDER_CODE,
+		PAYMENT_TYPE,
+		PAYMENT_FEE,
+		PAY_STATUS,
+		REMARK1,
+		REMARK2,
+		REMARK3,
+		UPDATE_TIME,
+		CREATE_TIME
+    </sql>
+	<sql id="entity_properties">
+		#{id},
+		#{orderCode},
+		#{paymentType,typeHandler=top.icoding.platform.common.repository.PaymentTypeHandler},
+		#{paymentFee},
+		#{payStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},
+		#{remark1},
+		#{remark2},
+		#{remark3},
+		#{updateTime},
+		#{createTime}
+	</sql>
+
+    <!-- 使用like用法：columnName like concat('%',#columnName#,'%') -->
+    <sql id="page_where">
+        <trim prefix="where" prefixOverrides="and | or ">
+            <if test="orderCode != null and orderCode != ''">and ORDER_CODE = #{orderCode}</if>
+            <if test="paymentType != null and paymentType != ''">and PAYMENT_TYPE = #{paymentType,typeHandler=top.icoding.platform.common.repository.PaymentTypeHandler}</if>
+            <if test="paymentFee != null and paymentFee != ''">and PAYMENT_FEE = #{paymentFee}</if>
+            <if test="payStatus != null and payStatus != ''">and PAY_STATUS = #{payStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler}</if>
+            <if test="remark1 != null and remark1 != ''">and REMARK1 = #{remark1}</if>
+            <if test="remark2 != null and remark2 != ''">and REMARK2 = #{remark2}</if>
+            <if test="remark3 != null and remark3 != ''">and REMARK3 = #{remark3}</if>
+            <if test="updateTime != null and updateTime != ''">and UPDATE_TIME = #{updateTime}</if>
+            <if test="createTime != null and createTime != ''">and CREATE_TIME = #{createTime}</if>
+        </trim>
+    </sql>
+
+
+	<!-- 适用于主键自增类型 -->
+	<insert id="insert" parameterType="OrderPayment" useGeneratedKeys="true" keyProperty="id">
+		insert into ORDER_PAYMENT( <include refid="table_columns" /> ) 
+		values ( <include refid="entity_properties" /> )
+	</insert>
+
+    <insert id="insertSelective" parameterType="OrderPayment">
+        insert into ORDER_PAYMENT
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="orderCode != null and orderCode != ''">ORDER_CODE,</if>
+            <if test="paymentType != null and paymentType != ''">PAYMENT_TYPE,</if>
+            <if test="paymentFee != null and paymentFee != ''">PAYMENT_FEE,</if>
+            <if test="payStatus != null and payStatus != ''">PAY_STATUS,</if>
+            <if test="remark1 != null and remark1 != ''">REMARK1,</if>
+            <if test="remark2 != null and remark2 != ''">REMARK2,</if>
+            <if test="remark3 != null and remark3 != ''">REMARK3,</if>
+            <if test="updateTime != null and updateTime != ''">UPDATE_TIME,</if>
+            <if test="createTime != null and createTime != ''">CREATE_TIME,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="orderCode != null and orderCode != ''">#{orderCode},</if>
+            <if test="paymentType != null and paymentType != ''">#{paymentType,typeHandler=top.icoding.platform.common.repository.PaymentTypeHandler},</if>
+            <if test="paymentFee != null and paymentFee != ''">#{paymentFee},</if>
+            <if test="payStatus != null and payStatus != ''">#{payStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+            <if test="remark1 != null and remark1 != ''">#{remark1},</if>
+            <if test="remark2 != null and remark2 != ''">#{remark2},</if>
+            <if test="remark3 != null and remark3 != ''">#{remark3},</if>
+            <if test="updateTime != null and updateTime != ''">#{updateTime},</if>
+            <if test="createTime != null and createTime != ''">#{createTime},</if>
+        </trim>
+	</insert>
+
+
+	<delete id="delete" parameterType="OrderPayment">
+		delete from ORDER_PAYMENT
+        <include refid="page_where" />
+	</delete>
+
+	<delete id="deleteByPrimaryKey" parameterType="int">
+		delete from ORDER_PAYMENT
+		where ID = #{id}
+	</delete>
+
+
+	<update id="updateByPrimaryKey" parameterType="OrderPayment">
+		update ORDER_PAYMENT 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="orderCode != null and orderCode != ''">ORDER_CODE = #{orderCode},</if>
+			<if test="paymentType != null and paymentType != ''">PAYMENT_TYPE = #{paymentType,typeHandler=top.icoding.platform.common.repository.PaymentTypeHandler},</if>
+			<if test="paymentFee != null and paymentFee != ''">PAYMENT_FEE = #{paymentFee},</if>
+			<if test="payStatus != null and payStatus != ''">PAY_STATUS = #{payStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+			<if test="remark1 != null and remark1 != ''">REMARK1 = #{remark1},</if>
+			<if test="remark2 != null and remark2 != ''">REMARK2 = #{remark2},</if>
+			<if test="remark3 != null and remark3 != ''">REMARK3 = #{remark3},</if>
+			<if test="updateTime != null and updateTime != ''">UPDATE_TIME = #{updateTime},</if>
+			<if test="createTime != null and createTime != ''">CREATE_TIME = #{createTime},</if>
+		</trim>
+		<where>ID = #{id}</where>
+	</update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="OrderPayment">
+        update ORDER_PAYMENT
+        <trim prefix="set" suffixOverrides=",">
+            <if test="orderCode != null and orderCode != ''">ORDER_CODE = #{orderCode},</if>
+            <if test="paymentType != null and paymentType != ''">PAYMENT_TYPE = #{paymentType,typeHandler=top.icoding.platform.common.repository.PaymentTypeHandler},</if>
+            <if test="paymentFee != null and paymentFee != ''">PAYMENT_FEE = #{paymentFee},</if>
+            <if test="payStatus != null and payStatus != ''">PAY_STATUS = #{payStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+            <if test="remark1 != null and remark1 != ''">REMARK1 = #{remark1},</if>
+            <if test="remark2 != null and remark2 != ''">REMARK2 = #{remark2},</if>
+            <if test="remark3 != null and remark3 != ''">REMARK3 = #{remark3},</if>
+            <if test="updateTime != null and updateTime != ''">UPDATE_TIME = #{updateTime},</if>
+            <if test="createTime != null and createTime != ''">CREATE_TIME = #{createTime},</if>
+        </trim>
+        <include refid="page_where" />
+    </update>
+
+
+    <select id="selectAll" resultMap="orderPaymentResultMap">
+        select <include refid="table_columns" />
+        from ORDER_PAYMENT
+    </select>
+
+    <select id="select" resultMap="orderPaymentResultMap">
+        select <include refid="table_columns" />
+        from ORDER_PAYMENT
+        <include refid="page_where" />
+	</select>
+
+    <select id="selectCount" resultType="int" >
+        select count(ID) from ORDER_PAYMENT
+        <include refid="page_where" />
+    </select>
+
+
+    <select id="selectByPrimaryKey" resultMap="orderPaymentResultMap" parameterType="int" >
+		select <include refid="table_columns" />
+		from ORDER_PAYMENT
+		where ID = #{id}
+	</select>
+	
+	<!-- 其他自定义SQL -->
+
+
+</mapper>

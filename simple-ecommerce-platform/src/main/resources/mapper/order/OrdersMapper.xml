@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.melody.unicall.platform.dal.order.OrdersMapper">
+	<resultMap type="Orders" id="ordersResultMap">
+		<result property="id" column="ID" />
+		<result property="accountId" column="ACCOUNT_ID" />
+		<result property="orderCode" column="ORDER_CODE"/>
+		<result property="orderStatus" column="ORDER_STATUS" typeHandler="top.melody.platform.common.repository.OrderStatusHandler"/>
+		<result property="shipStatus" column="SHIP_STATUS" typeHandler="top.melody.platform.common.repository.ActStatusTypeHandler"/>
+		<result property="paymentStatus" column="PAYMENT_STATUS" typeHandler="top.melody.platform.common.repository.ActStatusTypeHandler"/>
+		<result property="paymentType" column="PAYMENT_TYPE" typeHandler="top.melody.platform.common.repository.PaymentTypeHandler"/>
+		<result property="needDistribute" column="NEED_DISTRIBUTE" typeHandler="top.melody.platform.common.repository.OrderTypeHandler"/>
+		<result property="goodsNum" column="GOODS_NUM" />
+		<result property="totalGoodsFee" column="TOTAL_GOODS_FEE" />
+		<result property="postFee" column="POST_FEE" />
+		<result property="totalFee" column="TOTAL_FEE" />
+		<result property="paymentFee" column="PAYMENT_FEE" />
+		<result property="needInvoice" column="NEED_INVOICE" typeHandler="top.melody.platform.common.repository.ActStatusTypeHandler"/>
+		<result property="invoiceType" column="INVOICE_TYPE" typeHandler="top.melody.platform.common.repository.OrderInvoiceTypeHandler"/>
+		<result property="invoiceTitle" column="INVOICE_TITLE" />
+		<result property="logisticsCode" column="LOGISTICS_CODE" />
+		<result property="logisticsName" column="LOGISTICS_NAME" />
+		<result property="trackNumber" column="TRACK_NUMBER" />
+		<result property="orderTime" column="ORDER_TIME" />
+		<result property="shipTime" column="SHIP_TIME" />
+		<result property="signTime" column="SIGN_TIME" />
+		<result property="remark1" column="REMARK1" />
+		<result property="remark2" column="REMARK2" />
+		<result property="remark3" column="REMARK3" />
+		<result property="validStatus" column="VALID_STATUS" typeHandler="top.melody.platform.common.repository.ValidStatusTypeHandler"/>
+		<result property="removeStatus" column="REMOVE_STATUS" typeHandler="top.melody.platform.common.repository.ActStatusTypeHandler"/>
+		<result property="updateTime" column="UPDATE_TIME" />
+		<result property="createTime" column="CREATE_TIME" />
+	</resultMap>
+	
+	<sql id="table_columns">
+		ID,
+		ACCOUNT_ID,
+		ORDER_CODE,
+		ORDER_STATUS,
+		SHIP_STATUS,
+		PAYMENT_STATUS,
+		PAYMENT_TYPE,
+		NEED_DISTRIBUTE,
+		GOODS_NUM,
+		TOTAL_GOODS_FEE,
+		POST_FEE,
+		TOTAL_FEE,
+		PAYMENT_FEE,
+		NEED_INVOICE,
+		INVOICE_TYPE,
+		INVOICE_TITLE,
+		LOGISTICS_CODE,
+		LOGISTICS_NAME,
+		TRACK_NUMBER,
+		ORDER_TIME,
+		SHIP_TIME,
+		SIGN_TIME,
+		REMARK1,
+		REMARK2,
+		REMARK3,
+		VALID_STATUS,
+		REMOVE_STATUS,
+		UPDATE_TIME,
+		CREATE_TIME
+    </sql>
+	<sql id="entity_properties">
+		#{id},
+		#{accountId},
+		#{orderCode},
+		#{orderStatus,typeHandler=top.icoding.platform.common.repository.OrderStatusHandler},
+		#{shipStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},
+		#{paymentStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},
+		#{paymentType,typeHandler=top.icoding.platform.common.repository.PaymentTypeHandler},
+		#{needDistribute,typeHandler=top.icoding.platform.common.repository.OrderTypeHandler},
+		#{goodsNum},
+		#{totalGoodsFee},
+		#{postFee},
+		#{totalFee},
+		#{paymentFee},
+		#{needInvoice,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},
+		#{invoiceType,typeHandler=top.icoding.platform.common.repository.OrderInvoiceTypeHandler},
+		#{invoiceTitle},
+		#{logisticsCode},
+		#{logisticsName},
+		#{trackNumber},
+		#{orderTime},
+		#{shipTime},
+		#{signTime},
+		#{remark1},
+		#{remark2},
+		#{remark3},
+		#{validStatus,typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler},
+		#{removeStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},
+		#{updateTime},
+		#{createTime}
+	</sql>
+
+    <!-- 使用like用法：columnName like concat('%',#columnName#,'%') -->
+    <sql id="page_where">
+        <trim prefix="where" prefixOverrides="and | or ">
+            <if test="accountId != null and accountId != ''">and ACCOUNT_ID = #{accountId}</if>
+            <if test="orderCode != null and orderCode != ''">and ORDER_CODE = #{orderCode}</if>
+            <if test="orderStatus != null and orderStatus != ''">and ORDER_STATUS = #{orderStatus,typeHandler=top.icoding.platform.common.repository.OrderStatusHandler}</if>
+            <if test="shipStatus != null and shipStatus != ''">and SHIP_STATUS = #{shipStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler}</if>
+            <if test="paymentStatus != null and paymentStatus != ''">and PAYMENT_STATUS = #{paymentStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler}</if>
+            <if test="paymentType != null and paymentType != ''">and PAYMENT_TYPE = #{paymentType,typeHandler=top.icoding.platform.common.repository.PaymentTypeHandler}</if>
+            <if test="needDistribute != null and needDistribute != ''">and NEED_DISTRIBUTE = #{needDistribute,typeHandler=top.icoding.platform.common.repository.OrderTypeHandler}</if>
+            <if test="goodsNum != null and goodsNum != ''">and GOODS_NUM = #{goodsNum}</if>
+            <if test="totalGoodsFee != null and totalGoodsFee != ''">and TOTAL_GOODS_FEE = #{totalGoodsFee}</if>
+            <if test="postFee != null and postFee != ''">and POST_FEE = #{postFee}</if>
+            <if test="totalFee != null and totalFee != ''">and TOTAL_FEE = #{totalFee}</if>
+            <if test="paymentFee != null and paymentFee != ''">and PAYMENT_FEE = #{paymentFee}</if>
+            <if test="needInvoice != null and needInvoice != ''">and NEED_INVOICE = #{needInvoice,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler}</if>
+            <if test="invoiceType != null and invoiceType != ''">and INVOICE_TYPE = #{invoiceType,typeHandler=top.icoding.platform.common.repository.OrderInvoiceTypeHandler}</if>
+            <if test="invoiceTitle != null and invoiceTitle != ''">and INVOICE_TITLE = #{invoiceTitle}</if>
+            <if test="logisticsCode != null and logisticsCode != ''">and LOGISTICS_CODE = #{logisticsCode}</if>
+            <if test="logisticsName != null and logisticsName != ''">and LOGISTICS_NAME = #{logisticsName}</if>
+            <if test="trackNumber != null and trackNumber != ''">and TRACK_NUMBER = #{trackNumber}</if>
+            <if test="orderTime != null and orderTime != ''">and ORDER_TIME = #{orderTime}</if>
+            <if test="shipTime != null and shipTime != ''">and SHIP_TIME = #{shipTime}</if>
+            <if test="signTime != null and signTime != ''">and SIGN_TIME = #{signTime}</if>
+            <if test="remark1 != null and remark1 != ''">and REMARK1 = #{remark1}</if>
+            <if test="remark2 != null and remark2 != ''">and REMARK2 = #{remark2}</if>
+            <if test="remark3 != null and remark3 != ''">and REMARK3 = #{remark3}</if>
+            <if test="validStatus != null and validStatus != ''">and VALID_STATUS = #{validStatus,typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler}</if>
+            <if test="removeStatus != null and removeStatus != ''">and REMOVE_STATUS = #{removeStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler}</if>
+            <if test="updateTime != null and updateTime != ''">and UPDATE_TIME = #{updateTime}</if>
+            <if test="createTime != null and createTime != ''">and CREATE_TIME = #{createTime}</if>
+        </trim>
+    </sql>
+
+
+	<!-- 适用于主键自增类型 -->
+	<insert id="insert" parameterType="Orders" useGeneratedKeys="true" keyProperty="id">
+		insert into ORDERS( <include refid="table_columns" /> ) 
+		values ( <include refid="entity_properties" /> )
+	</insert>
+
+    <insert id="insertSelective" parameterType="Orders">
+        insert into ORDERS
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="accountId != null and accountId != ''">ACCOUNT_ID,</if>
+            <if test="orderCode != null and orderCode != ''">ORDER_CODE,</if>
+            <if test="orderStatus != null and orderStatus != ''">ORDER_STATUS,</if>
+            <if test="shipStatus != null and shipStatus != ''">SHIP_STATUS,</if>
+            <if test="paymentStatus != null and paymentStatus != ''">PAYMENT_STATUS,</if>
+            <if test="paymentType != null and paymentType != ''">PAYMENT_TYPE,</if>
+            <if test="needDistribute != null and needDistribute != ''">NEED_DISTRIBUTE,</if>
+            <if test="goodsNum != null and goodsNum != ''">GOODS_NUM,</if>
+            <if test="totalGoodsFee != null and totalGoodsFee != ''">TOTAL_GOODS_FEE,</if>
+            <if test="postFee != null and postFee != ''">POST_FEE,</if>
+            <if test="totalFee != null and totalFee != ''">TOTAL_FEE,</if>
+            <if test="paymentFee != null and paymentFee != ''">PAYMENT_FEE,</if>
+            <if test="needInvoice != null and needInvoice != ''">NEED_INVOICE,</if>
+            <if test="invoiceType != null and invoiceType != ''">INVOICE_TYPE,</if>
+            <if test="invoiceTitle != null and invoiceTitle != ''">INVOICE_TITLE,</if>
+            <if test="logisticsCode != null and logisticsCode != ''">LOGISTICS_CODE,</if>
+            <if test="logisticsName != null and logisticsName != ''">LOGISTICS_NAME,</if>
+            <if test="trackNumber != null and trackNumber != ''">TRACK_NUMBER,</if>
+            <if test="orderTime != null and orderTime != ''">ORDER_TIME,</if>
+            <if test="shipTime != null and shipTime != ''">SHIP_TIME,</if>
+            <if test="signTime != null and signTime != ''">SIGN_TIME,</if>
+            <if test="remark1 != null and remark1 != ''">REMARK1,</if>
+            <if test="remark2 != null and remark2 != ''">REMARK2,</if>
+            <if test="remark3 != null and remark3 != ''">REMARK3,</if>
+            <if test="validStatus != null and validStatus != ''">VALID_STATUS,</if>
+            <if test="removeStatus != null and removeStatus != ''">REMOVE_STATUS,</if>
+            <if test="updateTime != null and updateTime != ''">UPDATE_TIME,</if>
+            <if test="createTime != null and createTime != ''">CREATE_TIME,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="accountId != null and accountId != ''">#{accountId},</if>
+            <if test="orderCode != null and orderCode != ''">#{orderCode},</if>
+            <if test="orderStatus != null and orderStatus != ''">#{orderStatus,typeHandler=top.icoding.platform.common.repository.OrderStatusHandler},</if>
+            <if test="shipStatus != null and shipStatus != ''">#{shipStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+            <if test="paymentStatus != null and paymentStatus != ''">#{paymentStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+            <if test="paymentType != null and paymentType != ''">#{paymentType,typeHandler=top.icoding.platform.common.repository.PaymentTypeHandler},</if>
+            <if test="needDistribute != null and needDistribute != ''">#{needDistribute,typeHandler=top.icoding.platform.common.repository.OrderTypeHandler},</if>
+            <if test="goodsNum != null and goodsNum != ''">#{goodsNum},</if>
+            <if test="totalGoodsFee != null and totalGoodsFee != ''">#{totalGoodsFee},</if>
+            <if test="postFee != null and postFee != ''">#{postFee},</if>
+            <if test="totalFee != null and totalFee != ''">#{totalFee},</if>
+            <if test="paymentFee != null and paymentFee != ''">#{paymentFee},</if>
+            <if test="needInvoice != null and needInvoice != ''">#{needInvoice,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+            <if test="invoiceType != null and invoiceType != ''">#{invoiceType,typeHandler=top.icoding.platform.common.repository.OrderInvoiceTypeHandler},</if>
+            <if test="invoiceTitle != null and invoiceTitle != ''">#{invoiceTitle},</if>
+            <if test="logisticsCode != null and logisticsCode != ''">#{logisticsCode},</if>
+            <if test="logisticsName != null and logisticsName != ''">#{logisticsName},</if>
+            <if test="trackNumber != null and trackNumber != ''">#{trackNumber},</if>
+            <if test="orderTime != null and orderTime != ''">#{orderTime},</if>
+            <if test="shipTime != null and shipTime != ''">#{shipTime},</if>
+            <if test="signTime != null and signTime != ''">#{signTime},</if>
+            <if test="remark1 != null and remark1 != ''">#{remark1},</if>
+            <if test="remark2 != null and remark2 != ''">#{remark2},</if>
+            <if test="remark3 != null and remark3 != ''">#{remark3},</if>
+            <if test="validStatus != null and validStatus != ''">#{validStatus,typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler},</if>
+            <if test="removeStatus != null and removeStatus != ''">#{removeStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+            <if test="updateTime != null and updateTime != ''">#{updateTime},</if>
+            <if test="createTime != null and createTime != ''">#{createTime},</if>
+        </trim>
+	</insert>
+
+
+	<delete id="delete" parameterType="Orders">
+		delete from ORDERS
+        <include refid="page_where" />
+	</delete>
+
+	<delete id="deleteByPrimaryKey" parameterType="int">
+		delete from ORDERS
+		where ID = #{id}
+	</delete>
+
+
+	<update id="updateByPrimaryKey" parameterType="Orders">
+		update ORDERS 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="accountId != null and accountId != ''">ACCOUNT_ID = #{accountId},</if>
+			<if test="orderCode != null and orderCode != ''">ORDER_CODE = #{orderCode},</if>
+			<if test="orderStatus != null and orderStatus != ''">ORDER_STATUS = #{orderStatus,typeHandler=top.icoding.platform.common.repository.OrderStatusHandler},</if>
+			<if test="shipStatus != null and shipStatus != ''">SHIP_STATUS = #{shipStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+			<if test="paymentStatus != null and paymentStatus != ''">PAYMENT_STATUS = #{paymentStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+			<if test="paymentType != null and paymentType != ''">PAYMENT_TYPE = #{paymentType,typeHandler=top.icoding.platform.common.repository.PaymentTypeHandler},</if>
+			<if test="needDistribute != null and needDistribute != ''">NEED_DISTRIBUTE = #{needDistribute,typeHandler=top.icoding.platform.common.repository.OrderTypeHandler},</if>
+			<if test="goodsNum != null and goodsNum != ''">GOODS_NUM = #{goodsNum},</if>
+			<if test="totalGoodsFee != null and totalGoodsFee != ''">TOTAL_GOODS_FEE = #{totalGoodsFee},</if>
+			<if test="postFee != null and postFee != ''">POST_FEE = #{postFee},</if>
+			<if test="totalFee != null and totalFee != ''">TOTAL_FEE = #{totalFee},</if>
+			<if test="paymentFee != null and paymentFee != ''">PAYMENT_FEE = #{paymentFee},</if>
+			<if test="needInvoice != null and needInvoice != ''">NEED_INVOICE = #{needInvoice,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+			<if test="invoiceType != null and invoiceType != ''">INVOICE_TYPE = #{invoiceType,typeHandler=top.icoding.platform.common.repository.OrderInvoiceTypeHandler},</if>
+			<if test="invoiceTitle != null and invoiceTitle != ''">INVOICE_TITLE = #{invoiceTitle},</if>
+			<if test="logisticsCode != null and logisticsCode != ''">LOGISTICS_CODE = #{logisticsCode},</if>
+			<if test="logisticsName != null and logisticsName != ''">LOGISTICS_NAME = #{logisticsName},</if>
+			<if test="trackNumber != null and trackNumber != ''">TRACK_NUMBER = #{trackNumber},</if>
+			<if test="orderTime != null and orderTime != ''">ORDER_TIME = #{orderTime},</if>
+			<if test="shipTime != null and shipTime != ''">SHIP_TIME = #{shipTime},</if>
+			<if test="signTime != null and signTime != ''">SIGN_TIME = #{signTime},</if>
+			<if test="remark1 != null and remark1 != ''">REMARK1 = #{remark1},</if>
+			<if test="remark2 != null and remark2 != ''">REMARK2 = #{remark2},</if>
+			<if test="remark3 != null and remark3 != ''">REMARK3 = #{remark3},</if>
+			<if test="validStatus != null and validStatus != ''">VALID_STATUS = #{validStatus,typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler},</if>
+			<if test="removeStatus != null and removeStatus != ''">REMOVE_STATUS = #{removeStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+			<if test="updateTime != null and updateTime != ''">UPDATE_TIME = #{updateTime},</if>
+			<if test="createTime != null and createTime != ''">CREATE_TIME = #{createTime},</if>
+		</trim>
+		<where>ID = #{id}</where>
+	</update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="Orders">
+        update ORDERS
+        <trim prefix="set" suffixOverrides=",">
+            <if test="accountId != null and accountId != ''">ACCOUNT_ID = #{accountId},</if>
+            <if test="orderCode != null and orderCode != ''">ORDER_CODE = #{orderCode},</if>
+            <if test="orderStatus != null and orderStatus != ''">ORDER_STATUS = #{orderStatus,typeHandler=top.icoding.platform.common.repository.OrderStatusHandler},</if>
+            <if test="shipStatus != null and shipStatus != ''">SHIP_STATUS = #{shipStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+            <if test="paymentStatus != null and paymentStatus != ''">PAYMENT_STATUS = #{paymentStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+            <if test="paymentType != null and paymentType != ''">PAYMENT_TYPE = #{paymentType,typeHandler=top.icoding.platform.common.repository.PaymentTypeHandler},</if>
+            <if test="needDistribute != null and needDistribute != ''">NEED_DISTRIBUTE = #{needDistribute,typeHandler=top.icoding.platform.common.repository.OrderTypeHandler},</if>
+            <if test="goodsNum != null and goodsNum != ''">GOODS_NUM = #{goodsNum},</if>
+            <if test="totalGoodsFee != null and totalGoodsFee != ''">TOTAL_GOODS_FEE = #{totalGoodsFee},</if>
+            <if test="postFee != null and postFee != ''">POST_FEE = #{postFee},</if>
+            <if test="totalFee != null and totalFee != ''">TOTAL_FEE = #{totalFee},</if>
+            <if test="paymentFee != null and paymentFee != ''">PAYMENT_FEE = #{paymentFee},</if>
+            <if test="needInvoice != null and needInvoice != ''">NEED_INVOICE = #{needInvoice,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+            <if test="invoiceType != null and invoiceType != ''">INVOICE_TYPE = #{invoiceType,typeHandler=top.icoding.platform.common.repository.OrderInvoiceTypeHandler},</if>
+            <if test="invoiceTitle != null and invoiceTitle != ''">INVOICE_TITLE = #{invoiceTitle},</if>
+            <if test="logisticsCode != null and logisticsCode != ''">LOGISTICS_CODE = #{logisticsCode},</if>
+            <if test="logisticsName != null and logisticsName != ''">LOGISTICS_NAME = #{logisticsName},</if>
+            <if test="trackNumber != null and trackNumber != ''">TRACK_NUMBER = #{trackNumber},</if>
+            <if test="orderTime != null and orderTime != ''">ORDER_TIME = #{orderTime},</if>
+            <if test="shipTime != null and shipTime != ''">SHIP_TIME = #{shipTime},</if>
+            <if test="signTime != null and signTime != ''">SIGN_TIME = #{signTime},</if>
+            <if test="remark1 != null and remark1 != ''">REMARK1 = #{remark1},</if>
+            <if test="remark2 != null and remark2 != ''">REMARK2 = #{remark2},</if>
+            <if test="remark3 != null and remark3 != ''">REMARK3 = #{remark3},</if>
+            <if test="validStatus != null and validStatus != ''">VALID_STATUS = #{validStatus,typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler},</if>
+            <if test="removeStatus != null and removeStatus != ''">REMOVE_STATUS = #{removeStatus,typeHandler=top.icoding.platform.common.repository.ActStatusTypeHandler},</if>
+            <if test="updateTime != null and updateTime != ''">UPDATE_TIME = #{updateTime},</if>
+            <if test="createTime != null and createTime != ''">CREATE_TIME = #{createTime},</if>
+        </trim>
+        <include refid="page_where" />
+    </update>
+
+
+    <select id="selectAll" resultMap="ordersResultMap">
+        select <include refid="table_columns" />
+        from ORDERS
+    </select>
+
+    <select id="select" resultMap="ordersResultMap">
+        select <include refid="table_columns" />
+        from ORDERS
+        <include refid="page_where" />
+	</select>
+
+    <select id="selectCount" resultType="int" >
+        select count(ID) from ORDERS
+        <include refid="page_where" />
+    </select>
+
+
+    <select id="selectByPrimaryKey" resultMap="ordersResultMap" parameterType="int" >
+		select <include refid="table_columns" />
+		from ORDERS
+		where ID = #{id}
+	</select>
+
+	<select id="getOrder" resultMap="ordersResultMap" parameterType="String" >
+		select <include refid="table_columns" />
+		from ORDERS
+		where ORDER_CODE = #{0}
+	</select>
+	
+	<!-- 其他自定义SQL -->
+
+
+</mapper>

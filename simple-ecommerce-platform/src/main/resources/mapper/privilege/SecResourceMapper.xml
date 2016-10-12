@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.melody.unicall.platform.dal.privilege.SecResourceMapper">
+    <resultMap id="BaseResultMap" type="top.melody.unicall.platform.entity.privilege.SecResource">
+        <!--
+          WARNING - @mbggenerated
+        -->
+        <id column="ID" property="id" jdbcType="VARCHAR"/>
+        <result column="RESOURCE_CODE" property="resourceCode" jdbcType="VARCHAR"/>
+        <result column="RESOURCE_NAME" property="resourceName" jdbcType="VARCHAR"/>
+        <result column="RESOURCE_URL" property="resourceUrl" jdbcType="VARCHAR"/>
+        <result column="RESOURCE_ICON" property="resourceIcon" jdbcType="VARCHAR"/>
+        <result column="RESOURCE_TYPE" property="resourceType" jdbcType="VARCHAR"/>
+        <result column="SEQ_KEY" property="seqKey" jdbcType="INTEGER"/>
+        <result column="LEVELS" property="levels" jdbcType="INTEGER"/>
+        <result column="PID" property="pid" jdbcType="VARCHAR"/>
+        <result column="APP_ID" property="appId" jdbcType="VARCHAR"/>
+        <result column="VALID_STATUS" property="validStatus" jdbcType="VARCHAR"
+                typeHandler="top.melody.platform.common.repository.ValidStatusTypeHandler"/>
+        <!--<result property="removeStatus" column="REMOVE_STATUS" typeHandler="top.melodyplatform.common.repository.ActStatusTypeHandler" />-->
+        <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--
+          WARNING - @mbggenerated
+        -->
+        ID, RESOURCE_CODE, RESOURCE_NAME, RESOURCE_URL, RESOURCE_ICON, RESOURCE_TYPE, SEQ_KEY,
+        LEVELS, PID, APP_ID, VALID_STATUS, CREATE_DATE, UPDATE_DATE
+    </sql>
+    <sql id="Entity_Prop_List">
+    #{resourceCode},#{resourceName},#{resourceUrl},#{resourceIcon},#{resourceType},#{seqKey},#{levels},#{pid},#{appId},#{validStatus,typeHandler=top.icoding.platform.common.repository.ValidStatusTypeHandler},#{createDate},#{updateDate}
+  </sql>
+
+
+    <select id="selectByIdIn" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM SEC_RESOURCE SR
+        WHERE ID IN
+        <foreach item="item" index="index" collection="list"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+</mapper>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.melody.unicall.platform.dal.privilege.OrgOrganizationMapper" >
+  <resultMap id="BaseResultMap" type="top.melody.unicall.platform.entity.privilege.OrgOrganization" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="ORGANIZATION_CODE" property="organizationCode" jdbcType="VARCHAR" />
+    <result column="ORGANIZATION_NAME" property="organizationName" jdbcType="VARCHAR" />
+    <result column="PARENT_ID" property="parentId" jdbcType="VARCHAR" />
+    <result column="APP_ID" property="appId" jdbcType="VARCHAR" />
+    <result column="VALID_STATUS" property="validStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="STR1" property="str1" jdbcType="VARCHAR" />
+    <result column="STR2" property="str2" jdbcType="VARCHAR" />
+    <result column="STR3" property="str3" jdbcType="VARCHAR" />
+    <result column="STR4" property="str4" jdbcType="VARCHAR" />
+    <result column="STR5" property="str5" jdbcType="VARCHAR" />
+    <result column="INT1" property="int1" jdbcType="INTEGER" />
+    <result column="INT2" property="int2" jdbcType="INTEGER" />
+    <result column="INT3" property="int3" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    ID, ORGANIZATION_CODE, ORGANIZATION_NAME, PARENT_ID, APP_ID, VALID_STATUS, CREATE_DATE, 
+    UPDATE_DATE, STR1, STR2, STR3, STR4, STR5, INT1, INT2, INT3
+  </sql>
+  <sql id="Entity_Prop_List" >
+    #{organizationCode},#{organizationName},#{parentId},#{appId},#{validStatus},#{createDate},#{updateDate},#{str1},#{str2},#{str3},#{str4},#{str5},#{int1},#{int2},#{int3}
+  </sql>
+</mapper>
